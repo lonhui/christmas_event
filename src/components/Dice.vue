@@ -85,7 +85,7 @@ export default {
     },
     mounted(){
         var diceNumber = Math.floor(Math.random()*5)+1//随机生成1~6点数，后期调接口从后台获取
-        console.log(diceNumber)
+        console.log("本次骰子点数："+diceNumber)
         setTimeout(()=>{
             this.DiceNumber = diceNumber
         },3000)

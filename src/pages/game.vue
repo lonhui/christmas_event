@@ -13,10 +13,10 @@
             <img src="@/assets/images/game/paly_button.png" @click="openDice" alt="">
         </div>
 
-        <button @click="walkingToTop(60)"> 上 </button>
-        <button @click="walkingToBottom(60)"> 下 </button>
-        <button @click="walkingToLeft(60)"> 左 </button>
-        <button @click="walkingToRight(60)"> 右 </button>
+        <button @click="walkingToTop(latticeWH)"> 上 </button>
+        <button @click="walkingToBottom(latticeWH)"> 下 </button>
+        <button @click="walkingToLeft(latticeWH)"> 左 </button>
+        <button @click="walkingToRight(latticeWH)"> 右 </button>
 
 
         <NetworkError v-if="NetworkErrorShow" @on-close="NetworkErrorShow=false"></NetworkError>
@@ -56,12 +56,13 @@ export default {
             WinningShow:false,//中奖弹框
             DiceShow:false,//投掷骰子
             timer:null,
+            latticeWH:60,
             // 棋盘上格子对应的坐标
             ChessPosition:[
                 {top:480,left:0},{top:480,left:120},{top:480,left:240},{top:480,left:360},{top:480,left:480},
-                {top:360,left:0},{top:360,left:120},{top:360,left:240},{top:360,left:360},{top:360,left:480},
+                {top:360,left:480},{top:360,left:360},{top:360,left:240},{top:360,left:120},{top:360,left:0},
                 {top:240,left:0},{top:240,left:120},{top:240,left:240},{top:240,left:360},{top:240,left:480},
-                {top:120,left:0},{top:120,left:120},{top:120,left:240},{top:120,left:360},{top:120,left:480},
+                {top:120,left:480},{top:120,left:360},{top:120,left:240},{top:120,left:120},{top:120,left:0},
                 {top:0,left:0},{top:0,left:120},{top:0,left:240},{top:0,left:360},{top:0,left:480},
             ],
             ChessPositionNum:1,//当前所在格子
@@ -80,42 +81,90 @@ export default {
         Dice
     },
     mounted(){
-       
+       this.getLatticeWH()
     },
     methods:{
         openDice(){
             this.DiceShow = true
         },
         closeDice(num){
-            console.log(num)
             this.DiceShow = false
+            var endPoint = this.ChessPositionNum + num//本次行走的终点
+            console.log("本次行走初始位置："+this.ChessPositionNum+";本次行走终点位置："+endPoint)
+            this.walk(num,endPoint)
+        },
+        // 获取棋盘上每个格子的大小
+        getLatticeWH(){
+            var Odiv =  document.getElementById("checkerboard")
+            var lattice_width = window.getComputedStyle(Odiv).width
+            var lattice_height = window.getComputedStyle(Odiv).height
+            var latticeWH = lattice_width+""
+            this.latticeWH = (Number(latticeWH.substring(0,latticeWH.length-2))/5).toFixed(0)
+            this.getChessPosition(this.latticeWH)
+        },
+        // 获取棋盘中每个格子的坐标
+        getChessPosition(latticeWH){
+            let aa = latticeWH*2
+            let bb =latticeWH*4
+            let cc = latticeWH*6
+            let dd = latticeWH*8
+            var ChessPosition = [
+                {top:dd,left:0},{top:dd,left:aa},{top:dd,left:bb},{top:dd,left:cc},{top:dd,left:dd},
+                {top:cc,left:dd},{top:cc,left:cc},{top:cc,left:bb},{top:cc,left:aa},{top:cc,left:0},
+                {top:bb,left:0},{top:bb,left:aa},{top:bb,left:bb},{top:bb,left:cc},{top:bb,left:dd},
+                {top:aa,left:dd},{top:aa,left:cc},{top:aa,left:bb},{top:aa,left:aa},{top:aa,left:0},
+                {top:0,left:0},{top:0,left:aa},{top:0,left:bb},{top:0,left:cc},{top:0,left:dd},
+            ]
+            this.ChessPosition = ChessPosition
+            console.log(ChessPosition)
+        },
+        // 按骰子点数行走
+        walk(num,endPoint){
             var timing = null
-            var count = 0
+            // 每一点1.2秒走一步
+            var count=0
             timing = setInterval(()=>{
-                if(count>=num){
-                    clearInterval(this.timing)
+                if(this.ChessPositionNum==endPoint){
+                    clearInterval(timing)
                 }else{
-                    var coordinate = this.ChessPosition[this.ChessPositionNum-1]//棋子当前所在坐标
-                    alert(this.ChessPositionNum)
-                    if((this.ChessPositionNum>5&this.ChessPositionNum<10)||(this.ChessPositionNum>15&this.ChessPositionNum<20)){
-                        // 向左
-                        if(coordinate.left>0){
-                            this.walkingToLeft(60)
-                        }else{
-                            this.walkingToTop(60)//向上
-                        }
-                    }else{
-                        //向右
-                        if(coordinate.left<480){
-                            this.walkingToRight(60)
-                        }else{
-                            this.walkingToTop(60)//向上
-                        }
+                    console.log("走了"+ ++count+"步")
+                    switch(this.ChessPositionNum){
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 11:
+                        case 12:
+                        case 13:
+                        case 14:
+                        case 21:
+                        case 22:
+                        case 23:
+                        case 24:this.walkingToRight(this.latticeWH);//向右
+                                ++this.ChessPositionNum;
+                                console.log("当前位置："+this.ChessPositionNum+";目标位置："+endPoint)
+                                break;
+                        case 6:
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 16:
+                        case 17:
+                        case 18:
+                        case 19:this.walkingToLeft(this.latticeWH);// 向左
+                                ++this.ChessPositionNum;
+                                console.log("当前位置："+this.ChessPositionNum+";目标位置："+endPoint)
+                                break;
+                        case 5:
+                        case 10:
+                        case 15:
+                        case 20:this.walkingToTop(this.latticeWH);//向上
+                                ++this.ChessPositionNum;
+                                console.log("当前位置："+this.ChessPositionNum+";目标位置："+endPoint)
+                                break;
                     }
-                    ++this.ChessPositionNum
-                    count++
                 }
-            },1000)
+            },2000)
         },
         //向右行走
         walkingToRight(target){
