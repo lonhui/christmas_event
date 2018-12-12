@@ -3,21 +3,23 @@
         <div class="img">
             <img src="@/assets/images/game/capingRun_min.png" alt="">
         </div>
-        <div id="checkerboard">
+        <div id="checkerboard" :class="checkerboard">
             <div id="piece">
                 <img src="@/assets/images/game/piece.png" alt="">
             </div>
+            <div class="giftBox1" @click="openGiftBox(1)"></div>
+            <div class="giftBox2" @click="openGiftBox(2)"></div>
+            <div class="giftBox3" @click="openGiftBox(3)"></div>
         </div>
         <p>Lempar dadumu dan selesaikan permainan untuk kesempatan dapetin <span>Grand Prize!</span></p>
         <div class="play">
             <img src="@/assets/images/game/paly_button.png" @click="openDice" alt="">
         </div>
 
-        <button @click="walkingToTop(latticeWH)"> 上 </button>
-        <button @click="walkingToBottom(latticeWH)"> 下 </button>
-        <button @click="walkingToLeft(latticeWH)"> 左 </button>
-        <button @click="walkingToRight(latticeWH)"> 右 </button>
-
+        <br><br><br>
+        <button @click="zoomOut">缩小</button>
+        <button @click="amplification">放大</button>
+        <button @click="transfer(7)">传送</button>
 
         <NetworkError v-if="NetworkErrorShow" @on-close="NetworkErrorShow=false"></NetworkError>
         <UserCoins v-if="UserCoinsShow" @on-close="UserCoinsShow=false"></UserCoins>
@@ -56,6 +58,7 @@ export default {
             WinningShow:false,//中奖弹框
             DiceShow:false,//投掷骰子
             timer:null,
+            checkerboard:"checkerboard_gray",
             latticeWH:60,
             // 棋盘上格子对应的坐标
             ChessPosition:[
@@ -80,7 +83,7 @@ export default {
         Winning,
         Dice
     },
-    mounted(){
+    mounted(){ 
        this.getLatticeWH()
     },
     methods:{
@@ -92,6 +95,9 @@ export default {
             var endPoint = this.ChessPositionNum + num//本次行走的终点
             console.log("本次行走初始位置："+this.ChessPositionNum+";本次行走终点位置："+endPoint)
             this.walk(num,endPoint)
+        },
+        openGiftBox(boxNum){
+            alert("打开 "+boxNum+" 号盒子")
         },
         // 获取棋盘上每个格子的大小
         getLatticeWH(){
@@ -124,8 +130,19 @@ export default {
             // 每一点1.2秒走一步
             var count=0
             timing = setInterval(()=>{
+                // 更换背景图片
                 if(this.ChessPositionNum==endPoint){
                     clearInterval(timing)
+                    if(this.ChessPositionNum < 8){
+                        this.checkerboard = "checkerboard_gray"
+                    }else if(this.ChessPositionNum >= 8 && this.ChessPositionNum < 17){
+                        this.checkerboard = "checkerboard_bright_1"
+                    }else if(this.ChessPositionNum >= 17 && this.ChessPositionNum < 25){
+                        this.checkerboard = "checkerboard_bright_2"
+                    }else if(this.ChessPositionNum == 25){
+                        this.checkerboard = "checkerboard_bright"
+                    }
+                    this.judgeGrid()
                 }else{
                     console.log("走了"+ ++count+"步")
                     switch(this.ChessPositionNum){
@@ -164,7 +181,57 @@ export default {
                                 break;
                     }
                 }
-            },2000)
+            },1000)
+        },
+        // 当行进停止时判断当前所在格子的功能
+        judgeGrid (){
+            switch(this.ChessPositionNum){
+                case 4:
+                        this.zoomOut()
+                        setTimeout(()=>{
+                            this.transfer(8)
+                            this.amplification()
+                        },1200)
+                        break;
+                case 8:
+                        alert("中奖了！")
+                        break;
+                case 13:
+                        this.zoomOut()
+                        setTimeout(()=>{
+                            this.transfer(10)
+                            this.amplification()
+                        },1200)
+                        break;
+                case 17:
+                        alert("中奖了！")
+                        break;
+                case 18:
+                        this.zoomOut()
+                        setTimeout(()=>{
+                            this.transfer(22)
+                            this.amplification()
+                        },1200)
+                        break;
+                case 24:
+                        this.zoomOut()
+                        setTimeout(()=>{
+                            this.transfer(15)
+                            this.amplification()
+                        },1200)
+                        break;
+            }
+        },
+        //传送
+        transfer(num){
+            console.log("传送！")
+            this.ChessPositionNum = num
+            console.log("当前位置："+this.ChessPositionNum)
+            var oDiv =document.getElementById("piece");
+            let left = this.ChessPosition[num-1].left/2
+            let top = this.ChessPosition[num-1].top/2
+            oDiv.style.left = left + "px"
+            oDiv.style.top = top + "px"
         },
         //向右行走
         walkingToRight(target){
@@ -172,7 +239,7 @@ export default {
             var count=0
             clearInterval(this.timer);
             this.timer = setInterval(function(){
-                var speed = (target - count)/20;
+                var speed = (target - count)/10;
                 speed = speed>0 ? Math.ceil(speed) : Math.floor(speed);
                 if(count == target){
                     clearInterval(this.timer);
@@ -189,7 +256,7 @@ export default {
             var count = 0
             clearInterval(this.timer);
             this.timer = setInterval(function(){
-                var speed = (target - count)/20;
+                var speed = (target - count)/10;
                 speed = speed>0 ? Math.ceil(speed) : Math.floor(speed);
                 if(count == target){
                     clearInterval(this.timer);
@@ -206,7 +273,7 @@ export default {
             var count = 0
             clearInterval(this.timer);
             this.timer = setInterval(function(){
-                var speed = (target - count)/20;
+                var speed = (target - count)/10;
                 speed = speed>0 ? Math.ceil(speed) : Math.floor(speed);
                 if(count == target){
                     clearInterval(this.timer);
@@ -223,7 +290,7 @@ export default {
             var count = 0
             clearInterval(this.timer);
             this.timer = setInterval(function(){
-                var speed = (target - count)/20;
+                var speed = (target - count)/10;
                 speed = speed>0 ? Math.ceil(speed) : Math.floor(speed);
                 if(count == target){
                     clearInterval(this.timer);
@@ -234,13 +301,49 @@ export default {
                 }
             },30);
         },
+        // 缩小
+        zoomOut(){
+            var timeing = null
+            var oDiv = document.getElementById("piece");
+            let Pwidth = window.getComputedStyle(oDiv).width
+            let speed = Number(Pwidth.substring(0,Pwidth.length-2))
+            clearInterval(timeing)
+            timeing = setInterval(()=>{
+                --speed
+                if(speed==0){
+                    clearInterval(this.timer);
+                }else{
+                    oDiv.style.width = speed+"px"
+                }
+            },20);
+        },
+        // 放大
+        amplification(){
+            var timeing = null
+            var oDiv = document.getElementById("piece");
+            let speed = 0
+            clearInterval(timeing)
+            timeing = setInterval(()=>{
+                ++speed
+                if(speed>=this.latticeWH){
+                    clearInterval(this.timer);
+                }else{
+                    oDiv.style.width = speed+"px"
+                }
+            },20);
+        }
+
     },
-    
 }
 </script>
 
 <style scoped>
+button{
+    width: 200px;
+    height: 200px;
+}
 #game{width: 100%;}
+
 .img{
     width: 300px;
     margin: 0 auto;
@@ -251,10 +354,48 @@ img{
 #checkerboard{
     width: 600px;
     height: 600px;
-    background: url("../assets/images/game/checkerboard.png") no-repeat;
-    background-size: 100% 100%;
     margin: 0 auto;
     position: relative;
+}
+.checkerboard_gray{
+    background: url("../assets/images/game/checkerboard_gray.png") no-repeat;
+    background-size: 100% 100%;
+}
+.checkerboard_bright_1{
+    background: url("../assets/images/game/checkerboard_bright_1.png") no-repeat;
+    background-size: 100% 100%;
+}
+.checkerboard_bright_2{
+    background: url("../assets/images/game/checkerboard_bright_2.png") no-repeat;
+    background-size: 100% 100%;
+}
+.checkerboard_bright{
+    background: url("../assets/images/game/checkerboard_bright.png") no-repeat;
+    background-size: 100% 100%;
+}
+.giftBox1{
+    width: 120px;
+    height: 120px;
+    /* background-color: rgba(137, 43, 226, 0.171); */
+    position: absolute;
+    top: 350px;
+    left: 240px;
+}
+.giftBox2{
+    width: 120px;
+    height: 120px;
+    /* background-color: rgba(137, 43, 226, 0.171); */
+    position: absolute;
+    top: 115px;
+    left: 360px;
+}
+.giftBox3{
+    width: 120px;
+    height: 120px;
+    /* background-color: rgba(137, 43, 226, 0.171); */
+    position: absolute;
+    top:0;
+    left: 480px;
 }
 #piece{
     width: 120px;

@@ -88,7 +88,7 @@ export default {
         console.log("本次骰子点数："+diceNumber)
         setTimeout(()=>{
             this.DiceNumber = diceNumber
-        },3000)
+        },2000)
     },
      methods: {
         closeDice(){
