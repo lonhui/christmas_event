@@ -58,7 +58,8 @@ export default {
             WinningShow:false,//中奖弹框
             DiceShow:false,//投掷骰子
             timer:null,
-            checkerboard:"checkerboard_gray",
+            checkerboard:"checkerboard_gray",//棋盘class,用于更换棋盘背景
+            toTheTop:false,//到顶，false正常走  ture方向走
             latticeWH:60,
             // 棋盘上格子对应的坐标
             ChessPosition:[
@@ -179,6 +180,7 @@ export default {
                                 ++this.ChessPositionNum;
                                 console.log("当前位置："+this.ChessPositionNum+";目标位置："+endPoint)
                                 break;
+                        case 25:this.walkingToLeft(this.latticeWH);// 向左
                     }
                 }
             },1000)
@@ -187,38 +189,38 @@ export default {
         judgeGrid (){
             switch(this.ChessPositionNum){
                 case 4:
-                        this.zoomOut()
-                        setTimeout(()=>{
+                        // this.zoomOut()
+                        // setTimeout(()=>{
                             this.transfer(8)
-                            this.amplification()
-                        },1200)
+                        //     this.amplification()
+                        // },1200)
                         break;
                 case 8:
                         alert("中奖了！")
                         break;
                 case 13:
-                        this.zoomOut()
-                        setTimeout(()=>{
+                        // this.zoomOut()
+                        // setTimeout(()=>{
                             this.transfer(10)
-                            this.amplification()
-                        },1200)
+                        //     this.amplification()
+                        // },1200)
                         break;
                 case 17:
                         alert("中奖了！")
                         break;
                 case 18:
-                        this.zoomOut()
-                        setTimeout(()=>{
+                        // this.zoomOut()
+                        // setTimeout(()=>{
                             this.transfer(22)
-                            this.amplification()
-                        },1200)
+                        //     this.amplification()
+                        // },1200)
                         break;
                 case 24:
-                        this.zoomOut()
-                        setTimeout(()=>{
+                        // this.zoomOut()
+                        // setTimeout(()=>{
                             this.transfer(15)
-                            this.amplification()
-                        },1200)
+                        //     this.amplification()
+                        // },1200)
                         break;
             }
         },
