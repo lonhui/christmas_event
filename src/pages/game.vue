@@ -12,17 +12,33 @@
             <div id="piece">
                 <img src="@/assets/images/game/piece.png" alt="">
             </div>
+            <div class="flag">
+                <img src="@/assets/images/game/flag.png" alt="">
+            </div>
             <div class="giftBox1" @click="openGiftBox(1)"></div>
             <div class="giftBox2" @click="openGiftBox(2)"></div>
             <div class="giftBox3" @click="openGiftBox(3)"></div>
         </div>
         <p>Lempar dadumu dan selesaikan permainan untuk kesempatan dapetin <span>Grand Prize!</span></p>
-        <div class="play">
-            <img src="@/assets/images/game/paly_button.png" @click="openDice" alt="">
+
+        <div class="batton_play">
+            <div class="play" v-if="userStatus.diceStatus">
+                <img src="@/assets/images/game/paly_button.png" @click="openDice" alt="">
+            </div>
+            <div class="play_dice" v-if="!userStatus.diceStatus">
+                <div class="dice_button" >
+                    <img src="@/assets/images/game/dice_button.png" alt="">
+                </div>
+                <p class="dice_button_text">24:30:52</p>
+            </div>
+            <div class="play" v-if="!userStatus.diceStatus">
+                <img src="@/assets/images/game/BulletBox/200coins_button.png" alt="" @click="UserCoinsShow = true;paymentMark = true">
+            </div>
         </div>
+        
 
         <NetworkError v-if="NetworkErrorShow" @on-close="NetworkErrorShow=false"></NetworkError>
-        <UserCoins v-if="UserCoinsShow" @on-close="closeUserCoins"></UserCoins>
+        <UserCoins v-if="UserCoinsShow" @on-close="closeUserCoins" :paymentMark="paymentMark"></UserCoins>
         <NoCoins v-if="NoCoinsShow" @on-close="NoCoinsShow=false"></NoCoins>
         <GiftCall v-if="GiftCallShow" @on-close="GiftCallShow=false"></GiftCall>
         <GiftPhone v-if="GiftPhoneShow" @on-close="GiftPhoneShow=false"></GiftPhone>
@@ -50,7 +66,6 @@ import WinningNo from "@/components/Winning_no"
 import Dice from "@/components/Dice"
 import Share from "@/components/Share"
 
-
 export default {
     data(){
         return{
@@ -67,6 +82,7 @@ export default {
             ShareShow:false,//分享弹框
             DiceShow:false,//投掷骰子
             timer:null,
+            paymentMark:false,//支付标记  false开箱，true掷骰
             checkerboard:"checkerboard_gray",//棋盘class,用于更换棋盘背景
             toTheTop:false,//到顶，false正常走  ture方向走
             userStatus:{    //用户状态
@@ -88,7 +104,6 @@ export default {
                 {top:0,left:0},{top:0,left:120},{top:0,left:240},{top:0,left:360},{top:0,left:480},
             ],
             ChessPositionNum:1,//当前所在格子
-
         }
     },
     components:{
@@ -110,6 +125,7 @@ export default {
     },
     methods:{
         openDice(){
+            this.userStatus.diceStatus = false
             this.DiceShow = true
         },
         closeDice(num){//num 骰子点数
@@ -125,6 +141,7 @@ export default {
                         this.userStatus.openBoxStatus = false
                         break
                 case 2: this.UserCoinsShow = true
+                        this.paymentMark = false
                         break
             }
         },
@@ -142,13 +159,18 @@ export default {
         closeUserCoins(whether){//whether,false关闭，true付费开箱
             this.UserCoinsShow = false
             if(whether){
-                this.SelectGiftShow = true
+                if(this.paymentMark){
+                    this.DiceShow = true
+                }else{
+                    this.SelectGiftShow = true
+                }
             }
         },
         closeGiftCoins(whether){//whether,false关闭，true开启花费金币提示
             this.GiftCoinsShow = false
             if(whether){
                 this.UserCoinsShow = true
+                this.paymentMark = false
             }
         },
         openGiftBox(boxNum){
@@ -297,11 +319,7 @@ export default {
                         this.transfer(22)
                         break;
                 case 24:
-                        // this.zoomOut()
-                        // setTimeout(()=>{
-                            this.transfer(15)
-                        //     this.amplification()
-                        // },1200)
+                        this.transfer(15)
                         break;
             }
         },
@@ -351,38 +369,6 @@ export default {
                 }
             },30);
         },
-        // 缩小
-        zoomOut(){
-            var timeing = null
-            var oDiv = document.getElementById("piece");
-            let Pwidth = window.getComputedStyle(oDiv).width
-            let speed = Number(Pwidth.substring(0,Pwidth.length-2))
-            clearInterval(timeing)
-            timeing = setInterval(()=>{
-                --speed
-                if(speed==0){
-                    clearInterval(this.timer);
-                }else{
-                    oDiv.style.width = speed+"px"
-                }
-            },20);
-        },
-        // 放大
-        amplification(){
-            var timeing = null
-            var oDiv = document.getElementById("piece");
-            let speed = 0
-            clearInterval(timeing)
-            timeing = setInterval(()=>{
-                ++speed
-                if(speed>=this.latticeWH){
-                    clearInterval(this.timer);
-                }else{
-                    oDiv.style.width = speed+"px"
-                }
-            },20);
-        }
-
     },
 }
 </script>
@@ -407,22 +393,6 @@ img{
     margin: 0 auto;
     position: relative;
 }
-/* .checkerboard_gray{
-    background: url("../assets/images/game/checkerboard_gray.png") no-repeat;
-    background-size: 100% 100%;
-}
-.checkerboard_bright_1{
-    background: url("../assets/images/game/checkerboard_bright_1.png") no-repeat;
-    background-size: 100% 100%;
-}
-.checkerboard_bright_2{
-    background: url("../assets/images/game/checkerboard_bright_2.png") no-repeat;
-    background-size: 100% 100%;
-}
-.checkerboard_bright{
-    background: url("../assets/images/game/checkerboard_bright.png") no-repeat;
-    background-size: 100% 100%;
-} */
 .giftBox1{
     width: 120px;
     height: 120px;
@@ -454,7 +424,13 @@ img{
     top: 480px;
     left: 0px;
 }
-
+.flag{
+    width: 80px;
+    height: 80px;
+    position:absolute;
+    top: -80px;
+    left: 440px; 
+}
 p{
     width: 80%;
     color: #fff;
@@ -463,9 +439,37 @@ p{
     margin: 20px auto 0;
     text-align: center;    
 }
+.batton_play{
+    padding-top: 50px;
+    display: flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:space-around;
+    align-items:flex-start;
+    align-content:flex-start;
+}
 .play{
-    width: 350px;
-    margin: 30px auto 20px;
+    width: 300px;
+}
+.play_dice{
+    width: 300px;
+    height: 110px;
+    border-radius: 100px;
+    background-color: #c2c2c2;
+    position: relative;
+}
+.dice_button{
+    width: 80px;
+    position: absolute;
+    top: 14px;
+    left: 16px;
+}
+.dice_button_text{
+    font-weight: bold;
+    color: #818181;
+    position: absolute;
+    top: 15px;
+    left: 60px;
 }
 
 </style>
