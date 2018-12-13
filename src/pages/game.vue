@@ -19,7 +19,7 @@
         <br><br><br>
         <button @click="zoomOut">缩小</button>
         <button @click="amplification">放大</button>
-        <button @click="transfer(7)">传送</button>
+        <button @click="transfer(23)">传送</button>
 
         <NetworkError v-if="NetworkErrorShow" @on-close="NetworkErrorShow=false"></NetworkError>
         <UserCoins v-if="UserCoinsShow" @on-close="UserCoinsShow=false"></UserCoins>
@@ -125,25 +125,41 @@ export default {
             this.ChessPosition = ChessPosition
             console.log(ChessPosition)
         },
+        //判断是否转换背景图
+        conversionBackImg(){
+            if(this.ChessPositionNum < 8){
+                this.checkerboard = "checkerboard_gray"
+            }else if(this.ChessPositionNum >= 8 && this.ChessPositionNum < 17){
+                this.checkerboard = "checkerboard_bright_1"
+            }else if(this.ChessPositionNum >= 17 && this.ChessPositionNum < 25){
+                this.checkerboard = "checkerboard_bright_2"
+            }else if(this.ChessPositionNum == 25){
+                this.checkerboard = "checkerboard_bright"
+            }
+            this.judgeGrid()
+        },
         // 按骰子点数行走
         walk(num,endPoint){
             var timing = null
             // 每一点1.2秒走一步
             var count=0
+            var OneGrid = this.latticeWH
             timing = setInterval(()=>{
-                // 更换背景图片
-                if(this.ChessPositionNum==endPoint){
-                    clearInterval(timing)
-                    if(this.ChessPositionNum < 8){
-                        this.checkerboard = "checkerboard_gray"
-                    }else if(this.ChessPositionNum >= 8 && this.ChessPositionNum < 17){
-                        this.checkerboard = "checkerboard_bright_1"
-                    }else if(this.ChessPositionNum >= 17 && this.ChessPositionNum < 25){
-                        this.checkerboard = "checkerboard_bright_2"
-                    }else if(this.ChessPositionNum == 25){
-                        this.checkerboard = "checkerboard_bright"
+                if(this.ChessPositionNum==endPoint || this.ChessPositionNum==25){
+                    if(this.ChessPositionNum==endPoint){
+                        console.log("本次行走结束！")
+                        clearInterval(timing)
+                        this.conversionBackImg()
+                    }else if(endPoint>25){
+                        endPoint = 25-(endPoint - 25)
+                        if(endPoint<this.ChessPositionNum){
+                            OneGrid = -OneGrid
+                        }
+                        console.log("触顶倒退，目标修改为:"+endPoint+"当前位置："+this.ChessPositionNum)
+                    }else{
+                        this.walkingToRight(OneGrid);
+                        --this.ChessPositionNum
                     }
-                    this.judgeGrid()
                 }else{
                     console.log("走了"+ ++count+"步")
                     switch(this.ChessPositionNum){
@@ -158,8 +174,8 @@ export default {
                         case 21:
                         case 22:
                         case 23:
-                        case 24:this.walkingToRight(this.latticeWH);//向右
-                                ++this.ChessPositionNum;
+                        case 24:this.walkingToRight(OneGrid);//向右
+                                endPoint<this.ChessPositionNum?--this.ChessPositionNum:++this.ChessPositionNum
                                 console.log("当前位置："+this.ChessPositionNum+";目标位置："+endPoint)
                                 break;
                         case 6:
@@ -169,18 +185,17 @@ export default {
                         case 16:
                         case 17:
                         case 18:
-                        case 19:this.walkingToLeft(this.latticeWH);// 向左
-                                ++this.ChessPositionNum;
+                        case 19:this.walkingToRight(-OneGrid);// 向左
+                                endPoint<this.ChessPositionNum?--this.ChessPositionNum:++this.ChessPositionNum
                                 console.log("当前位置："+this.ChessPositionNum+";目标位置："+endPoint)
                                 break;
                         case 5:
                         case 10:
                         case 15:
-                        case 20:this.walkingToTop(this.latticeWH);//向上
-                                ++this.ChessPositionNum;
+                        case 20:this.walkingToTop(OneGrid);//向上
+                                endPoint<this.ChessPositionNum?--this.ChessPositionNum:++this.ChessPositionNum
                                 console.log("当前位置："+this.ChessPositionNum+";目标位置："+endPoint)
                                 break;
-                        case 25:this.walkingToLeft(this.latticeWH);// 向左
                     }
                 }
             },1000)
@@ -234,6 +249,7 @@ export default {
             let top = this.ChessPosition[num-1].top/2
             oDiv.style.left = left + "px"
             oDiv.style.top = top + "px"
+            this.conversionBackImg()
         },
         //向右行走
         walkingToRight(target){
@@ -252,23 +268,6 @@ export default {
                 }
             },30);
         },
-        //向左行走
-        walkingToLeft(target){
-            var oDiv =document.getElementById("piece");
-            var count = 0
-            clearInterval(this.timer);
-            this.timer = setInterval(function(){
-                var speed = (target - count)/10;
-                speed = speed>0 ? Math.ceil(speed) : Math.floor(speed);
-                if(count == target){
-                    clearInterval(this.timer);
-                }
-                else{
-                    oDiv.style.left = oDiv.offsetLeft - speed + 'px';
-                    count = count + speed
-                }
-            },30);
-        },
         //向上行走
         walkingToTop(target){
             var oDiv =document.getElementById("piece");
@@ -282,23 +281,6 @@ export default {
                 }
                 else{
                     oDiv.style.top = oDiv.offsetTop - speed + 'px';
-                    count = count + speed
-                }
-            },30);
-        },
-        //向下行走
-        walkingToBottom(target){
-            var oDiv =document.getElementById("piece");
-            var count = 0
-            clearInterval(this.timer);
-            this.timer = setInterval(function(){
-                var speed = (target - count)/10;
-                speed = speed>0 ? Math.ceil(speed) : Math.floor(speed);
-                if(count == target){
-                    clearInterval(this.timer);
-                }
-                else{
-                    oDiv.style.top = oDiv.offsetTop + speed + 'px';
                     count = count + speed
                 }
             },30);
