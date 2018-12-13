@@ -3,7 +3,12 @@
         <div class="img">
             <img src="@/assets/images/game/capingRun_min.png" alt="">
         </div>
-        <div id="checkerboard" :class="checkerboard">
+        <div id="checkerboard">
+            <!-- 背景棋盘 -->
+            <img src="@/assets/images/game/checkerboard_gray.png" alt="" v-show="checkerboard=='checkerboard_gray'">
+            <img src="@/assets/images/game/checkerboard_bright_1.png" alt="" v-show="checkerboard=='checkerboard_bright_1'">
+            <img src="@/assets/images/game/checkerboard_bright_2.png" alt="" v-show="checkerboard=='checkerboard_bright_2'">
+            <img src="@/assets/images/game/checkerboard_bright.png" alt="" v-show="checkerboard=='checkerboard_bright'">
             <div id="piece">
                 <img src="@/assets/images/game/piece.png" alt="">
             </div>
@@ -15,11 +20,6 @@
         <div class="play">
             <img src="@/assets/images/game/paly_button.png" @click="openDice" alt="">
         </div>
-
-        <!-- <br><br><br>
-        <button @click="zoomOut">缩小</button>
-        <button @click="amplification">放大</button>
-        <button @click="transfer(23)">传送</button> -->
 
         <NetworkError v-if="NetworkErrorShow" @on-close="NetworkErrorShow=false"></NetworkError>
         <UserCoins v-if="UserCoinsShow" @on-close="closeUserCoins"></UserCoins>
@@ -288,31 +288,13 @@ export default {
         judgeGrid (){
             switch(this.ChessPositionNum){
                 case 4:
-                        // this.zoomOut()
-                        // setTimeout(()=>{
-                            this.transfer(8)
-                        //     this.amplification()
-                        // },1200)
-                        break;
-                case 8:
-                        alert("中奖了！")
+                        this.transfer(8)
                         break;
                 case 13:
-                        // this.zoomOut()
-                        // setTimeout(()=>{
-                            this.transfer(10)
-                        //     this.amplification()
-                        // },1200)
-                        break;
-                case 17:
-                        alert("中奖了！")
+                        this.transfer(10)
                         break;
                 case 18:
-                        // this.zoomOut()
-                        // setTimeout(()=>{
-                            this.transfer(22)
-                        //     this.amplification()
-                        // },1200)
+                        this.transfer(22)
                         break;
                 case 24:
                         // this.zoomOut()
@@ -425,7 +407,7 @@ img{
     margin: 0 auto;
     position: relative;
 }
-.checkerboard_gray{
+/* .checkerboard_gray{
     background: url("../assets/images/game/checkerboard_gray.png") no-repeat;
     background-size: 100% 100%;
 }
@@ -440,7 +422,7 @@ img{
 .checkerboard_bright{
     background: url("../assets/images/game/checkerboard_bright.png") no-repeat;
     background-size: 100% 100%;
-}
+} */
 .giftBox1{
     width: 120px;
     height: 120px;
