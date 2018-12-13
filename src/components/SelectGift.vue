@@ -2,7 +2,7 @@
     <div id="SelectGift">
         
         <div class="white">
-            <div class="end" @click="closeSelectGift">
+            <div class="end" @click="closeSelectGift(0)">
                 <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="header">
@@ -21,7 +21,10 @@
                         <img :src="boxNum==3?boxY:boxN" @click="selectBox(3)">
                     </div>
                 </div>
-                <div :class="boxNum != 0?'button_yes':'button'">
+                <div class="button" v-if="boxNum==0">
+                    Buka Kotak
+                </div>
+                <div class="button_yes" @click="openBox" v-if="boxNum!=0">
                     Buka Kotak
                 </div>
             </div>
@@ -43,9 +46,17 @@ export default {
         }
     },
     methods: {
-        closeSelectGift(){
-            this.boxNum = 0
-            this.$emit('on-close')
+        openBox(){
+             var giftNum = Math.floor(Math.random()*3)+1//随机生成1~3点数，后期调接口从后台获取
+             switch(giftNum){
+                 case 1:console.log("获得金币!");break
+                 case 2:console.log("获得话费!");break
+                 case 3:console.log("获得手机!");break
+             }
+             this.closeSelectGift(giftNum)
+        },
+        closeSelectGift(num){ //num,0关闭,1金币，2话费，3手机
+            this.$emit('on-close',num)
         },
         selectBox(num){
             switch(num){

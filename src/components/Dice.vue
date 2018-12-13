@@ -1,5 +1,5 @@
 <template>
-    <div id="Dice" @click="closeDice">
+    <div id="Dice" @click="closeDice" @touchmove.prevent>
         <div class="white">
             <div class="dice">
                 <img src="@/assets/images/game/dice_Animated.gif" alt="" v-if="DiceNumber==0">
@@ -70,7 +70,6 @@
                         <div class="point" style="width:40px;height:40px;border-radius:30px;margin-top: 25px"></div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -84,7 +83,7 @@ export default {
         }
     },
     mounted(){
-        var diceNumber = Math.floor(Math.random()*5)+1//随机生成1~6点数，后期调接口从后台获取
+        var diceNumber = Math.floor(Math.random()*6)+1//随机生成1~6点数，后期调接口从后台获取
         console.log("本次骰子点数："+diceNumber)
         setTimeout(()=>{
             this.DiceNumber = diceNumber

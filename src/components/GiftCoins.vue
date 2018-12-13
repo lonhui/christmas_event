@@ -1,7 +1,7 @@
 <template>
     <div id="SelectGift">
         <div class="white">
-            <div class="end" @click="closeSelectGift">
+            <div class="end" @click="closeSelectGift(false)">
                 <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="header">
@@ -18,7 +18,7 @@
                     <div class="share_button">
                         <img src="@/assets/images/game/BulletBox/share_button.png" alt="">
                     </div>
-                    <div class="pay_button">
+                    <div class="pay_button" @click="closeSelectGift(true)">
                         <img src="@/assets/images/game/BulletBox/200coins_button.png" alt="">
                     </div>
                 </div>
@@ -39,9 +39,8 @@ export default {
         }
     },
     methods: {
-        closeSelectGift(){
-            this.boxNum = 0
-            this.$emit('on-close')
+        closeSelectGift(whether){
+            this.$emit('on-close',whether)
         }
     }
 }

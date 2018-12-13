@@ -1,7 +1,7 @@
 <template>
     <div id="SelectGift" @touchmove.prevent>
         <div class="white">
-            <div class="end" @click="closeSelectGift(0)">
+            <div class="end" @click="closeSelectGift">
                 <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="header">
@@ -35,17 +35,12 @@
                         <p>1000 Coin</p>
                     </div>
                 </div>
-                <div class="button" v-if="boxNum" @click="closeSelectGift(1)">
-                    Ambil Hadiah
+                <div class="button_top">
+                    <p>Hadiah dapat diambil setelah kamu<br>berhasil melewati kolom hadiah</p>
                 </div>
-                <div class="button_coin" v-if="!boxNum" @click="closeSelectGift(2)">
-                    <img src="@/assets/images/game/BulletBox/200coins_button.png" alt="">
+                <div class="button" @click="closeSelectGift">
+                    Mulai Main
                 </div>
-                <div class="footer">
-                    {{boxNum?'Gratis 1x Arnbil Perhari':'Atau tunggu selama'}}
-                    <div class="time" v-if="!boxNum">23:34:01</div>
-                </div>
-                
             </div>
         </div>
     </div>
@@ -55,18 +50,14 @@
 <script>
 
 export default {
-    props:["data"],
     data(){
         return{
-            boxNum:true,//控制按钮显示
+
         }
     },
-    mounted(){
-        this.boxNum = this.data
-    },
     methods: {
-        closeSelectGift(num){   //num ,0 关闭，1免费开箱，2付费开箱
-            this.$emit('on-close',num)
+        closeSelectGift(){
+            this.$emit('on-close')
         },
     }
 }
@@ -96,6 +87,7 @@ export default {
 }
 .white{
     width: 90%;
+    height: 750px;
     background-color: #eefff5;
     margin:  200px auto 0;
     border-radius: 50px 50px 50px 50px;
@@ -143,22 +135,14 @@ p{
     font-weight: bold;
     font-size: 30px;
 }
-.button_coin{
-    width: 360px;
-    margin: 50px auto 10px;
-}
 .footer{
     font-size: 26px;
     line-height: 50px;
-    padding-bottom: 30px;
     text-align: center;
     color: #8DB09C;
 }
-.time{
-    font-size: 28px;
-    text-align: center;
-    font-weight: 700;
-    color: #8DB09C;
+.button_top{
+    margin: 30px;
 }
 </style>
 

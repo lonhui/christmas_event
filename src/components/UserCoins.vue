@@ -1,13 +1,13 @@
 <template>
     <div id="UserCoins">
         <div class="white">
-            <div class="end" @click="closeUserCoins">
+            <div class="end" @click="closeUserCoins(false)">
                 <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="centont">
                 <p class="top_p">Kamu akan menggunakan <span>200 Coin</span> untuk</p>
                 <p>membuka kotak keberuntungan</p>
-                <div class="button">
+                <div class="button"  @click="closeUserCoins(true)">
                     Buka Kotak Sekarang
                 </div>
                 <p>BATAL</p>
@@ -19,8 +19,8 @@
 <script>
 export default {
     methods: {
-        closeUserCoins(){
-            this.$emit('on-close')
+        closeUserCoins(whether){
+            this.$emit('on-close',whether)
         }
     }
 }

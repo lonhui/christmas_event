@@ -16,19 +16,21 @@
             <img src="@/assets/images/game/paly_button.png" @click="openDice" alt="">
         </div>
 
-        <br><br><br>
+        <!-- <br><br><br>
         <button @click="zoomOut">缩小</button>
         <button @click="amplification">放大</button>
-        <button @click="transfer(23)">传送</button>
+        <button @click="transfer(23)">传送</button> -->
 
         <NetworkError v-if="NetworkErrorShow" @on-close="NetworkErrorShow=false"></NetworkError>
-        <UserCoins v-if="UserCoinsShow" @on-close="UserCoinsShow=false"></UserCoins>
+        <UserCoins v-if="UserCoinsShow" @on-close="closeUserCoins"></UserCoins>
         <NoCoins v-if="NoCoinsShow" @on-close="NoCoinsShow=false"></NoCoins>
         <GiftCall v-if="GiftCallShow" @on-close="GiftCallShow=false"></GiftCall>
+        <GiftPhone v-if="GiftPhoneShow" @on-close="GiftPhoneShow=false"></GiftPhone>
         <NoLogin v-if="NoLoginShow" @on-close="NoLoginShow=false"></NoLogin>
-        <SelectGift v-if="SelectGiftShow" @on-close="SelectGiftShow=false"></SelectGift>
-        <GiftCoins v-if="GiftCoinsShow" @on-close="GiftCoinsShow=false"></GiftCoins>
-        <Winning v-if="WinningShow" @on-close="WinningShow=false"></Winning>
+        <SelectGift v-if="SelectGiftShow" @on-close="closeSelectGift"></SelectGift>
+        <GiftCoins v-if="GiftCoinsShow" @on-close="closeGiftCoins"></GiftCoins>
+        <Winning v-if="WinningShow" @on-close="closeWinning" :data="userStatus.openBoxStatus"></Winning>
+        <WinningNo v-if="WinningNoShow" @on-close="WinningNoShow=false"></WinningNo>
         <Dice v-if="DiceShow" @on-close="closeDice"></Dice>
     </div>
 </template>
@@ -38,10 +40,12 @@ import NetworkError from "@/components/NetworkError"
 import UserCoins from "@/components/UserCoins"
 import NoCoins from "@/components/NoCoins"
 import GiftCall from "@/components/GiftCall"
+import GiftPhone from "@/components/GiftPhone"
 import NoLogin from "@/components/NoLogin"
 import SelectGift from "@/components/SelectGift"
 import GiftCoins from "@/components/GiftCoins"
 import Winning from "@/components/Winning"
+import WinningNo from "@/components/Winning_no"
 import Dice from "@/components/Dice"
 
 
@@ -52,14 +56,25 @@ export default {
             UserCoinsShow:false,//使用金币提示框
             NoCoinsShow:false,//金币不足提示框
             GiftCallShow:false,//开奖结果显示————话费
+            GiftPhoneShow:true,//开奖结果显示————手机
             NoLoginShow:false,//未登录提示框
             SelectGiftShow:false,//礼盒选择框
             GiftCoinsShow:false,//开奖结果显示————金币
-            WinningShow:false,//中奖弹框
+            WinningShow:false,//盒子开启状态
+            WinningNoShow:false,
             DiceShow:false,//投掷骰子
             timer:null,
             checkerboard:"checkerboard_gray",//棋盘class,用于更换棋盘背景
             toTheTop:false,//到顶，false正常走  ture方向走
+            userStatus:{    //用户状态
+                diceStatus:true,
+                openBoxStatus:true
+            },
+            giftBoxStatus:{ //礼盒状态
+                giftBox_1:false,
+                giftBox_2:false,
+                giftBox_3:false
+            },
             latticeWH:60,
             // 棋盘上格子对应的坐标
             ChessPosition:[
@@ -78,10 +93,12 @@ export default {
         UserCoins,
         NoCoins,
         GiftCall,
+        GiftPhone,
         NoLogin,
         SelectGift,
         GiftCoins,
         Winning,
+        WinningNo,
         Dice
     },
     mounted(){ 
@@ -91,14 +108,57 @@ export default {
         openDice(){
             this.DiceShow = true
         },
-        closeDice(num){
+        closeDice(num){//num 骰子点数
             this.DiceShow = false
             var endPoint = this.ChessPositionNum + num//本次行走的终点
             console.log("本次行走初始位置："+this.ChessPositionNum+";本次行走终点位置："+endPoint)
             this.walk(num,endPoint)
         },
+        closeWinning(num){//num ,0 关闭，1免费开箱，2付费开箱
+            this.WinningShow = false
+            switch(num){
+                case 1: this.SelectGiftShow = true
+                        this.userStatus.openBoxStatus = false
+                        break
+                case 2: this.UserCoinsShow = true
+                        break
+            }
+        },
+        closeSelectGift(num){ //num,0关闭,1金币，2话费，3手机
+            this.SelectGiftShow = false
+            switch(num){
+                case 1: this.GiftCoinsShow = true
+                        break
+                case 2: this.GiftCallShow = true
+                        break
+                case 3: this.GiftPhoneShow = true//需要换成手机
+                        break
+            }
+        },
+        closeUserCoins(whether){//whether,false关闭，true付费开箱
+            this.UserCoinsShow = false
+            if(whether){
+                this.SelectGiftShow = true
+            }
+        },
+        closeGiftCoins(whether){//whether,false关闭，true开启花费金币提示
+            this.GiftCoinsShow = false
+            if(whether){
+                this.UserCoinsShow = true
+            }
+        },
         openGiftBox(boxNum){
-            alert("打开 "+boxNum+" 号盒子")
+            switch(boxNum){
+                case 1:
+                        this.giftBoxStatus.giftBox_1?this.WinningShow = true:this.WinningNoShow = true
+                        break
+                case 2:
+                        this.giftBoxStatus.giftBox_2?this.WinningShow = true:this.WinningNoShow = true
+                        break
+                case 3:
+                        this.giftBoxStatus.giftBox_3?this.WinningShow = true:this.WinningNoShow = true
+                        break
+            }
         },
         // 获取棋盘上每个格子的大小
         getLatticeWH(){
@@ -112,7 +172,7 @@ export default {
         // 获取棋盘中每个格子的坐标
         getChessPosition(latticeWH){
             let aa = latticeWH*2
-            let bb =latticeWH*4
+            let bb = latticeWH*4
             let cc = latticeWH*6
             let dd = latticeWH*8
             var ChessPosition = [
@@ -125,16 +185,36 @@ export default {
             this.ChessPosition = ChessPosition
             console.log(ChessPosition)
         },
-        //判断是否转换背景图
+        //判断转换礼盒状态
         conversionBackImg(){
             if(this.ChessPositionNum < 8){
                 this.checkerboard = "checkerboard_gray"
+                this.giftBoxStatus={
+                    giftBox_1:false,
+                    giftBox_2:false,
+                    giftBox_3:false
+                }
             }else if(this.ChessPositionNum >= 8 && this.ChessPositionNum < 17){
                 this.checkerboard = "checkerboard_bright_1"
+                this.giftBoxStatus={
+                    giftBox_1:true,
+                    giftBox_2:false,
+                    giftBox_3:false
+                }
             }else if(this.ChessPositionNum >= 17 && this.ChessPositionNum < 25){
                 this.checkerboard = "checkerboard_bright_2"
+                this.giftBoxStatus={
+                    giftBox_1:true,
+                    giftBox_2:true,
+                    giftBox_3:false
+                }
             }else if(this.ChessPositionNum == 25){
                 this.checkerboard = "checkerboard_bright"
+                this.giftBoxStatus={
+                    giftBox_1:true,
+                    giftBox_2:true,
+                    giftBox_3:true
+                }
             }
             this.judgeGrid()
         },
@@ -398,8 +478,8 @@ p{
     text-align: center;    
 }
 .play{
-    width: 400px;
-    margin: 50px auto 0;
+    width: 350px;
+    margin: 30px auto 20px;
 }
 
 </style>
