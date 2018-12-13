@@ -32,6 +32,7 @@
         <Winning v-if="WinningShow" @on-close="closeWinning" :data="userStatus.openBoxStatus"></Winning>
         <WinningNo v-if="WinningNoShow" @on-close="WinningNoShow=false"></WinningNo>
         <Dice v-if="DiceShow" @on-close="closeDice"></Dice>
+        <Share v-if="ShareShow" @on-close="ShareShow=false"></Share>
     </div>
 </template>
 
@@ -47,6 +48,7 @@ import GiftCoins from "@/components/GiftCoins"
 import Winning from "@/components/Winning"
 import WinningNo from "@/components/Winning_no"
 import Dice from "@/components/Dice"
+import Share from "@/components/Share"
 
 
 export default {
@@ -56,12 +58,13 @@ export default {
             UserCoinsShow:false,//使用金币提示框
             NoCoinsShow:false,//金币不足提示框
             GiftCallShow:false,//开奖结果显示————话费
-            GiftPhoneShow:true,//开奖结果显示————手机
+            GiftPhoneShow:false,//开奖结果显示————手机
             NoLoginShow:false,//未登录提示框
             SelectGiftShow:false,//礼盒选择框
             GiftCoinsShow:false,//开奖结果显示————金币
             WinningShow:false,//盒子开启状态
             WinningNoShow:false,
+            ShareShow:true,//分享弹框
             DiceShow:false,//投掷骰子
             timer:null,
             checkerboard:"checkerboard_gray",//棋盘class,用于更换棋盘背景
@@ -99,7 +102,8 @@ export default {
         GiftCoins,
         Winning,
         WinningNo,
-        Dice
+        Dice,
+        Share
     },
     mounted(){ 
        this.getLatticeWH()
