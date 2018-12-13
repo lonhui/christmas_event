@@ -9,7 +9,7 @@
                 <!-- 话费 -->
                 <p>Pulsa akan dikirim ke nomor kamu<br>dalam maksimal 3x24 jam</p>
                 <!-- 手机 -->
-                <p>Tim Caping akan menghubungi kamu<br>lewat email untuk proses lebih lanjut</p>
+                <!-- <p>Tim Caping akan menghubungi kamu<br>lewat email untuk proses lebih lanjut</p> -->
                 <div class="button">
                    <img src="@/assets/images/game/BulletBox/share_button.png" alt="">
                 </div>
@@ -30,7 +30,7 @@ import callImg from "@/assets/images/game/BulletBox/shutDown.png"
 import phoneImg from "@/assets/images/game/BulletBox/Gift_phone.png"
 
 export default {
-    props:[data],
+    // props:[data],
     data(){
         return{
             callImg:callImg,

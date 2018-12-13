@@ -64,7 +64,7 @@ export default {
             GiftCoinsShow:false,//开奖结果显示————金币
             WinningShow:false,//盒子开启状态
             WinningNoShow:false,
-            ShareShow:true,//分享弹框
+            ShareShow:false,//分享弹框
             DiceShow:false,//投掷骰子
             timer:null,
             checkerboard:"checkerboard_gray",//棋盘class,用于更换棋盘背景
