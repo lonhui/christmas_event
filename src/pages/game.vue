@@ -29,7 +29,7 @@
                 <div class="dice_button" >
                     <img src="@/assets/images/game/dice_button.png" alt="">
                 </div>
-                <p class="dice_button_text">24:30:52</p>
+                <p class="dice_button_text">{{countdown}}</p>
             </div>
             <div class="play" v-if="!diceStatus">
                 <img src="@/assets/images/game/BulletBox/200coins_button.png" @click="pay(0)">
@@ -48,7 +48,7 @@
         <Dice v-if="DiceShow" @on-close="closeDice" :diceCount="diceCount"></Dice>
         <UseCoins v-if="UseCoinsShow" @on-close="closePay" :payType="payType"></UseCoins>
         <WinningNo v-if="WinningNoShow" @on-close="WinningNoShow=false"></WinningNo>
-        <Winning v-if="WinningShow" @on-close="closeWinning" :boxStatus="boxStatus"></Winning>
+        <Winning v-if="WinningShow" @on-close="closeWinning" :boxStatus="boxStatus" :countdown="countdown"></Winning>
         <SelectGift v-if="SelectGiftShow" @on-close="closeSelectGift" :boxType="boxType"></SelectGift>
         <GiftCoins v-if="GiftCoinsShow" @on-close="closeGiftCoins" :boxType="boxType"></GiftCoins>
 
@@ -107,6 +107,7 @@ export default {
             ],
             ChessPositionNum:1,//当前所在格子
             boxPayNum:200,//开启本次礼盒需要的金币
+            countdown:"00:00:00",//倒计时
 // _______________________________________________________
             buyPackage:[
                 {level: 1, count: 0},
@@ -138,6 +139,7 @@ export default {
         this.getCookie()
         this.getLatticeWH()
         this.getUserStatus()
+        this.time()
     },
     methods:{
         getUserStatus(){
@@ -276,6 +278,27 @@ export default {
         },
 
 //=======================================================动画
+        // 倒计时
+        time(){
+            // 当天00:00:00时间戳
+            let endTime = new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000
+            setInterval(()=>{
+                let timestamp = Date.parse(new Date());// 当前时间戳
+                let timeDifference = (endTime-timestamp)/1000
+                if(timeDifference==0){
+                    this.getUserStatus()
+                }
+                let h = Math.floor(timeDifference / 60 / 60 % 24)//获得小时
+                let m = Math.floor(timeDifference / 60 % 60)//获得分钟
+                let s = Math.floor(timeDifference % 60)//获得秒钟
+                //将天数转换为小时显示（需求绝定）
+                //格式化时分秒
+                if(h < 10){ h = '0' + h }
+                if(m < 10){ m = '0' + m }
+                if(s < 10){ s = '0' + s }
+                this.countdown = h + ':' + m + ':' + s    //倒计时格式  时：分：秒
+            },1000)
+        },
         // 获取棋盘上每个格子的大小
         getLatticeWH(){
             var Odiv =  document.getElementById("checkerboard")

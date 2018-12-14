@@ -8,7 +8,7 @@
                 <h3>Koneksi kamu tidak stabil</h3>
                 <p>Periksa jaringan internet kamu</p>
                 <div class="button">
-                    <img src="@/assets/images/game/BulletBox/load_button.png" alt="">
+                    <img src="@/assets/images/game/BulletBox/load_button.png" @click="refresh" alt="">
                 </div>
             </div>
         </div>
@@ -23,6 +23,9 @@ export default {
     methods: {
         closeNetworkError(){
             this.$emit('on-close')
+        },
+        refresh(){
+            location.reload()
         }
     }
 }

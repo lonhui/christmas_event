@@ -47,7 +47,7 @@
                 </div>
                 <div class="footer">
                     {{boxNum?'Gratis 1x Arnbil Perhari':'Atau tunggu selama'}}
-                    <div class="time" v-if="!boxNum">23:34:01</div>
+                    <div class="time" v-if="!boxNum">{{countdown}}</div>
                 </div>
                 
             </div>
@@ -59,7 +59,7 @@
 <script>
 
 export default {
-    props:["boxStatus"],
+    props:["boxStatus","countdown"],
     data(){
         return{
             boxNum:false,//控制按钮显示
