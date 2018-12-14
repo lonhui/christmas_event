@@ -1,5 +1,5 @@
 <template>
-    <div id="GiftPhone">
+    <div id="GiftPhone" @touchmove.prevent>
         <div class="white">
             <div class="end" @click="closeGiftPhone">
                 <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
@@ -65,7 +65,7 @@ export default {
 .white{
     width: 80%;
     background-color: #eefff5;
-    margin:  200px auto 0;
+    margin:  120px auto 0;
     border-radius: 50px 50px 50px 50px;
     border: #56bc8c 10px solid;
     position: relative;

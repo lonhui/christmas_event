@@ -1,5 +1,5 @@
 <template>
-    <div id="SelectGift">
+    <div id="SelectGift" @touchmove.prevent>
         
         <div class="white">
             <div class="end" @click="closeSelectGift(0)">
@@ -95,7 +95,7 @@ export default {
     width: 90%;
     height: 550px;
     background-color: #eefff5;
-    margin:  400px auto 0;
+    margin:  280px auto 0;
     border-radius: 50px 50px 50px 50px;
     border: #56bc8c 10px solid;
     position: relative;

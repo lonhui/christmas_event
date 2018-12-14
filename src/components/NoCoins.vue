@@ -1,5 +1,5 @@
 <template>
-    <div id="NoCoins">
+    <div id="NoCoins" @touchmove.prevent>
         <div class="white">
             <div class="end" @click="closeNoCoins">
                 <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
@@ -42,7 +42,7 @@ export default {
     width: 89%;
     height: 480px;
     background-color: #eefff5;
-    margin:  400px auto 0;
+    margin:  300px auto 0;
     border-radius: 50px 50px 50px 50px;
     border: #56bc8c 10px solid;
     position: relative;
@@ -56,7 +56,7 @@ h3{
     font-weight: bold;
     text-align: center;
     line-height: 80px;
-    margin-top: 120px;
+    margin-top: 130px;
     color: #145e38;
 }
 p{
@@ -73,7 +73,7 @@ p{
     right: 20px;
 }
 .header_img{
-    width: 300px;
+    width: 320px;
     margin: 0 auto;
     position: relative;
     top:-670px;

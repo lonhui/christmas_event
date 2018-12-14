@@ -1,5 +1,5 @@
 <template>
-    <div id="NoLogin">
+    <div id="NoLogin" @touchmove.prevent>
         <div class="white">
             <div class="end" @click="closeNoLogin">
                 <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
@@ -40,9 +40,8 @@ export default {
 }
 .white{
     width: 80%;
-    height: 450px;
     background-color: #eefff5;
-    margin:  400px auto 0;
+    margin:  300px auto 0;
     border-radius: 50px 50px 50px 50px;
     border: #56bc8c 10px solid;
     position: relative;
@@ -56,7 +55,7 @@ h3{
     font-weight: bold;
     text-align: center;
     line-height: 80px;
-    margin-top: 100px;
+    margin-top: 120px;
     color: #145e38;
 }
 p{
@@ -80,7 +79,7 @@ p{
 }
 .button{
     width: 300px;
-    margin: 50px auto 0;
+    margin: 50px auto 50px;
 }
 
 </style>

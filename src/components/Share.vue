@@ -1,5 +1,5 @@
 <template>
-    <div id="Share">
+    <div id="Share" @touchmove.prevent>
         <div class="white">
             <div class="end" @click="closeShare">
                 <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
@@ -58,7 +58,7 @@ export default {
 .white{
     width: 80%;
     background-color: #eefff5;
-    margin:  400px auto 0;
+    margin:  300px auto 0;
     border-radius: 50px 50px 50px 50px;
     border: #56bc8c 10px solid;
     position: relative;
