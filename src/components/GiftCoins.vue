@@ -19,7 +19,11 @@
                         <img src="@/assets/images/game/BulletBox/share_button.png" alt="">
                     </div>
                     <div class="pay_button" @click="closeSelectGift(true)">
-                        <img src="@/assets/images/game/BulletBox/200coins_button.png" alt="">
+                        <p>Buka Lagi</p>
+                        <div class="coins">
+                            <img src="@/assets/images/game/coins.png" alt="">
+                            <span>200 Coin</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -118,8 +122,32 @@ p span{
 }
 .share_button,.pay_button{
     width: 300px;
-    height: 80px;
 }
+.pay_button{
+    height: 105px;
+    border-radius: 80px;
+    background: linear-gradient(#ebb027, hsl(40, 65%, 41%));
+    position: relative;
+}
+.pay_button p{
+    margin-top:10px;
+    color: #fff;
+    font-size: 34px;
+}
+.coins{
+    width: 160px;
+    margin: 0  auto;
+    padding-bottom: 100px;
+}
+.coins img{
+    width: 24px;
+}
+.coins span{
+    color: #fff;
+    font-size: 26px;
+}
+
+
 .coin_left{
     color: #fff;
     font-size: 24px;

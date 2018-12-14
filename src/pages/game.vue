@@ -32,23 +32,25 @@
                 <p class="dice_button_text">24:30:52</p>
             </div>
             <div class="play" v-if="!userStatus.diceStatus">
-                <img src="@/assets/images/game/BulletBox/200coins_button.png" alt="" @click="UserCoinsShow = true;paymentMark = true">
+                <img src="@/assets/images/game/BulletBox/200coins_button.png" @click="UserCoinsShow = true;paymentMark = true">
             </div>
         </div>
         
 
         <NetworkError v-if="NetworkErrorShow" @on-close="NetworkErrorShow=false"></NetworkError>
-        <UserCoins v-if="UserCoinsShow" @on-close="closeUserCoins" :paymentMark="paymentMark"></UserCoins>
+        <UserCoins v-if="UserCoinsShow" @on-close="closeUserCoins"></UserCoins>
         <NoCoins v-if="NoCoinsShow" @on-close="NoCoinsShow=false"></NoCoins>
         <GiftCall v-if="GiftCallShow" @on-close="GiftCallShow=false"></GiftCall>
         <GiftPhone v-if="GiftPhoneShow" @on-close="GiftPhoneShow=false"></GiftPhone>
         <NoLogin v-if="NoLoginShow" @on-close="NoLoginShow=false"></NoLogin>
         <SelectGift v-if="SelectGiftShow" @on-close="closeSelectGift"></SelectGift>
         <GiftCoins v-if="GiftCoinsShow" @on-close="closeGiftCoins"></GiftCoins>
-        <Winning v-if="WinningShow" @on-close="closeWinning" :data="userStatus.openBoxStatus"></Winning>
+        <Winning v-if="WinningShow" @on-close="closeWinning"></Winning>
         <WinningNo v-if="WinningNoShow" @on-close="WinningNoShow=false"></WinningNo>
-        <Dice v-if="DiceShow" @on-close="closeDice"></Dice>
         <Share v-if="ShareShow" @on-close="ShareShow=false"></Share>
+
+        <Dice v-if="DiceShow" @on-close="closeDice" :diceCount="diceCount"></Dice>
+
     </div>
 </template>
 
@@ -66,9 +68,12 @@ import WinningNo from "@/components/Winning_no"
 import Dice from "@/components/Dice"
 import Share from "@/components/Share"
 
+import axios from 'axios'
+
 export default {
     data(){
         return{
+            userId:undefined,
             NetworkErrorShow:false,//网络错误提示框
             UserCoinsShow:false,//使用金币提示框
             NoCoinsShow:false,//金币不足提示框
@@ -81,7 +86,7 @@ export default {
             WinningNoShow:false,
             ShareShow:false,//分享弹框
             DiceShow:false,//投掷骰子
-            timer:null,
+            timer:undefined,
             paymentMark:false,//支付标记  false开箱，true掷骰
             checkerboard:"checkerboard_gray",//棋盘class,用于更换棋盘背景
             toTheTop:false,//到顶，false正常走  ture方向走
@@ -95,6 +100,7 @@ export default {
                 giftBox_3:false
             },
             latticeWH:60,
+            diceCount:undefined,//投骰点数
             // 棋盘上格子对应的坐标
             ChessPosition:[
                 {top:480,left:0},{top:480,left:120},{top:480,left:240},{top:480,left:360},{top:480,left:480},
@@ -104,6 +110,7 @@ export default {
                 {top:0,left:0},{top:0,left:120},{top:0,left:240},{top:0,left:360},{top:0,left:480},
             ],
             ChessPositionNum:1,//当前所在格子
+            boxPayNum:200,//开启本次礼盒需要的金币
         }
     },
     components:{
@@ -121,12 +128,47 @@ export default {
         Share
     },
     mounted(){ 
-       this.getLatticeWH()
+        this.getCookie()
+        this.getLatticeWH()
+        this.getUserStatus()
     },
     methods:{
+        getUserStatus(){
+            // 获取用户当前位置
+            axios.get("/dice/chance?uid="+this.userId)
+            .then(res=>{
+                console.log(res)
+                if(res.data.code==0){
+                    // 有免费掷骰机会
+                    this.userStatus.diceStatus = true
+                }else{
+                    this.userStatus.diceStatus = false
+                }
+                if(res.data.data.package==1){
+                    //有免费开箱机会
+                    this.userStatus.openBoxStatus = true
+                }else{
+                    this.userStatus.openBoxStatus = false
+                }
+                this.transfer(res.data.data.position)
+
+            }).catch(error=>{
+                console.log(error)
+            })
+        },
         openDice(){
-            this.userStatus.diceStatus = false
-            this.DiceShow = true
+            // 投掷骰子
+            axios.get('/dice/one?uid='+this.userId)
+            .then(res=>{
+                console.log(res)
+                if(res.data.code==0){
+                    this.diceCount = res.data.data.diceCount
+                    this.userStatus.diceStatus = false
+                    this.DiceShow = true
+                }
+            }).catch(error=>{
+                console.log(error)
+            })
         },
         closeDice(num){//num 骰子点数
             this.DiceShow = false
@@ -134,6 +176,7 @@ export default {
             console.log("本次行走初始位置："+this.ChessPositionNum+";本次行走终点位置："+endPoint)
             this.walk(num,endPoint)
         },
+        
         closeWinning(num){//num ,0 关闭，1免费开箱，2付费开箱
             this.WinningShow = false
             switch(num){
@@ -160,8 +203,18 @@ export default {
             this.UserCoinsShow = false
             if(whether){
                 if(this.paymentMark){
-                    this.DiceShow = true
+                    // 付费投掷骰子
+                    axios.get('/dice/buy/dice/chance?uid='+this.userId)
+                    .then(res=>{
+                        if(res.data.code==0){
+                            this.openDice()
+                        }
+                    }).catch(error=>{
+                        console.log(error)
+                    })
+
                 }else{
+
                     this.SelectGiftShow = true
                 }
             }
@@ -369,7 +422,23 @@ export default {
                 }
             },30);
         },
-    },
+        //读取cookie
+         getCookie() {
+            if (document.cookie.length>0) {
+                var arr=document.cookie.split('; ');//这里显示的格式需要切割一下自己可输出看下
+                console.log(arr)
+                for(var i=0;i<arr.length;i++){
+                    var arr2=arr[i].split('=');//再次切割
+                    console.log(arr2)
+                    //判断查找相对应的值
+                    if(arr2[0]=='uid'){
+                        this.userId = arr2[1]//保存到保存数据的地方
+                    }
+                }
+                console.log(this.userId)
+            }
+        },
+    }
 }
 </script>
 

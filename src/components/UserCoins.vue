@@ -18,6 +18,11 @@
 
 <script>
 export default {
+    data(){
+        return{
+            coinsNum:200
+        }
+    },
     methods: {
         closeUserCoins(whether){
             this.$emit('on-close',whether)

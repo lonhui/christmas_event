@@ -39,7 +39,11 @@
                     Ambil Hadiah
                 </div>
                 <div class="button_coin" v-if="!boxNum" @click="closeSelectGift(2)">
-                    <img src="@/assets/images/game/BulletBox/200coins_button.png" alt="">
+                    <p>Buka Lagi</p>
+                    <div class="coins">
+                        <img src="@/assets/images/game/coins.png" alt="">
+                        <span>200 Coin</span>
+                    </div>
                 </div>
                 <div class="footer">
                     {{boxNum?'Gratis 1x Arnbil Perhari':'Atau tunggu selama'}}
@@ -143,9 +147,30 @@ p{
     font-weight: bold;
     font-size: 30px;
 }
+/* 付费按钮 */
 .button_coin{
     width: 360px;
+    height: 120px;
+    border-radius: 80px;
+    background: linear-gradient(#ebb027, hsl(40, 65%, 41%));
     margin: 50px auto 10px;
+    position: relative;
+}
+.button_coin p{
+    color: #fff;
+    font-size: 34px;
+    padding-top: 15px;
+}
+.coins{
+    width: 160px;
+    margin: 0  auto;
+}
+.coins img{
+    width: 24px;
+}
+.coins span{
+    color: #fff;
+    font-size: 26px;
 }
 .footer{
     font-size: 26px;

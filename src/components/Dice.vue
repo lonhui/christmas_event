@@ -77,16 +77,16 @@
 
 <script>
 export default {
+    props:["diceCount"],
     data(){
         return{
             DiceNumber:0
         }
     },
     mounted(){
-        var diceNumber = Math.floor(Math.random()*6)+1//随机生成1~6点数，后期调接口从后台获取
-        console.log("本次骰子点数："+diceNumber)
+        console.log("本次骰子点数："+this.diceCount)
         setTimeout(()=>{
-            this.DiceNumber = diceNumber
+            this.DiceNumber = this.diceCount
         },2000)
     },
      methods: {

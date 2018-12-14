@@ -9,7 +9,7 @@
             <router-link :to="{path:'rule/',query:{rule_id:0}}">
                 <button class="rule">Cara Main</button>
             </router-link>
-            <router-link to="/game">
+            <router-link :to="{path:'/game'}">
                 <button class="game">Mulai Main</button>
             </router-link>
         </div>
@@ -25,7 +25,25 @@
 export default {
     data(){
         return {
-
+            userId:undefined,
+        }
+    },
+    mounted(){
+        const url = window.location.href
+        let uidArray = url.match(/[^a-zA-Z0-9]u{1,1}=([0-9\-]+)/)
+        // let didArray = url.match(/[^a-zA-Z0-9]c{1,1}=([a-z0-9]+)/)
+        let uid = uidArray[1]
+        // let did = didArray[1]
+        this.userId = uid
+        // this.user.did = did
+        alert(this.userId)
+        this.setCookie(uid,1)
+    },
+    methods:{
+        setCookie(uid,exdays){
+            var exdate = new Date();//获取时间
+            exdate.setTime(exdate.getTime()+24*60*60*1000*exdays)//保存天数
+            window.document.cookie="uid"+ "=" +uid+";path=/;expires="+exdate.toGMTString();
         }
     }
 }
