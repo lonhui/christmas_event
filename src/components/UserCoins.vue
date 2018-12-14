@@ -5,7 +5,7 @@
                 <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="centont">
-                <p class="top_p">Kamu akan menggunakan <span>200 Coin</span> untuk</p>
+                <p class="top_p">Kamu akan menggunakan <span>{{coinsNum}} Coin</span> untuk</p>
                 <p>membuka kotak keberuntungan</p>
                 <div class="button"  @click="closeUserCoins(true)">
                     Buka Kotak Sekarang
@@ -18,9 +18,19 @@
 
 <script>
 export default {
+    props:["payType"],
     data(){
         return{
             coinsNum:200
+        }
+    },
+    mounted(){
+        alert("支付类型："+this.payType)
+        switch(this.payType){
+            case 0: this.coinsNum = 200;break;
+            case 1: this.coinsNum = 400;break;
+            case 2: this.coinsNum = 2000;break;
+            case 3: this.coinsNum = 3500;break;
         }
     },
     methods: {

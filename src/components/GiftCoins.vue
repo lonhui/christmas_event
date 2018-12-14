@@ -1,7 +1,7 @@
 <template>
-    <div id="SelectGift" @touchmove.prevent>
+    <div id="GiftCoins" @touchmove.prevent>
         <div class="white">
-            <div class="end" @click="closeSelectGift(false)">
+            <div class="end" @click="closeGiftCoins(false)">
                 <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="header">
@@ -18,11 +18,11 @@
                     <div class="share_button">
                         <img src="@/assets/images/game/BulletBox/share_button.png" alt="">
                     </div>
-                    <div class="pay_button" @click="closeSelectGift(true)">
+                    <div class="pay_button" @click="closeGiftCoins(true)">
                         <p>Buka Lagi</p>
                         <div class="coins">
                             <img src="@/assets/images/game/coins.png" alt="">
-                            <span>200 Coin</span>
+                            <span>{{coinsNum}} Coin</span>
                         </div>
                     </div>
                 </div>
@@ -35,15 +35,24 @@
 <script>
 
 export default {
+    props:["boxType"],
     data(){
         return{
             leftCoin:700,
             centerCoin:200,
             rightCoin:1000,
+            coinsNum:200,
+        }
+    },
+    mounted(){
+        switch(this.boxType){
+            case 1: this.coinsNum = 400;break;
+            case 2: this.coinsNum = 2000;break;
+            case 3: this.coinsNum = 3500;break;
         }
     },
     methods: {
-        closeSelectGift(whether){
+        closeGiftCoins(whether){
             this.$emit('on-close',whether)
         }
     }
@@ -51,7 +60,7 @@ export default {
 </script>
 
 <style scoped>
-#SelectGift{
+#GiftCoins{
     position: fixed;
     z-index: 100;
     top: 0;

@@ -42,7 +42,7 @@
                     <p>Buka Lagi</p>
                     <div class="coins">
                         <img src="@/assets/images/game/coins.png" alt="">
-                        <span>200 Coin</span>
+                        <span>{{coinsNum}} Coin</span>
                     </div>
                 </div>
                 <div class="footer">
@@ -59,18 +59,27 @@
 <script>
 
 export default {
-    props:["data"],
+    props:["boxStatus"],
     data(){
         return{
-            boxNum:true,//控制按钮显示
+            boxNum:false,//控制按钮显示
+            boxType:undefined,
+            coinsNum:200,
         }
     },
     mounted(){
-        this.boxNum = this.data
+        if(this.boxStatus.dailyPackage > 0 || this.boxStatus.count>0){
+            this.boxNum = true
+        }
+        switch(this.boxStatus.boxType){
+            case 1: this.coinsNum = 400;break;
+            case 2: this.coinsNum = 2000;break;
+            case 3: this.coinsNum = 3500;break;
+        }
     },
     methods: {
         closeSelectGift(num){   //num ,0 关闭，1免费开箱，2付费开箱
-            this.$emit('on-close',num)
+            this.$emit('on-close',num,this.boxStatus.boxType)
         },
     }
 }

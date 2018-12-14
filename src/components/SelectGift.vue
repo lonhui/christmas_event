@@ -36,8 +36,10 @@
 <script>
 import boxN from "../assets/images/game/BulletBox/GiftBox_n.png"
 import boxY from "../assets/images/game/BulletBox/GiftBox.png"
+import axios from 'axios'
 
 export default {
+    props:["boxType"],
     data(){
         return{
             boxN:boxN,
@@ -47,13 +49,13 @@ export default {
     },
     methods: {
         openBox(){
-             var giftNum = Math.floor(Math.random()*3)+1//随机生成1~3点数，后期调接口从后台获取
-             switch(giftNum){
-                 case 1:console.log("获得金币!");break
-                 case 2:console.log("获得话费!");break
-                 case 3:console.log("获得手机!");break
-             }
-             this.closeSelectGift(giftNum)
+            alert("盒子类型："+this.boxType)
+            //  axios.get('').then(res=>{
+
+            //  }).catch(error=>{
+
+            //  })
+            this.closeSelectGift(1)
         },
         closeSelectGift(num){ //num,0关闭,1金币，2话费，3手机
             this.$emit('on-close',num)

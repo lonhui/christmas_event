@@ -22,41 +22,46 @@
         <p>Lempar dadumu dan selesaikan permainan untuk kesempatan dapetin <span>Grand Prize!</span></p>
 
         <div class="batton_play">
-            <div class="play" v-if="userStatus.diceStatus">
+            <div class="play" v-if="diceStatus">
                 <img src="@/assets/images/game/paly_button.png" @click="openDice" alt="">
             </div>
-            <div class="play_dice" v-if="!userStatus.diceStatus">
+            <div class="play_dice" v-if="!diceStatus">
                 <div class="dice_button" >
                     <img src="@/assets/images/game/dice_button.png" alt="">
                 </div>
                 <p class="dice_button_text">24:30:52</p>
             </div>
-            <div class="play" v-if="!userStatus.diceStatus">
-                <img src="@/assets/images/game/BulletBox/200coins_button.png" @click="UserCoinsShow = true;paymentMark = true">
+            <div class="play" v-if="!diceStatus">
+                <img src="@/assets/images/game/BulletBox/200coins_button.png" @click="pay(0)">
             </div>
         </div>
         
 
         <NetworkError v-if="NetworkErrorShow" @on-close="NetworkErrorShow=false"></NetworkError>
-        <UserCoins v-if="UserCoinsShow" @on-close="closeUserCoins"></UserCoins>
+        
         <NoCoins v-if="NoCoinsShow" @on-close="NoCoinsShow=false"></NoCoins>
         <GiftCall v-if="GiftCallShow" @on-close="GiftCallShow=false"></GiftCall>
         <GiftPhone v-if="GiftPhoneShow" @on-close="GiftPhoneShow=false"></GiftPhone>
         <NoLogin v-if="NoLoginShow" @on-close="NoLoginShow=false"></NoLogin>
-        <SelectGift v-if="SelectGiftShow" @on-close="closeSelectGift"></SelectGift>
-        <GiftCoins v-if="GiftCoinsShow" @on-close="closeGiftCoins"></GiftCoins>
-        <Winning v-if="WinningShow" @on-close="closeWinning"></Winning>
-        <WinningNo v-if="WinningNoShow" @on-close="WinningNoShow=false"></WinningNo>
         <Share v-if="ShareShow" @on-close="ShareShow=false"></Share>
 
         <Dice v-if="DiceShow" @on-close="closeDice" :diceCount="diceCount"></Dice>
+        <UseCoins v-if="UseCoinsShow" @on-close="closePay" :payType="payType"></UseCoins>
+        <WinningNo v-if="WinningNoShow" @on-close="WinningNoShow=false"></WinningNo>
+        <Winning v-if="WinningShow" @on-close="closeWinning" :boxStatus="boxStatus"></Winning>
+        <SelectGift v-if="SelectGiftShow" @on-close="closeSelectGift" :boxType="boxType"></SelectGift>
+        <GiftCoins v-if="GiftCoinsShow" @on-close="closeGiftCoins" :boxType="boxType"></GiftCoins>
+
+
+
+
 
     </div>
 </template>
 
 <script>
 import NetworkError from "@/components/NetworkError"
-import UserCoins from "@/components/UserCoins"
+import UseCoins from "@/components/UserCoins"
 import NoCoins from "@/components/NoCoins"
 import GiftCall from "@/components/GiftCall"
 import GiftPhone from "@/components/GiftPhone"
@@ -75,7 +80,7 @@ export default {
         return{
             userId:undefined,
             NetworkErrorShow:false,//网络错误提示框
-            UserCoinsShow:false,//使用金币提示框
+            UseCoinsShow:false,//使用金币提示框
             NoCoinsShow:false,//金币不足提示框
             GiftCallShow:false,//开奖结果显示————话费
             GiftPhoneShow:false,//开奖结果显示————手机
@@ -86,19 +91,10 @@ export default {
             WinningNoShow:false,
             ShareShow:false,//分享弹框
             DiceShow:false,//投掷骰子
+
             timer:undefined,
-            paymentMark:false,//支付标记  false开箱，true掷骰
             checkerboard:"checkerboard_gray",//棋盘class,用于更换棋盘背景
             toTheTop:false,//到顶，false正常走  ture方向走
-            userStatus:{    //用户状态
-                diceStatus:true,
-                openBoxStatus:true
-            },
-            giftBoxStatus:{ //礼盒状态
-                giftBox_1:false,
-                giftBox_2:false,
-                giftBox_3:false
-            },
             latticeWH:60,
             diceCount:undefined,//投骰点数
             // 棋盘上格子对应的坐标
@@ -111,11 +107,22 @@ export default {
             ],
             ChessPositionNum:1,//当前所在格子
             boxPayNum:200,//开启本次礼盒需要的金币
+// _______________________________________________________
+            buyPackage:[
+                {level: 1, count: 0},
+                {level: 2, count: 0},
+                {level: 3, count: 0},
+            ],
+            dailyPackage:0,//免费开箱次数
+            diceStatus:false,
+            payType:undefined,//付款类型 0 投掷，1 box_1，2 box_3，3 box_3
+            boxType:undefined,//盒子类型        1 box_1，2 box_3，3 box_3
+            boxStatus:undefined,//盒子的状态,打开盒子时传入模态框，用于模态框中判断显示状态
         }
     },
     components:{
         NetworkError,
-        UserCoins,
+        UseCoins,
         NoCoins,
         GiftCall,
         GiftPhone,
@@ -138,107 +145,137 @@ export default {
             axios.get("/dice/chance?uid="+this.userId)
             .then(res=>{
                 console.log(res)
+                let data = res.data.data
                 if(res.data.code==0){
-                    // 有免费掷骰机会
-                    this.userStatus.diceStatus = true
+                    this.diceStatus = true
                 }else{
-                    this.userStatus.diceStatus = false
+                    this.diceStatus = false
                 }
-                if(res.data.data.package==1){
-                    //有免费开箱机会
-                    this.userStatus.openBoxStatus = true
-                }else{
-                    this.userStatus.openBoxStatus = false
-                }
-                this.transfer(res.data.data.position)
-
+                // this.dailyPackage = data.dailyPackage
+                this.dailyPackage = 0
+                this.buyPackage = data.buyPackage
+                this.transfer(data.position)//同步棋子位置
             }).catch(error=>{
                 console.log(error)
+                this.NetworkErrorShow = true
             })
         },
+        // 投掷骰子
         openDice(){
-            // 投掷骰子
             axios.get('/dice/one?uid='+this.userId)
             .then(res=>{
                 console.log(res)
                 if(res.data.code==0){
                     this.diceCount = res.data.data.diceCount
-                    this.userStatus.diceStatus = false
+                    this.diceStatus = false
                     this.DiceShow = true
                 }
             }).catch(error=>{
                 console.log(error)
+                this.NetworkErrorShow = true
             })
         },
-        closeDice(num){//num 骰子点数
-            this.DiceShow = false
-            var endPoint = this.ChessPositionNum + num//本次行走的终点
-            console.log("本次行走初始位置："+this.ChessPositionNum+";本次行走终点位置："+endPoint)
-            this.walk(num,endPoint)
+        // 付款
+        pay(payType){
+            this.payType = payType
+            this.UseCoinsShow = true
         },
-        
-        closeWinning(num){//num ,0 关闭，1免费开箱，2付费开箱
-            this.WinningShow = false
-            switch(num){
-                case 1: this.SelectGiftShow = true
-                        this.userStatus.openBoxStatus = false
-                        break
-                case 2: this.UserCoinsShow = true
-                        this.paymentMark = false
-                        break
+        closePay(whether){//确付款
+            if(whether){
+                this.UseCoinsShow = false
+                switch(this.payType){
+                    case 0: this.payOpenDice();break;
+                    case 1: this.SelectGiftShow = true;break;
+                    case 2: this.SelectGiftShow = true;break;
+                    case 3: this.SelectGiftShow = true;break;
+                }
+            }else{
+                this.UseCoinsShow = false
             }
         },
-        closeSelectGift(num){ //num,0关闭,1金币，2话费，3手机
+        // 付费投掷骰子
+        payOpenDice(){
+             axios.get('/dice/buy/dice/chance?uid='+this.userId)
+            .then(res=>{
+                console.log(res)
+                if(res.data.code==0){
+                    this.openDice()
+                }
+            }).catch(error=>{
+                console.log(error)
+                this.NetworkErrorShow = true
+            })
+        },
+        closeDice(diceCount){
+            this.DiceShow = false
+            var endPoint = this.ChessPositionNum + diceCount//本次行走的终点
+            console.log("本次行走初始位置："+this.ChessPositionNum+";本次行走终点位置："+endPoint)
+            this.walk(diceCount,endPoint)
+        },
+//=======================================================开箱
+        openGiftBox(boxType){
+            this.boxType = boxType
+            this.boxStatus={
+                count:this.buyPackage[0].count,
+                dailyPackage:this.dailyPackage,
+                boxType:boxType
+            }
+            switch(boxType){
+                case 1: 
+                        if(this.ChessPositionNum > 7){
+                            this.WinningShow = true
+                        }else{
+                            this.WinningNoShow = true
+                        }
+                        break;
+                case 2: 
+                        if(this.ChessPositionNum > 16){
+                            this.WinningShow = true
+                        }else{
+                            this.WinningNoShow = true
+                        }
+                        break;
+                case 3: 
+                        if(this.ChessPositionNum == 25){
+                            this.WinningShow = true
+                        }else{
+                            this.WinningNoShow = true
+                        }
+                        break;
+            }
+        },
+        closeWinning(num,boxType){//0关闭，1开箱，2付款开箱
+             switch(num){
+                    case 0: this.WinningShow = false;break;
+                    case 1: 
+                            this.WinningShow = false
+                            this.SelectGiftShow = true
+                            break;
+                    case 2: 
+                            this.WinningShow = false
+                            this.pay(boxType)
+                            break;
+                }
+        },
+        closeSelectGift(GiftNum){
             this.SelectGiftShow = false
-            switch(num){
+            switch(GiftNum){
                 case 1: this.GiftCoinsShow = true
                         break
                 case 2: this.GiftCallShow = true
                         break
-                case 3: this.GiftPhoneShow = true//需要换成手机
+                case 3: this.GiftPhoneShow = true
                         break
             }
         },
-        closeUserCoins(whether){//whether,false关闭，true付费开箱
-            this.UserCoinsShow = false
-            if(whether){
-                if(this.paymentMark){
-                    // 付费投掷骰子
-                    axios.get('/dice/buy/dice/chance?uid='+this.userId)
-                    .then(res=>{
-                        if(res.data.code==0){
-                            this.openDice()
-                        }
-                    }).catch(error=>{
-                        console.log(error)
-                    })
-
-                }else{
-
-                    this.SelectGiftShow = true
-                }
-            }
-        },
-        closeGiftCoins(whether){//whether,false关闭，true开启花费金币提示
+        closeGiftCoins(whether){
             this.GiftCoinsShow = false
             if(whether){
-                this.UserCoinsShow = true
-                this.paymentMark = false
+                this.pay(this.boxType)
             }
         },
-        openGiftBox(boxNum){
-            switch(boxNum){
-                case 1:
-                        this.giftBoxStatus.giftBox_1?this.WinningShow = true:this.WinningNoShow = true
-                        break
-                case 2:
-                        this.giftBoxStatus.giftBox_2?this.WinningShow = true:this.WinningNoShow = true
-                        break
-                case 3:
-                        this.giftBoxStatus.giftBox_3?this.WinningShow = true:this.WinningNoShow = true
-                        break
-            }
-        },
+
+//=======================================================动画
         // 获取棋盘上每个格子的大小
         getLatticeWH(){
             var Odiv =  document.getElementById("checkerboard")
