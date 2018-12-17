@@ -2,7 +2,7 @@
     <div id="GiftCall" @touchmove.prevent>
         <div class="white">
             <div class="end" @click="closeGiftCall">
-                <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
+                <img src="static/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="centont">
                 <h3>Pulsa Rp 10.000</h3>
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="header_img">
-            <img src="@/assets/images/game/BulletBox/Gift_call.png" alt="">
+            <img src="static/images/game/BulletBox/Gift_call.png" alt="">
         </div>
     </div>
 </template>

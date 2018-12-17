@@ -2,7 +2,7 @@
     <div id="NoCoins" @touchmove.prevent>
         <div class="white">
             <div class="end" @click="closeNoCoins">
-                <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
+                <img src="static/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="centont">
                 <h3>Oops,koin kamu tidak cukup!</h3>
@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="header_img">
-            <img src="@/assets/images/game/BulletBox/NoCoins.png" alt="">
+            <img src="static/images/game/BulletBox/NoCoins.png" alt="">
         </div>
     </div>
 </template>

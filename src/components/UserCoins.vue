@@ -2,7 +2,7 @@
     <div id="UserCoins" @touchmove.prevent>
         <div class="white">
             <div class="end" @click="closeUserCoins(false)">
-                <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
+                <img src="static/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="centont">
                 <p class="top_p">Kamu akan menggunakan <span>{{coinsNum}} Coin</span> untuk</p>

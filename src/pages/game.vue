@@ -1,19 +1,19 @@
 <template>
     <div id="game">
         <div class="img">
-            <img src="@/assets/images/game/capingRun_min.png" alt="">
+            <img src="static/images/game/capingRun_min.png" alt="">
         </div>
         <div id="checkerboard">
             <!-- 背景棋盘 -->
-            <img src="@/assets/images/game/checkerboard_gray.png" alt="" v-show="checkerboard=='checkerboard_gray'">
-            <img src="@/assets/images/game/checkerboard_bright_1.png" alt="" v-show="checkerboard=='checkerboard_bright_1'">
-            <img src="@/assets/images/game/checkerboard_bright_2.png" alt="" v-show="checkerboard=='checkerboard_bright_2'">
-            <img src="@/assets/images/game/checkerboard_bright.png" alt="" v-show="checkerboard=='checkerboard_bright'">
+            <img src="static/images/game/checkerboard_gray.png" alt="" v-show="checkerboard=='checkerboard_gray'">
+            <img src="static/images/game/checkerboard_bright_1.png" alt="" v-show="checkerboard=='checkerboard_bright_1'">
+            <img src="static/images/game/checkerboard_bright_2.png" alt="" v-show="checkerboard=='checkerboard_bright_2'">
+            <img src="static/images/game/checkerboard_bright.png" alt="" v-show="checkerboard=='checkerboard_bright'">
             <div id="piece">
-                <img src="@/assets/images/game/piece.png" alt="">
+                <img src="static/images/game/piece.png" alt="">
             </div>
             <div class="flag">
-                <img src="@/assets/images/game/flag.png" alt="">
+                <img src="static/images/game/flag.png" alt="">
             </div>
             <div class="giftBox1" @click="openGiftBox(1)"></div>
             <div class="giftBox2" @click="openGiftBox(2)"></div>
@@ -23,16 +23,16 @@
 
         <div class="batton_play">
             <div class="play" v-if="diceStatus">
-                <img src="@/assets/images/game/paly_button.png" @click="openDice" alt="">
+                <img src="static/images/game/paly_button.png" @click="openDice" alt="">
             </div>
             <div class="play_dice" v-if="!diceStatus">
                 <div class="dice_button" >
-                    <img src="@/assets/images/game/dice_button.png" alt="">
+                    <img src="static/images/game/dice_button.png" alt="">
                 </div>
                 <p class="dice_button_text">{{countdown}}</p>
             </div>
             <div class="play" v-if="!diceStatus">
-                <img src="@/assets/images/game/BulletBox/200coins_button.png" @click="pay(0)">
+                <img src="static/images/game/BulletBox/200coins_button.png" @click="pay(0)">
             </div>
         </div>
         

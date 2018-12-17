@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-      <loading v-if="loadingShow"></loading>
+      <loading v-if="loadingShow" :count="count"></loading>
+      
       <div class="escBut" @click="esc">
-        <img src="@/assets/images/esc.png" alt="">
+        <img src="static/images/esc.png" alt="">
       </div>
       <router-view/>
   </div>
@@ -15,33 +16,87 @@ export default {
   name: 'App',
   data(){
     return{
-      loadingShow:false,
+      loadingShow:true,
+      count:0
     }
   },
+  components:{
+    loading,
+  },
+  mounted(){
+    this.loading()
+  },
+  
   methods:{
     esc(){
-      console.log(this.$route.path)
       if (this.$route.path === '/') {
         this.$router.back(-1)
       } else {
         this.$router.push('/')
       }
+    },
+    loading(){
+      let imgs=[
+        "static/images/esc.png",
+        "static/images/bg.png",
+        "static/images/index/capingRun.png",
+        "static/images/game/capingRun_min.png",
+        "static/images/game/checkerboard_gray.pn",
+        "static/images/game/checkerboard_bright_1.png",
+        "static/images/game/checkerboard_bright_2.png",
+        "static/images/game/checkerboard_bright.png",
+        "static/images/game/piece.png",
+        "static/images/game/flag.png",
+        "static/images/game/paly_button.png",
+        "static/images/game/dice_button.png",
+        "static/images/game/BulletBox/200coins_button.png",
+        "static/images/game/dice_Animated.gif",
+        "static/images/game/BulletBox/shutDown.png",
+        "static/images/game/BulletBox/Gift_call.png",
+        "static/images/game/BulletBox/share_button.png",
+        "static/images/game/coins.png",
+        "static/images/game/BulletBox/Gift_phone.png",
+        "static/images/game/BulletBox/load_button.png",
+        "static/images/game/BulletBox/network_error.png",
+        "static/images/game/BulletBox/NoCoins.png",
+        "static/images/game/BulletBox/goLogin_button.png",
+        "static/images/game/BulletBox/UnLogin.png",
+        "static/images/game/BulletBox/GiftBox_n.png",
+        "static/images/game/BulletBox/GiftBox.png",
+        "static/images/game/BulletBox/CallCharge_share.png",
+        "static/images/game/BulletBox/Coins_1.png",
+        "static/images/game/BulletBox/Coins_2.png",
+        "static/images/game/BulletBox/Coins_3.png",
+        "static/images/game/BulletBox/Coins_4.png"
+      ]
+
+      for(let img of imgs){
+        let image = new Image()
+        image.src = img
+        image.onload = () =>{
+          this.count++
+          if(this.count==30){
+            this.loadingShow = false
+          }
+        }
+      }
     }
   },
-  components:{
-    loading,
-  }
+  
 }
 </script>
 
 <style>
   @import "../static/css/reset.css";
+
+ 
+
   body{
     margin:  0 auto;
     background-color: #020031;
   }
   #app{
-    background: url("./assets/images/bg.png") no-repeat;
+    background: url("../static/images/bg.png") no-repeat;
     background-size: 100% 100%;
     padding-top:30px;
   }

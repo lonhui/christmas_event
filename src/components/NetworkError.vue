@@ -2,18 +2,18 @@
     <div id="networkError" @touchmove.prevent>
         <div class="white">
             <div class="end" @click="closeNetworkError">
-                <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
+                <img src="static/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="centont">
                 <h3>Koneksi kamu tidak stabil</h3>
                 <p>Periksa jaringan internet kamu</p>
                 <div class="button">
-                    <img src="@/assets/images/game/BulletBox/load_button.png" @click="refresh" alt="">
+                    <img src="static/images/game/BulletBox/load_button.png" @click="refresh" alt="">
                 </div>
             </div>
         </div>
         <div class="header_img">
-            <img src="@/assets/images/game/BulletBox/network_error.png" alt="">
+            <img src="static/images/game/BulletBox/network_error.png" alt="">
         </div>
     </div>
 </template>

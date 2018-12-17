@@ -3,7 +3,7 @@
         
         <div class="white">
             <div class="end" @click="closeSelectGift(0)">
-                <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
+                <img src="static/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="header">
                 Pilih Hadiah
@@ -34,8 +34,8 @@
 
 
 <script>
-import boxN from "../assets/images/game/BulletBox/GiftBox_n.png"
-import boxY from "../assets/images/game/BulletBox/GiftBox.png"
+import boxN from "../../static/images/game/BulletBox/GiftBox_n.png"
+import boxY from "../../static/images/game/BulletBox/GiftBox.png"
 import axios from 'axios'
 
 export default {

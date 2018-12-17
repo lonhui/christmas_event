@@ -2,18 +2,18 @@
     <div id="NoLogin" @touchmove.prevent>
         <div class="white">
             <div class="end" @click="closeNoLogin">
-                <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
+                <img src="static/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="centont">
                 <h3>KAMU BELUM LOGIN</h3>
                 <p>Masuk ke akun Caping untuk<br>mulai bermain</p>
                 <div class="button">
-                    <img src="@/assets/images/game/BulletBox/goLogin_button.png" alt="">
+                    <img src="static/images/game/BulletBox/goLogin_button.png" alt="">
                 </div>
             </div>
         </div>
         <div class="header_img">
-            <img src="@/assets/images/game/BulletBox/UnLogin.png" alt="">
+            <img src="static/images/game/BulletBox/UnLogin.png" alt="">
         </div>
     </div>
 </template>

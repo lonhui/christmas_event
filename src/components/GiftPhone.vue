@@ -2,7 +2,7 @@
     <div id="GiftPhone" @touchmove.prevent>
         <div class="white">
             <div class="end" @click="closeGiftPhone">
-                <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
+                <img src="static/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="centont">
                 <p class="header_p">Kamu Mendapatkan 1 Unit</p>
@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="header_img">
-            <img src="@/assets/images/game/BulletBox/Gift_phone.png" alt="">
+            <img src="static/images/game/BulletBox/Gift_phone.png" alt="">
         </div>
     </div>
 </template>

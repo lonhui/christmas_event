@@ -2,7 +2,7 @@
     <div id="SelectGift" @touchmove.prevent>
         <div class="white">
             <div class="end" @click="closeSelectGift(0)">
-                <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
+                <img src="static/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="header">
                 Hadiah Sesi 1
@@ -12,19 +12,19 @@
                 <div class="box">
                     <div>
                         <div class="box_img">
-                            <img src="@/assets/images/game/BulletBox/Coins_1.png">
+                            <img src="static/images/game/BulletBox/Coins_1.png">
                         </div>
                         <p>350 Coin</p>
                     </div>
                     <div>
                         <div class="box_img">
-                            <img src="@/assets/images/game/BulletBox/Coins_2.png">
+                            <img src="static/images/game/BulletBox/Coins_2.png">
                         </div>
                         <p>500 Coin</p>
                     </div>
                     <div>
                         <div class="box_img">
-                            <img src="@/assets/images/game/BulletBox/Coins_3.png">
+                            <img src="static/images/game/BulletBox/Coins_3.png">
                         </div>
                         <p>700 Coin</p>
                     </div>
@@ -41,7 +41,7 @@
                 <div class="button_coin" v-if="!boxNum" @click="closeSelectGift(2)">
                     <p>Buka Lagi</p>
                     <div class="coins">
-                        <img src="@/assets/images/game/coins.png" alt="">
+                        <img src="static/images/game/coins.png" alt="">
                         <span>{{coinsNum}} Coin</span>
                     </div>
                 </div>

@@ -2,7 +2,7 @@
     <div id="Dice" @click="closeDice" @touchmove.prevent>
         <div class="white">
             <div class="dice">
-                <img src="@/assets/images/game/dice_Animated.gif" alt="" v-if="DiceNumber==0">
+                <img src="static/images/game/dice_Animated.gif" alt="" v-if="DiceNumber==0">
                 <!-- 6 -->
                 <div class="dice_num1" v-if="DiceNumber==6">
                     <div class="top">

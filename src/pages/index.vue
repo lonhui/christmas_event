@@ -1,7 +1,7 @@
 <template>
     <div id="index">
         <div class="img">
-            <img src="@/assets/images/index/capingRun.png" alt="">
+            <img src="static/images/index/capingRun.png" alt="">
         </div>
         <h1>RUN FOR YOUR PRIZE!</h1>
         <p class="des">Bermain ular tangga dan dapatkan hadiah menarik di akhir permainan!</p>
@@ -36,7 +36,6 @@ export default {
         // let did = didArray[1]
         this.userId = uid
         // this.user.did = did
-        alert(this.userId)
         this.setCookie(uid,1)
     },
     methods:{

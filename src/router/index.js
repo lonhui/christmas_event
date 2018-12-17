@@ -1,8 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from '@/pages/index'
-import Game from '@/pages/game'
-import Rule from '@/pages/rule'
 
 Vue.use(Router)
 
@@ -11,17 +8,17 @@ export default new Router({
     {
       path: '/',
       name: 'Index',
-      component: Index
+      component: ()=> import("@/pages/index"),
     },
     {
       path: '/game',
       name: 'Game',
-      component: Game
+      component: ()=> import("@/pages/game"),
     },
     {
       path: '/rule',
       name: 'Rule',
-      component: Rule
+      component: ()=> import("@/pages/rule"),
     },
   ]
 })

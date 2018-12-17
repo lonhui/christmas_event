@@ -2,7 +2,7 @@
     <div id="Share" @touchmove.prevent>
         <div class="white">
             <div class="end" @click="closeShare">
-                <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
+                <img src="static/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="centont">
                 <h3>SELAMAT!</h3>
@@ -11,7 +11,7 @@
                 <!-- 手机 -->
                 <!-- <p>Tim Caping akan menghubungi kamu<br>lewat email untuk proses lebih lanjut</p> -->
                 <div class="button">
-                   <img src="@/assets/images/game/BulletBox/share_button.png" alt="">
+                   <img src="static/images/game/BulletBox/share_button.png" alt="">
                 </div>
                  <div class="footer">
                     <p @click="closeShare">MAIN LAGI</p>
@@ -19,15 +19,15 @@
             </div>
         </div>
         <div class="header_img">
-            <img src="@/assets/images/game/BulletBox/CallCharge_share.png" alt="">
+            <img src="static/images/game/BulletBox/CallCharge_share.png" alt="">
         </div>
        
     </div>
 </template>
 
 <script>
-import callImg from "@/assets/images/game/BulletBox/shutDown.png"
-import phoneImg from "@/assets/images/game/BulletBox/Gift_phone.png"
+import callImg from "../../static/images/game/BulletBox/shutDown.png"
+import phoneImg from "../../static/images/game/BulletBox/Gift_phone.png"
 
 export default {
     // props:[data],

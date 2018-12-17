@@ -2,7 +2,7 @@
     <div id="GiftCoins" @touchmove.prevent>
         <div class="white">
             <div class="end" @click="closeGiftCoins(false)">
-                <img src="@/assets/images/game/BulletBox/shutDown.png" alt="">
+                <img src="static/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="header">
                 SELAMAT
@@ -16,12 +16,12 @@
                 <p>Kamu telah mendapatkan<br><span>200 Caping Coin!</span></p>
                 <div class="button">
                     <div class="share_button">
-                        <img src="@/assets/images/game/BulletBox/share_button.png" alt="">
+                        <img src="static/images/game/BulletBox/share_button.png" alt="">
                     </div>
                     <div class="pay_button" @click="closeGiftCoins(true)">
                         <p>Buka Lagi</p>
                         <div class="coins">
-                            <img src="@/assets/images/game/coins.png" alt="">
+                            <img src="static/images/game/coins.png" alt="">
                             <span>{{coinsNum}} Coin</span>
                         </div>
                     </div>
