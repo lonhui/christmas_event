@@ -29,7 +29,7 @@ import NoLogin from "@/components/NoLogin"
 export default {
     data(){
         return {
-            userId:undefined,
+            userId:null,
             NoLoginShow:false,
         }
     },
@@ -46,6 +46,18 @@ export default {
             let uid = uidArray[1]
             this.userId = uid
             this.setCookie(uid,1)
+        }else  if (document.cookie.length>0) {
+            var arr=document.cookie.split('; ');//这里显示的格式需要切割一下自己可输出看下
+            console.log(arr)
+            for(var i=0;i<arr.length;i++){
+                var arr2=arr[i].split('=');//再次切割
+                console.log(arr2)
+                //判断查找相对应的值
+                if(arr2[0]=='uid'){
+                    this.userId = arr2[1]//保存到保存数据的地方
+                }
+            }
+            if(this.userId==null){this.NoLoginShow = true}
         }else{
             this.NoLoginShow = true
         }
@@ -102,14 +114,14 @@ h1{
     margin-top:80px;
 }
 .rule{
-    width: 300px;
-    border-radius: 50px;
-    border: 2px #8cf0be solid;
+    width: 292px;
+    border-radius: 60px;
+    border: 4px #8cf0be solid;
     color: #8cf0be;
     font-size: 36px;
     font-weight: bold;
     text-align: center;
-    line-height: 100px;
+    line-height: 92px;
     background-color: rgba(255, 255, 255, 0);
 }
 .game{
