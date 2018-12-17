@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+      <loading v-if="loadingShow"></loading>
       <div class="escBut" @click="esc">
         <img src="@/assets/images/esc.png" alt="">
       </div>
@@ -8,8 +9,15 @@
 </template>
 
 <script>
+import loading from "@/components/loading.vue"
+
 export default {
   name: 'App',
+  data(){
+    return{
+      loadingShow:false,
+    }
+  },
   methods:{
     esc(){
       console.log(this.$route.path)
@@ -19,6 +27,9 @@ export default {
         this.$router.push('/')
       }
     }
+  },
+  components:{
+    loading,
   }
 }
 </script>
@@ -26,8 +37,6 @@ export default {
 <style>
   @import "../static/css/reset.css";
   body{
-    /* width: 750px;
-    height: 1334px; */
     margin:  0 auto;
     background-color: #020031;
   }
