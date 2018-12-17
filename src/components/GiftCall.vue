@@ -8,7 +8,7 @@
                 <h3>Pulsa Rp 10.000</h3>
                 <p>Masukkan nomor ponsel kamu</p>
                 <div class="input">
-                    <input type="number" v-model="phoneNum" placeholder="Contoh:081234657890">
+                    <input :class="inputClass" type="number" v-model="phoneNum" placeholder="Contoh:081234657890">
                 </div>
                 <div class="button" @click="submit">
                    Oke
@@ -26,6 +26,7 @@ export default {
     data(){
         return{
             phoneNum:null,
+            inputClass:"telInput"
         }
     },
     methods: {
@@ -33,7 +34,40 @@ export default {
             this.$emit('on-close')
         },
         submit(){
-            alert("phone:"+this.phoneNum)
+            var verifyPhone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if(this.phoneNum){
+                if(this.phoneNum.length==0) { 
+                    this.inputClass = "noTelInput"
+                    alert('手机号码不能为空！');
+                } else if(this.phoneNum.length!=11) { 
+                    this.inputClass = "noTelInput"
+                    alert('请输入有效的手机号码，需是11位！');
+                }else if(!verifyPhone.test(this.phoneNum)){ 
+                    this.inputClass = "noTelInput"
+                    alert('请输入有效的手机号码！'); 
+                }else{
+                    alert("phone:"+this.phoneNum)
+                }
+            }else{
+                alert('手机号码不能为空！');
+            }
+            
+        }
+    },
+    watch:{
+        "phoneNum":function(){
+            var verifyPhone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if(this.phoneNum){
+                if(this.phoneNum.length==0) { 
+                
+                } else if(this.phoneNum.length!=11) { 
+                    
+                }else if(!verifyPhone.test(this.phoneNum)){ 
+                    
+                }else{
+                    this.inputClass = "telInput"
+                }
+            }
         }
     }
 }
@@ -104,8 +138,18 @@ p{
     width: 400px;
     margin: 20px auto 20px;
 }
-input{
+.telInput{
     border:#66C69D 2px solid;
+    border-radius: 50px;
+    width: 100%;
+    height: 100px;
+    padding-left: 50px;
+    padding-right: 50px;
+    position: relative;
+    left: -50px;
+}
+.noTelInput{
+    border:red 2px solid;
     border-radius: 50px;
     width: 100%;
     height: 100px;

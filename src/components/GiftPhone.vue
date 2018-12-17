@@ -9,15 +9,15 @@
                 <h3>OPPO A3S</h3>
                 <p>Username Caping</p>
                 <div class="input">
-                    <input type="text" v-model="userName" placeholder="Username Caping Kamu">
+                    <input class="userInput" type="text" v-model="userName" placeholder="Username Caping Kamu">
                 </div>
                 <p>Nomor HP</p>
                 <div class="input">
-                    <input type="number" v-model="phoneNum" placeholder="Contoh:081234657890">
+                    <input :class="telInClass" type="number" v-model="phoneNum" placeholder="Contoh:081234657890">
                 </div>
                 <p>Alamat Emali</p>
                 <div class="input">
-                    <input type="emali" v-model="emali" placeholder="Contoh:caping@gmail.com">
+                    <input :class="emaliInClass" type="emali" v-model="emali" placeholder="Contoh:caping@gmail.com">
                 </div>
                 <div class="button" @click="submit">
                    Kirim
@@ -37,6 +37,8 @@ export default {
             userName:null,
             phoneNum:null,
             emali:null,
+            telInClass:'telInput',
+            emaliInClass:'emaliInput'
         }
     },
     methods: {
@@ -44,9 +46,53 @@ export default {
             this.$emit('on-close')
         },
         submit(){
-            alert(
-                "namme:"+this.userName+";"+"phone:"+this.phoneNum+";"+"emali:"+this.emali
-            )
+            var myregEmali = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+            var verifyPhone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if(this.phoneNum && this.userName && this.emali){
+                if(this.phoneNum.length==0) {
+                    this.telInClass = "noInput"
+                    alert('手机号码不能为空！');
+                } else if(this.phoneNum.length!=11) { 
+                    this.telInClass = "noInput"
+                    alert('请输入有效的手机号码，需是11位！');
+                }else if(!verifyPhone.test(this.phoneNum)){ 
+                    this.telInClass = "noInput"
+                    alert('请输入有效的手机号码！'); 
+                }else if(!myregEmali.test(this.emali)){
+                    this.emaliInClass = "noInput"
+                    alert('请输入有效的邮箱！');
+                }else{
+                    alert("namme:"+this.userName+";"+"phone:"+this.phoneNum+";"+"emali:"+this.emali)
+                }
+            }else{
+                alert("请按要求填写信息")
+            }
+        }
+    },
+    watch:{
+        "phoneNum":function(){
+            var verifyPhone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+            if(this.phoneNum){
+                 if(this.phoneNum.length==0) {
+                    
+                } else if(this.phoneNum.length!=11) { 
+                    
+                }else if(!verifyPhone.test(this.phoneNum)){ 
+                    
+                }else{
+                    this.telInClass = "telInput"
+                }
+            }
+        },
+        "emali":function(){
+            var myregEmali = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+            if(this.emali){
+                if(!myregEmali.test(this.emali)){
+                
+                }else{
+                    this.emaliInClass = "emaliInput"
+                }
+            }
         }
     }
 }
@@ -120,7 +166,18 @@ p{
     width: 400px;
     margin: 20px auto 20px;
 }
-input{
+.noInput{
+    border:red 2px solid;
+    border-radius: 50px;
+    width: 100%;
+    height: 100px;
+    padding-left: 50px;
+    padding-right: 50px;
+    position: relative;
+    left: -50px;
+}
+
+.userInput,.telInput,.emaliInput{
     border:#66C69D 2px solid;
     border-radius: 50px;
     width: 100%;

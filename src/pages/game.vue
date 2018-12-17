@@ -79,7 +79,7 @@ export default {
             UseCoinsShow:false,//使用金币提示框
             NoCoinsShow:false,//金币不足提示框
             GiftCallShow:false,//开奖结果显示————话费
-            GiftPhoneShow:false,//开奖结果显示————手机
+            GiftPhoneShow:true,//开奖结果显示————手机
             NoLoginShow:false,//未登录提示框
             SelectGiftShow:false,//礼盒选择框
             GiftCoinsShow:false,//开奖结果显示————金币
