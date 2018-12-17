@@ -34,40 +34,40 @@
                 </div>
                 <!-- 4 -->
                 <div class="dice_num1" v-if="DiceNumber==4">
-                    <div class="top" style="padding-top: 16.5px">
+                    <div class="top_2">
                         <div class="point"></div>
                         <div class="point"></div>
                     </div>
-                    <div class="bottom" style="padding-top: 16.5px">
+                    <div class="bottom_2">
                         <div class="point"></div>
                         <div class="point"></div>
                     </div>
                 </div>
                 <!-- 3 -->
                 <div class="dice_num1" v-if="DiceNumber==3">
-                    <div class="top">
-                        <div class="point" style="position: relative;left: 30px;"></div>
-                    </div>
-                     <div class="center">
+                    <div class="top_3">
                         <div class="point"></div>
                     </div>
-                    <div class="bottom">
-                        <div class="point" style="position: relative;left: -30px;"></div>
+                     <div class="center_3">
+                        <div class="point"></div>
+                    </div>
+                    <div class="bottom_3">
+                        <div class="point"></div>
                     </div>
                 </div>
                 <!-- 2 -->
                 <div class="dice_num1" v-if="DiceNumber==2">
-                    <div class="top">
-                        <div class="point" style="margin-top: 12.5px"></div>
+                    <div class="top_2">
+                        <div class="point"></div>
                     </div>
-                    <div class="bottom">
-                        <div class="point" style="margin-top: 12.5px"></div>
+                    <div class="bottom_2">
+                        <div class="point"></div>
                     </div>
                 </div>
                 <!-- 1 -->
                 <div class="dice_num1" v-if="DiceNumber==1">
-                    <div class="bottom">
-                        <div class="point" style="width:40px;height:40px;border-radius:30px;margin-top: 25px"></div>
+                    <div class="bottom_1" >
+                        <div class="point"></div>
                     </div>
                 </div>
             </div>
@@ -127,9 +127,37 @@ export default {
     height: 200px;
     border-radius: 20px;
     background-color: #D4312E;
+    border:#000 1px solid;
 }
 .top,.center,.bottom{
-    padding-top: 12.5px;
+    padding-top: 5px;
+    display: flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:space-around;
+    align-items:flex-start;
+    align-content:flex-start;
+}
+.top_3,.center_3,.bottom_3{
+    padding-top:5px;
+}
+.top_3{
+    padding-left: 110px;
+}
+.bottom_3{
+    padding-right: 110px;
+}
+.top_2,.bottom_2{
+    padding-top: 26px;
+    display: flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:space-around;
+    align-items:flex-start;
+    align-content:flex-start;
+}
+.bottom_1{
+    padding-top: 69px;
     display: flex;
     flex-direction:row;
     flex-wrap:wrap;
@@ -138,8 +166,9 @@ export default {
     align-content:flex-start;
 }
 .point{
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
     border-radius: 30px;
     background-color: #fff;
 }
