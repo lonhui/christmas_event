@@ -102,6 +102,7 @@ h2{
     text-align: center;
     line-height: 120px;
     padding-top: 30px;
+    font-family: OpenSans-Bold;
 }
 p{
    color: #838290;
@@ -112,6 +113,7 @@ p{
     padding: 0 30px 30px 30px;
     text-indent:-1em;
     margin-left:1em;
+    font-family: OpenSans-Regular;
    
 }
 .button{
@@ -124,11 +126,13 @@ button{
     border-radius: 60px;
     background: linear-gradient(#66C69D, #3B885E);
     color: #fff;
-    font-size: 30px;
+    font-size: 36px;
     font-weight: bold;
     text-align: center;
     line-height: 100px;
     margin: 0 auto;
+    font-family: OpenSans-Regular;
+
 }
 li{
     color: #838290;
@@ -139,6 +143,7 @@ li{
     padding: 0 30px 30px 30px;
     text-indent:-1em;
     margin-left:1em;
+    font-family: OpenSans-Regular;
 }
 .treaty{
     height: 830px;

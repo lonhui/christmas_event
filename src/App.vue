@@ -89,7 +89,18 @@ export default {
 <style>
   @import "../static/css/reset.css";
 
- 
+  @font-face {
+    font-family: OpenSans-Bold;
+    src: url('../static/font/OpenSans-Bold.ttf');
+  }
+  @font-face {
+      font-family: OpenSans-Regular;
+      src: url('../static/font/OpenSans-Regular.ttf');
+  }
+  @font-face {
+      font-family: OpenSans-SemiBold;
+      src: url('../static/font/OpenSans-SemiBold.ttf');
+  }
 
   body{
     margin:  0 auto;

@@ -18,25 +18,38 @@
                 <span>Syarat & Ketentuan</span>
             </router-link>
         </p>
+
+        <NoLogin v-if="NoLoginShow" @on-close="NoLoginShow=false"></NoLogin>
     </div>
 </template>
 
 <script>
+import NoLogin from "@/components/NoLogin"
+
 export default {
     data(){
         return {
             userId:undefined,
+            NoLoginShow:false,
         }
+    },
+    components:{
+        NoLogin
     },
     mounted(){
         const url = window.location.href
         let uidArray = url.match(/[^a-zA-Z0-9]u{1,1}=([0-9\-]+)/)
         // let didArray = url.match(/[^a-zA-Z0-9]c{1,1}=([a-z0-9]+)/)
-        let uid = uidArray[1]
         // let did = didArray[1]
-        this.userId = uid
         // this.user.did = did
-        this.setCookie(uid,1)
+        if(uidArray){
+            let uid = uidArray[1]
+            this.userId = uid
+            this.setCookie(uid,1)
+        }else{
+            this.NoLoginShow = true
+        }
+        
     },
     methods:{
         setCookie(uid,exdays){
@@ -61,21 +74,23 @@ img{
     margin: 0 auto;
 }
 h1{ 
-    color: #3B885E;
-    font-size:40px;
+    color: #50ac7e;
+    font-size:46px;
     font-weight: bold;
     text-align: center;
     line-height: 80px;
     margin-top:50px;
+    font-family: OpenSans-Bold;
 }
 .des{
     color: #fff;
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
-    font-size: 26px;
+    font-size: 28px;
     text-align: center;
-    line-height: 35px;
+    line-height: 45px;
     margin-top:10px;
+    font-family: OpenSans-Regular;
 }
 .button{
     display: flex;
@@ -91,18 +106,18 @@ h1{
     border-radius: 50px;
     border: 2px #8cf0be solid;
     color: #8cf0be;
-    font-size: 30px;
+    font-size: 36px;
     font-weight: bold;
     text-align: center;
     line-height: 100px;
-    background-color: rgba(255, 255, 255, 0)
+    background-color: rgba(255, 255, 255, 0);
 }
 .game{
     width: 300px;
     border-radius: 60px;
     background: linear-gradient(#66C69D, #3B885E);
     color: #fff;
-    font-size: 30px;
+    font-size: 36px;
     font-weight: bold;
     text-align: center;
     line-height: 100px;
@@ -111,6 +126,7 @@ h1{
     text-align: center;
     line-height: 35px;
     margin-top: 100px;
+    font-family: OpenSans-Regular;
 }
 .treaty span{
     color: #fff;

@@ -54,9 +54,27 @@ export default {
     methods: {
         closeGiftCoins(whether){
             this.$emit('on-close',whether)
-        }
+        },
     }
 }
+
+// 分享实例代码
+// created(){
+//     window.shareSucceed = this.shareSucceed;
+//     var that = this
+// },
+// methods:{
+//     close_no(){this.$emit('on-close',0)},
+//     close_yes(){this.$emit('on-close',1)},
+//     shareSucceed(){this.close_yes()},
+//     share(){
+//         let title = 'Dukung Indonesia di Caping dan raih koin sebanyak mungkin!'
+//         let content = 'Dukung Indonesia di Caping dan raih koin sebanyak mungkin!'
+//         let pic = null
+//         var url ='http://campaign.caping.co.id/dukungindonesia/'
+//         CapingJs.share(title, content,url,pic)
+//     }
+// }
 </script>
 
 <style scoped>

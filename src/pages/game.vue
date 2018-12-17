@@ -52,10 +52,6 @@
         <SelectGift v-if="SelectGiftShow" @on-close="closeSelectGift" :boxType="boxType"></SelectGift>
         <GiftCoins v-if="GiftCoinsShow" @on-close="closeGiftCoins" :boxType="boxType"></GiftCoins>
 
-
-
-
-
     </div>
 </template>
 
@@ -600,5 +596,8 @@ p{
     top: 15px;
     left: 60px;
 }
-
+span{
+    color: #50ac7e;
+    font-weight: bold;
+}
 </style>

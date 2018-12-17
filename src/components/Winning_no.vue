@@ -84,6 +84,7 @@ export default {
     margin: 0 auto;
     position: relative;
     top:-45px;
+    font-family: OpenSans-Regular;
 }
 .white{
     width: 90%;
@@ -110,7 +111,7 @@ p{
     line-height: 50px;
     text-align: center;
     color: #266b48;
-    font-weight: 700;
+    font-family: OpenSans-SemiBold;
 }
 .box{
     margin-top:25px;
@@ -133,7 +134,8 @@ p{
     line-height: 110px;
     color: #fff;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 36px;
+    font-family: OpenSans-Regular;
 }
 .footer{
     font-size: 26px;

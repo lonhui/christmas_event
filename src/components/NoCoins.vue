@@ -7,7 +7,7 @@
             <div class="centont">
                 <h3>Oops,koin kamu tidak cukup!</h3>
                 <p>Lakukan aktifitas di Caping untuk<br>meraih lebih banyak koin</p>
-                <div class="button">
+                <div class="button" @click="closeNoCoins">
                    Oke
                 </div>
             </div>

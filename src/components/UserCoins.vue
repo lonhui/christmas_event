@@ -25,7 +25,6 @@ export default {
         }
     },
     mounted(){
-        alert("支付类型："+this.payType)
         switch(this.payType){
             case 0: this.coinsNum = 200;break;
             case 1: this.coinsNum = 400;break;
