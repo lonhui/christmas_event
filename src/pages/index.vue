@@ -18,6 +18,13 @@
                 <span>Syarat & Ketentuan</span>
             </router-link>
         </p>
+        <!--广播 -->
+        <!-- <div class="broadcast">
+            <img src="static/images/index/horn.png" alt="">
+            <div class="text">
+                <span>ssssssss</span>
+            </div>
+        </div> -->
 
         <NoLogin v-if="NoLoginShow" @on-close="NoLoginShow=false"></NoLogin>
     </div>
@@ -144,5 +151,28 @@ h1{
     color: #fff;
     font-size: 26px;
 }
+
+/* 开启广播可开 */
+/* .broadcast{
+    width: 80%;
+    height: 50px;
+    margin:20px auto 0;
+    overflow: hidden;
+    position:relative;
+}
+.broadcast img{
+    position:absolute;
+}
+.broadcast .text{
+    color: #fff;
+    font-size: 30px;
+    line-height: 38px;
+    position: absolute;
+    left: 50px;
+}
+.broadcast span{
+     position: relative;
+     left: 0;
+} */
 
 </style>
