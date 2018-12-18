@@ -122,7 +122,7 @@ export default {
 .box{
     width: 100%;
     height: 220px;
-    background: url("../assets/images/game/BulletBox/openGift.png") no-repeat;
+    background: url("../../static/images/game/BulletBox/openGift.png") no-repeat;
     background-size: 100% 100%;
 }
 p{

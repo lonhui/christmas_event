@@ -68,7 +68,6 @@ export default {
         }else{
             this.NoLoginShow = true
         }
-        
     },
     methods:{
         setCookie(uid,exdays){

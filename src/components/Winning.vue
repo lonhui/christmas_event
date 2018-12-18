@@ -30,7 +30,7 @@
                     </div>
                      <div>
                          <div class="box_img">
-                            <img src="@/assets/images/game/BulletBox/Coins_4.png">
+                            <img src="static/images/game/BulletBox/Coins_4.png">
                          </div>
                         <p>1000 Coin</p>
                     </div>
