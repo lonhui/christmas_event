@@ -65,7 +65,10 @@ export default {
                     alert('请输入有效的邮箱！');
                 }else{
                     alert("namme:"+this.userName+";"+"phone:"+this.phoneNum+";"+"emali:"+this.emali)
-                     axios.get("/api/user").then(res=>{
+                    //—————————————————————————————————————————————————————————————————————
+                    // 需要跟换接口————————————————————————————————————————————————————————
+                    //—————————————————————————————————————————————————————————————————————
+                    axios.post("/set/Info").then(res=>{
                         console.log(res)
                         if(res.data.data.code==0){
                             this.closeGiftCall()

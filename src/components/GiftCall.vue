@@ -50,7 +50,10 @@ export default {
                     alert('请输入有效的手机号码！'); 
                 }else{
                     alert("phone:"+this.phoneNum)
-                    axios.get("/api/user").then(res=>{
+                    //—————————————————————————————————————————————————————————————————————
+                    // 需要跟换接口————————————————————————————————————————————————————————
+                    //—————————————————————————————————————————————————————————————————————
+                    axios.post("/set/Info").then(res=>{
                         console.log(res)
                         if(res.data.data.code==0){
                             this.closeGiftCall()
