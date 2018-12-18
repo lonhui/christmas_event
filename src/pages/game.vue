@@ -114,6 +114,7 @@ export default {
             ],
             dailyPackage:0,//免费开箱次数
             diceStatus:false,
+            position:undefined,//后端存储的棋子位置
             payType:undefined,//付款类型 0 投掷，1 box_1，2 box_3，3 box_3
             boxType:undefined,//盒子类型        1 box_1，2 box_3，3 box_3
             boxStatus:undefined,//盒子的状态,打开盒子时传入模态框，用于模态框中判断显示状态
@@ -167,6 +168,8 @@ export default {
                 console.log(res)
                 if(res.data.code==0){
                     this.diceCount = res.data.data.diceCount
+                    this.position = res.data.data.position
+                    console.log("后端终点"+this.position)
                     this.diceStatus = false
                     this.DiceShow = true
                 }
@@ -384,8 +387,14 @@ export default {
                 if(this.ChessPositionNum==endPoint || this.ChessPositionNum==25){
                     if(this.ChessPositionNum==endPoint){
                         console.log("本次行走结束！")
+                        if(this.position != this.ChessPositionNum){
+                            // 如果前端棋子位置与后端地址位置不符，以后端位置为准
+                            this.ChessPositionNum = this.position
+                            this.transfer(this.position)
+                        }
                         clearInterval(timing)
-                        this.conversionBackImg()
+                            this.conversionBackImg()
+                       
                     }else if(endPoint>25){
                         endPoint = 25-(endPoint - 25)
                         if(endPoint<this.ChessPositionNum){
