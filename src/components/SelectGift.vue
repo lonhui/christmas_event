@@ -50,14 +50,9 @@ export default {
     methods: {
         openBox(){
             alert("盒子类型："+this.boxType)
-            //  axios.get('').then(res=>{
-
-            //  }).catch(error=>{
-
-            //  })
-            this.closeSelectGift(1)
+            this.closeSelectGift(this.boxType)
         },
-        closeSelectGift(num){ //num,0关闭,1金币，2话费，3手机
+        closeSelectGift(num){ //num,0关闭,1开盒子
             this.$emit('on-close',num)
         },
         selectBox(num){

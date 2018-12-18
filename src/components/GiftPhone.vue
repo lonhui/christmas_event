@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import axios from "axios"
+
 export default {
     data(){
         return{
@@ -63,6 +65,14 @@ export default {
                     alert('请输入有效的邮箱！');
                 }else{
                     alert("namme:"+this.userName+";"+"phone:"+this.phoneNum+";"+"emali:"+this.emali)
+                     axios.get("/api/user").then(res=>{
+                        console.log(res)
+                        if(res.data.data.code==0){
+                            this.closeGiftCall()
+                        }
+                    }).catch(error=>{
+
+                    })
                 }
             }else{
                 alert("请按要求填写信息")

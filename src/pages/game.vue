@@ -40,7 +40,6 @@
         <NetworkError v-if="NetworkErrorShow" @on-close="NetworkErrorShow=false"></NetworkError>
         
         <NoCoins v-if="NoCoinsShow" @on-close="NoCoinsShow=false"></NoCoins>
-        <GiftCall v-if="GiftCallShow" @on-close="GiftCallShow=false"></GiftCall>
         <GiftPhone v-if="GiftPhoneShow" @on-close="GiftPhoneShow=false"></GiftPhone>
         <NoLogin v-if="NoLoginShow" @on-close="NoLoginShow=false"></NoLogin>
         <Share v-if="ShareShow" @on-close="ShareShow=false"></Share>
@@ -50,7 +49,8 @@
         <WinningNo v-if="WinningNoShow" @on-close="WinningNoShow=false"></WinningNo>
         <Winning v-if="WinningShow" @on-close="closeWinning" :boxStatus="boxStatus" :countdown="countdown"></Winning>
         <SelectGift v-if="SelectGiftShow" @on-close="closeSelectGift" :boxType="boxType"></SelectGift>
-        <GiftCoins v-if="GiftCoinsShow" @on-close="closeGiftCoins" :boxType="boxType"></GiftCoins>
+        <GiftCoins v-if="GiftCoinsShow" @on-close="closeGiftCoins" :boxType="boxType" :getCoins="getCoins"></GiftCoins>
+        <GiftCall v-if="GiftCallShow" @on-close="GiftCallShow=false" :getCallCharge="getCallCharge"></GiftCall>
 
     </div>
 </template>
@@ -104,6 +104,8 @@ export default {
             ChessPositionNum:1,//当前所在格子
             boxPayNum:200,//开启本次礼盒需要的金币
             countdown:"00:00:00",//倒计时
+            getCoins:null,//获得的金币数
+            getCallCharge:null,//获得的话费
 // _______________________________________________________
             buyPackage:[
                 {level: 1, count: 0},
@@ -256,15 +258,43 @@ export default {
                 }
         },
         closeSelectGift(GiftNum){
-            this.SelectGiftShow = false
-            switch(GiftNum){
-                case 1: this.GiftCoinsShow = true
-                        break
-                case 2: this.GiftCallShow = true
-                        break
-                case 3: this.GiftPhoneShow = true
-                        break
+            console.log(GiftNum)//礼盒id用于传给后端
+            // 需要跟换接口————————————————————————————————————————————————————————
+            if(GiftNum!=0){
+                axios.get('/api/winningList')
+                .then(res=>{
+                    console.log(res)
+                    let data = res.data.data
+                    console.log(data.data)
+                    if(data.code==0){
+                        if(data.data.cellphone){
+                            alert("手机")
+                            this.GiftPhoneShow = true
+                        }else{
+                            if(data.data.isSpecial == 0){
+                                alert("金币")
+                                this.getCoins = data.data.item
+                                this.GiftCoinsShow = true
+                            }else if(data.data.isSpecial == 1){
+                                alert("话费")
+                                this.getCallCharge = data.data.item
+                                this.GiftCallShow = true
+                            }
+                        }
+                    }
+                })
+                .catch(error=>{console.log(error)})
             }
+            this.SelectGiftShow = false
+
+            // switch(GiftNum){
+            //     case 1: this.GiftCoinsShow = true
+            //             break
+            //     case 2: this.GiftCallShow = true
+            //             break
+            //     case 3: this.GiftPhoneShow = true
+            //             break
+            // }
         },
         closeGiftCoins(whether){
             this.GiftCoinsShow = false

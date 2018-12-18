@@ -5,7 +5,7 @@
                 <img src="static/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="centont">
-                <h3>Pulsa Rp 10.000</h3>
+                <h3>Pulsa Rp {{getCallCharge}}</h3>
                 <p>Masukkan nomor ponsel kamu</p>
                 <div class="input">
                     <input :class="inputClass" type="number" v-model="phoneNum" placeholder="Contoh:081234657890">
@@ -22,7 +22,10 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
+    props:["getCallCharge"],
     data(){
         return{
             phoneNum:null,
@@ -47,6 +50,14 @@ export default {
                     alert('请输入有效的手机号码！'); 
                 }else{
                     alert("phone:"+this.phoneNum)
+                    axios.get("/api/user").then(res=>{
+                        console.log(res)
+                        if(res.data.data.code==0){
+                            this.closeGiftCall()
+                        }
+                    }).catch(error=>{
+
+                    })
                 }
             }else{
                 alert('手机号码不能为空！');

@@ -1,0 +1,14 @@
+{
+    "user":{
+        "code":0,
+        "msg":"success"
+    },
+    "winningList":{
+       "code":0,
+       "msg":"success",
+       "data":{
+           "item":"3000",
+           "isSpecial":1
+       }
+    }
+}

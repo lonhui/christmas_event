@@ -35,7 +35,7 @@
 <script>
 
 export default {
-    props:["boxType"],
+    props:["boxType","getCoins"],
     data(){
         return{
             leftCoin:700,
@@ -50,6 +50,7 @@ export default {
             case 2: this.coinsNum = 2000;break;
             case 3: this.coinsNum = 3500;break;
         }
+        this.centerCoin = this.getCoins
     },
     methods: {
         closeGiftCoins(whether){
