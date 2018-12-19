@@ -49,7 +49,7 @@ export default {
     },
     methods: {
         openBox(){
-            console("盒子类型："+this.boxType)
+            console.log("盒子类型："+this.boxType)
             this.closeSelectGift(this.boxType)
         },
         closeSelectGift(num){ //num,0关闭,1开盒子

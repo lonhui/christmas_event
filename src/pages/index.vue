@@ -14,7 +14,7 @@
             </router-link>
         </div>
         <p class="treaty">
-            <router-link :to="{path:'rule/',query:{rule_id:1}}">
+            <router-link :to="{path:'rule/',query:{rule_id:1}}" style="text-decoration:none;">
                 <span>Syarat & Ketentuan</span>
             </router-link>
         </p>
