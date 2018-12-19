@@ -19,12 +19,11 @@
             </router-link>
         </p>
         <!--广播 -->
-        <!-- <div class="broadcast">
-            <img src="static/images/index/horn.png" alt="">
+        <div class="broadcast">
             <div class="text">
-                <span>ssssssss</span>
+                <p class="broadcast_span"><span>{{name}}</span> berhasil mendapatkan Pulsa <span>{{coin}}</span>. </p>
             </div>
-        </div> -->
+        </div>
 
         <NoLogin v-if="NoLoginShow" @on-close="NoLoginShow=false"></NoLogin>
     </div>
@@ -32,18 +31,23 @@
 
 <script>
 import NoLogin from "@/components/NoLogin"
+import axios from "axios"
 
 export default {
     data(){
         return {
             userId:null,
             NoLoginShow:false,
+            scrollData:[],
+            name:null,
+            coin:null,
         }
     },
     components:{
         NoLogin
     },
     mounted(){
+        this.getScroll()
         const url = window.location.href
         let uidArray = url.match(/[^a-zA-Z0-9]u{1,1}=([0-9\-]+)/)
         // let didArray = url.match(/[^a-zA-Z0-9]c{1,1}=([a-z0-9]+)/)
@@ -72,6 +76,69 @@ export default {
             var exdate = new Date();//获取时间
             exdate.setTime(exdate.getTime()+24*60*60*1000*exdays)//保存天数
             window.document.cookie="uid"+ "=" +uid+";path=/;expires="+exdate.toGMTString();
+        },
+        getScroll(){
+            axios.get("/dice/prize/text").then(res=>{
+                console.log(res.data)
+                var data = res.data.data
+                var countCoin = 0
+                var countCall = 0
+                for(let i = 0;i<100;i++){
+                    let y = Math.floor(Math.random()*10)+1
+                    if(y>3){
+                        let item = {
+                            name:data.coin[countCoin].userName,
+                            coin:data.coin[countCoin].item+" poin"
+                        }
+                        this.scrollData.push(item)
+                        countCoin++
+                    }else{
+                        if(data.special.length<=countCall){
+                            let item = {
+                                name:data.coin[countCoin].userName,
+                                coin:data.coin[countCoin].item+" poin"
+                            }
+                            this.scrollData.push(item)
+                            countCoin++
+                        }else{
+                            let item = {
+                                name:data.special[countCall].userName,
+                                coin:data.special[countCall].item*10000+" ribu"
+                            }
+                            this.scrollData.push(item)
+                            countCall++
+                        }
+                    }
+                }
+                for(let i = 0; i < this.scrollData.length;i++){
+                    let name = this.scrollData[i].name
+                    this.scrollData[i].name = name.substring(0,2)+"***"+name.substring(name.length-2,name.length)
+                }
+                this.scrolling()
+            }).catch(error=>{
+                
+            })
+        },
+        scrolling(){
+            var spanDom = document.getElementsByClassName("broadcast_span")[0]//文字
+            var timer = null
+            this.name = this.scrollData[0].name
+            this.coin = this.scrollData[0].coin
+            var count = 1
+            timer = setInterval(()=>{
+                if(spanDom.offsetLeft > 300){
+                    if(count>99){
+                        count = 0
+                    }
+                    spanDom.style.left="-320px"
+                    this.name = this.scrollData[count].name
+                    this.coin = this.scrollData[count].coin
+                    count++
+                }
+                else{
+                    spanDom.style.left = spanDom.offsetLeft + 1 + 'px';
+                }
+            },30);
         }
     }
 }
@@ -150,26 +217,31 @@ h1{
 }
 
 /* 开启广播可开 */
-/* .broadcast{
-    width: 80%;
+.broadcast{
+    width: 90%;
     height: 50px;
+    background: url("../../static/images/index/horn.png") no-repeat;
+    background-size: 100% 100%;
     margin:20px auto 0;
-    overflow: hidden;
     position:relative;
 }
-.broadcast img{
-    position:absolute;
-}
 .broadcast .text{
+    width: 87%;
+    height: 100%;
     color: #fff;
-    font-size: 30px;
-    line-height: 38px;
+    font-size: 26px;
+    line-height: 44px;
+    overflow: hidden;
     position: absolute;
-    left: 50px;
+    left: 60px;
+}
+.broadcast p{
+    width: 200%;
+    position: relative;
+    left: 0;
 }
 .broadcast span{
-     position: relative;
-     left: 0;
-} */
+    color: yellow;
+}
 
 </style>

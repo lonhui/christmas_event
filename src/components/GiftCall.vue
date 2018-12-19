@@ -5,7 +5,7 @@
                 <img src="static/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="centont">
-                <h3>Pulsa Rp {{getCallCharge}}</h3>
+                <h3>Pulsa Rp {{getCallCharge*10000}}</h3>
                 <p>Masukkan nomor ponsel kamu</p>
                 <div class="input">
                     <input :class="inputClass" type="number" v-model="phoneNum" placeholder="Contoh:081234657890">
@@ -25,7 +25,7 @@
 import axios from 'axios'
 
 export default {
-    props:["getCallCharge"],
+    props:["getCallCharge",'uid'],
     data(){
         return{
             phoneNum:null,
@@ -53,7 +53,12 @@ export default {
                     //—————————————————————————————————————————————————————————————————————
                     // 需要跟换接口————————————————————————————————————————————————————————
                     //—————————————————————————————————————————————————————————————————————
-                    axios.post("/set/Info").then(res=>{
+                    axios.get("/dice/phone",{
+                        params:{
+                            uid:this.uid,
+                            phone:this.phoneNum
+                        }
+                    }).then(res=>{
                         console.log(res)
                         if(res.data.data.code==0){
                             this.closeGiftCall()

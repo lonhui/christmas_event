@@ -50,7 +50,7 @@
         <Winning v-if="WinningShow" @on-close="closeWinning" :boxStatus="boxStatus" :countdown="countdown"></Winning>
         <SelectGift v-if="SelectGiftShow" @on-close="closeSelectGift" :boxType="boxType"></SelectGift>
         <GiftCoins v-if="GiftCoinsShow" @on-close="closeGiftCoins" :boxType="boxType" :getCoins="getCoins"></GiftCoins>
-        <GiftCall v-if="GiftCallShow" @on-close="GiftCallShow=false" :getCallCharge="getCallCharge"></GiftCall>
+        <GiftCall v-if="GiftCallShow" @on-close="GiftCallShow=false" :getCallCharge="getCallCharge" :uid="userId"></GiftCall>
 
     </div>
 </template>
@@ -147,15 +147,19 @@ export default {
             .then(res=>{
                 console.log(res)
                 let data = res.data.data
-                if(res.data.code==0){
-                    this.diceStatus = true
+                if(res.data.code == 500101){
+                    this.NoLoginShow = true
                 }else{
-                    this.diceStatus = false
-                }
-                // this.dailyPackage = data.dailyPackage
-                this.dailyPackage = 0
-                this.buyPackage = data.buyPackage
-                this.transfer(data.position)//同步棋子位置
+                    if(res.data.code==0){
+                        this.diceStatus = true
+                    }else{
+                        this.diceStatus = false
+                    }
+                    this.dailyPackage = data.dailyPackage
+                    this.buyPackage = data.buyPackage
+                    console.log(this.buyPackage)
+                    this.transfer(data.position)//同步棋子位置
+                } 
             }).catch(error=>{
                 console.log(error)
                 this.NetworkErrorShow = true
@@ -188,13 +192,27 @@ export default {
                 this.UseCoinsShow = false
                 switch(this.payType){
                     case 0: this.payOpenDice();break;
-                    case 1: this.SelectGiftShow = true;break;
-                    case 2: this.SelectGiftShow = true;break;
-                    case 3: this.SelectGiftShow = true;break;
+                    case 1: 
+                    case 2: 
+                    case 3: this.bayPackage(this.payType);break;
                 }
             }else{
                 this.UseCoinsShow = false
             }
+        },
+        bayPackage(payType){
+            axios.get('dice/buy/package/chance',{
+                params:{
+                    uid:this.userId,
+                    level:payType
+                }
+            }).then(res=>{
+                console.log(res)
+                if(res.data.code==0){
+                    this.SelectGiftShow = true
+                    this.getUserStatus()
+                }
+            })
         },
         // 付费投掷骰子
         payOpenDice(){
@@ -219,10 +237,11 @@ export default {
         openGiftBox(boxType){
             this.boxType = boxType
             this.boxStatus={
-                count:this.buyPackage[0].count,
+                count:this.buyPackage[boxType-1].count,
                 dailyPackage:this.dailyPackage,
                 boxType:boxType
             }
+            console.log(this.boxStatus)
             switch(boxType){
                 case 1: 
                         if(this.ChessPositionNum > 7){
@@ -262,16 +281,18 @@ export default {
         },
         closeSelectGift(GiftNum){
             console.log(GiftNum)//礼盒id用于传给后端
-            //—————————————————————————————————————————————————————————————————————
-            // 需要跟换接口————————————————————————————————————————————————————————
-            //—————————————————————————————————————————————————————————————————————
             if(GiftNum!=0){
-                 axios.get("/open/gift").then(res=>{
+                 axios.get("/dice/package/open",{
+                     params:{
+                         uid:this.userId,
+                         level:GiftNum,
+                     }
+                 }).then(res=>{
                     console.log(res)
-                    let data = res.data.data
+                    let data = res.data
                     console.log(data.data)
                     if(data.code==0){
-                        if(data.data.cellphone){
+                        if(data.data.item == "cellphone"){
                             //  手机
                             this.GiftPhoneShow = true
                         }else{
@@ -285,6 +306,7 @@ export default {
                                 this.GiftCallShow = true
                             }
                         }
+                        this.getUserStatus()
                     }
                 }).catch(error=>{console.log(error)})
             }
@@ -342,7 +364,6 @@ export default {
                 {top:0,left:0},{top:0,left:aa},{top:0,left:bb},{top:0,left:cc},{top:0,left:dd},
             ]
             this.ChessPosition = ChessPosition
-            console.log(ChessPosition)
         },
         //判断转换礼盒状态
         conversionBackImg(){

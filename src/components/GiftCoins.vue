@@ -13,7 +13,7 @@
                     <div class="coin_center">{{centerCoin}} Coin</div>
                     <div class="coin_right">{{rightCoin}}</div>
                 </div>
-                <p>Kamu telah mendapatkan<br><span>200 Caping Coin!</span></p>
+                <p>Kamu telah mendapatkan<br><span>{{centerCoin}} Caping Coin!</span></p>
                 <div class="button">
                     <div class="share_button">
                         <img src="static/images/game/BulletBox/share_button.png" alt="">
