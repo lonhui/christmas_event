@@ -26,11 +26,13 @@
         </div>
 
         <NoLogin v-if="NoLoginShow" @on-close="NoLoginShow=false"></NoLogin>
+         <NetworkError v-if="NetworkErrorShow" @on-close="NetworkErrorShow=false"></NetworkError>
     </div>
 </template>
 
 <script>
 import NoLogin from "@/components/NoLogin"
+import NetworkError from "@/components/NetworkError"
 import axios from "axios"
 
 export default {
@@ -38,13 +40,15 @@ export default {
         return {
             userId:null,
             NoLoginShow:false,
+            NetworkErrorShow:false,
             scrollData:[],
             name:null,
             coin:null,
         }
     },
     components:{
-        NoLogin
+        NoLogin,
+        NetworkError
     },
     mounted(){
         this.getScroll()
@@ -116,7 +120,7 @@ export default {
                 }
                 this.scrolling()
             }).catch(error=>{
-                
+                this.NetworkErrorShow = true
             })
         },
         scrolling(){

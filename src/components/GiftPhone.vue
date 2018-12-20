@@ -1,7 +1,7 @@
 <template>
     <div id="GiftPhone" @touchmove.prevent>
         <div class="white">
-            <div class="end" @click="closeGiftPhone">
+            <div class="end" @click="closeGiftPhone(0)">
                 <img src="static/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="centont">
@@ -34,6 +34,7 @@
 import axios from "axios"
 
 export default {
+    props:["uid"],
     data(){
         return{
             userName:null,
@@ -44,8 +45,8 @@ export default {
         }
     },
     methods: {
-        closeGiftPhone(){
-            this.$emit('on-close')
+        closeGiftPhone(num){
+            this.$emit('on-close',num)
         },
         submit(){
             var myregEmali = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
@@ -64,17 +65,20 @@ export default {
                     this.emaliInClass = "noInput"
                     alert('请输入有效的邮箱！');
                 }else{
-                    alert("namme:"+this.userName+";"+"phone:"+this.phoneNum+";"+"emali:"+this.emali)
-                    //—————————————————————————————————————————————————————————————————————
-                    // 需要跟换接口————————————————————————————————————————————————————————
-                    //—————————————————————————————————————————————————————————————————————
-                    axios.post("/set/Info").then(res=>{
+                    axios.get("/dice/user/info",{
+                        params:{
+                            uid:this.uid,
+                            phone:this.phoneNum,
+                            email:this.emali,
+                            userName:this.userName,
+                        }
+                    }).then(res=>{
                         console.log(res)
-                        if(res.data.data.code==0){
-                            this.closeGiftCall()
+                        if(res.data.code==0){
+                            this.closeGiftPhone(1)
                         }
                     }).catch(error=>{
-
+                        console.log(error)
                     })
                 }
             }else{

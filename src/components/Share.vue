@@ -10,7 +10,7 @@
                 <p>Pulsa akan dikirim ke nomor kamu<br>dalam maksimal 3x24 jam</p>
                 <!-- 手机 -->
                 <!-- <p>Tim Caping akan menghubungi kamu<br>lewat email untuk proses lebih lanjut</p> -->
-                <div class="button">
+                <div class="button" @click="share">
                    <img src="static/images/game/BulletBox/share_button.png" alt="">
                 </div>
                  <div class="footer">
@@ -18,28 +18,34 @@
                 </div>
             </div>
         </div>
-        <div class="header_img">
+        <div class="header_img_call" v-if="shareType==1">
             <img src="static/images/game/BulletBox/CallCharge_share.png" alt="">
+        </div>
+        <div class="header_img_phone" v-if="shareType==0">
+            <img src="static/images/game/BulletBox/Gift_phone.png" alt="">
         </div>
        
     </div>
 </template>
 
 <script>
-import callImg from "../../static/images/game/BulletBox/shutDown.png"
-import phoneImg from "../../static/images/game/BulletBox/Gift_phone.png"
-
 export default {
-    // props:[data],
-    data(){
-        return{
-            callImg:callImg,
-            phoneImg:phoneImg
-        }
+    props:["shareType"],
+    created(){
+        window.shareSucceed = this.shareSucceed;
+        var that = this
     },
     methods: {
         closeShare(){
             this.$emit('on-close')
+        },
+        shareSucceed(){this.closeShare()},
+        share(){
+            let title = 'Dukung Indonesia di Caping dan raih koin sebanyak mungkin!'
+            let content = 'Dukung Indonesia di Caping dan raih koin sebanyak mungkin!'
+            let pic = null
+            var url ='http://campaign.caping.co.id/dukungindonesia/'
+            CapingJs.share(title, content,url,pic)
         }
     }
 }
@@ -88,11 +94,17 @@ p{
     top: 20px;
     right: 20px;
 }
-.header_img{
+.header_img_call{
     width: 350px;
     margin: 0 auto;
     position: relative;
-    top:-730px;
+    top:-720px;
+}
+.header_img_phone{
+    width: 300px;
+    margin: 0 auto;
+    position: relative;
+    top:-720px;
 }
 .button{
     width: 300px;

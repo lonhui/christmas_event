@@ -40,17 +40,18 @@
         <NetworkError v-if="NetworkErrorShow" @on-close="NetworkErrorShow=false"></NetworkError>
         
         <NoCoins v-if="NoCoinsShow" @on-close="NoCoinsShow=false"></NoCoins>
-        <GiftPhone v-if="GiftPhoneShow" @on-close="GiftPhoneShow=false"></GiftPhone>
         <NoLogin v-if="NoLoginShow" @on-close="NoLoginShow=false"></NoLogin>
-        <Share v-if="ShareShow" @on-close="ShareShow=false"></Share>
-
         <Dice v-if="DiceShow" @on-close="closeDice" :diceCount="diceCount"></Dice>
         <UseCoins v-if="UseCoinsShow" @on-close="closePay" :payType="payType"></UseCoins>
         <WinningNo v-if="WinningNoShow" @on-close="WinningNoShow=false"></WinningNo>
         <Winning v-if="WinningShow" @on-close="closeWinning" :boxStatus="boxStatus" :countdown="countdown"></Winning>
         <SelectGift v-if="SelectGiftShow" @on-close="closeSelectGift" :boxType="boxType"></SelectGift>
         <GiftCoins v-if="GiftCoinsShow" @on-close="closeGiftCoins" :boxType="boxType" :getCoins="getCoins"></GiftCoins>
-        <GiftCall v-if="GiftCallShow" @on-close="GiftCallShow=false" :getCallCharge="getCallCharge" :uid="userId"></GiftCall>
+        <GiftCall v-if="GiftCallShow" @on-close="closeGiftCall" :getCallCharge="getCallCharge" :uid="userId"></GiftCall>
+        <GiftPhone v-if="GiftPhoneShow" @on-close="closeGiftPhone" :uid="userId"></GiftPhone>
+        <Share v-if="ShareShow" @on-close="ShareShow=false" :shareType="shareType"></Share>
+
+
 
     </div>
 </template>
@@ -80,9 +81,9 @@ export default {
             NoCoinsShow:false,//金币不足提示框
             GiftCallShow:false,//开奖结果显示————话费
             GiftPhoneShow:false,//开奖结果显示————手机
+            GiftCoinsShow:false,//开奖结果显示————金币
             NoLoginShow:false,//未登录提示框
             SelectGiftShow:false,//礼盒选择框
-            GiftCoinsShow:false,//开奖结果显示————金币
             WinningShow:false,//盒子开启状态
             WinningNoShow:false,
             ShareShow:false,//分享弹框
@@ -118,6 +119,7 @@ export default {
             payType:undefined,//付款类型 0 投掷，1 box_1，2 box_3，3 box_3
             boxType:undefined,//盒子类型        1 box_1，2 box_3，3 box_3
             boxStatus:undefined,//盒子的状态,打开盒子时传入模态框，用于模态框中判断显示状态
+            shareType:undefined//0话费，1手机
         }
     },
     components:{
@@ -181,6 +183,20 @@ export default {
                 console.log(error)
                 this.NetworkErrorShow = true
             })
+        },
+        closeGiftPhone(num){//num  0关闭，1开启分享
+            this.GiftPhoneShow = false
+            if(num==1){
+                this.shareType = 1
+                this.ShareShow = true
+            }
+        },
+        closeGiftCall(num){//num  0关闭，1开启分享
+            this.GiftCallShow = false
+            if(num==1){
+                this.shareType = 0
+                this.ShareShow = true
+            }
         },
         // 付款
         pay(payType){

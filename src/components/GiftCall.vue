@@ -1,7 +1,7 @@
 <template>
     <div id="GiftCall" @touchmove.prevent>
         <div class="white">
-            <div class="end" @click="closeGiftCall">
+            <div class="end" @click="closeGiftCall(0)">
                 <img src="static/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="centont">
@@ -33,8 +33,8 @@ export default {
         }
     },
     methods: {
-        closeGiftCall(){
-            this.$emit('on-close')
+        closeGiftCall(num){
+            this.$emit('on-close',num)
         },
         submit(){
             var verifyPhone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
@@ -49,10 +49,6 @@ export default {
                     this.inputClass = "noTelInput"
                     alert('请输入有效的手机号码！'); 
                 }else{
-                    alert("phone:"+this.phoneNum)
-                    //—————————————————————————————————————————————————————————————————————
-                    // 需要跟换接口————————————————————————————————————————————————————————
-                    //—————————————————————————————————————————————————————————————————————
                     axios.get("/dice/phone",{
                         params:{
                             uid:this.uid,
@@ -60,11 +56,11 @@ export default {
                         }
                     }).then(res=>{
                         console.log(res)
-                        if(res.data.data.code==0){
-                            this.closeGiftCall()
+                        if(res.data.code==0){
+                            this.closeGiftCall(1)
                         }
                     }).catch(error=>{
-
+                        console.log(error)
                     })
                 }
             }else{
