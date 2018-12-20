@@ -41,7 +41,7 @@ export default {
         "static/images/bg.png",
         "static/images/index/capingRun.png",
         "static/images/game/capingRun_min.png",
-        "static/images/game/checkerboard_gray.pn",
+        "static/images/game/checkerboard_gray.png",
         "static/images/game/checkerboard_bright_1.png",
         "static/images/game/checkerboard_bright_2.png",
         "static/images/game/checkerboard_bright.png",

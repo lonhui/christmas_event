@@ -30,7 +30,7 @@
 
 <script>
 export default {
-    props:["shareType"],
+    props:["shareType"],//0话费，1手机
     created(){
         window.shareSucceed = this.shareSucceed;
         var that = this
@@ -41,10 +41,15 @@ export default {
         },
         shareSucceed(){this.closeShare()},
         share(){
-            let title = 'Dukung Indonesia di Caping dan raih koin sebanyak mungkin!'
-            let content = 'Dukung Indonesia di Caping dan raih koin sebanyak mungkin!'
+            let title = 'Caping'
+            let content = ''
+            if(this.shareType==0){
+                content='Yey! Aku baru saja dapetin pulsa gratis di event Caping Run. Kamu mau juga? (link download app)'
+            }else{
+                content='Yey! Aku baru saja dapetin smartphone keren di event Caping Run. Kamu mau juga? (link download app)'
+            }
             let pic = null
-            var url ='http://campaign.caping.co.id/dukungindonesia/'
+            var url ='https://app.appsflyer.com/com.engloryintertech.caping?pid=Caping+Article'
             CapingJs.share(title, content,url,pic)
         }
     }

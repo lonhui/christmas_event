@@ -114,7 +114,7 @@ export default {
                 {level: 3, count: 0},
             ],
             dailyPackage:0,//免费开箱次数
-            diceStatus:false,
+            diceStatus:true,
             position:undefined,//后端存储的棋子位置
             payType:undefined,//付款类型 0 投掷，1 box_1，2 box_3，3 box_3
             boxType:undefined,//盒子类型        1 box_1，2 box_3，3 box_3

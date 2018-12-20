@@ -15,7 +15,7 @@
                 </div>
                 <p>Kamu telah mendapatkan<br><span>{{centerCoin}} Caping Coin!</span></p>
                 <div class="button">
-                    <div class="share_button">
+                    <div class="share_button" @click="share">
                         <img src="static/images/game/BulletBox/share_button.png" alt="">
                     </div>
                     <div class="pay_button" @click="closeGiftCoins(true)">
@@ -62,10 +62,10 @@ export default {
         },
         shareSucceed(){this.closeGiftCoins(false)},
         share(){
-            let title = 'Dukung Indonesia di Caping dan raih koin sebanyak mungkin!'
-            let content = 'Dukung Indonesia di Caping dan raih koin sebanyak mungkin!'
+            let title = 'Caping'
+            let content = 'Yey! Aku baru saja dapetin koin Caping di event Caping Run. Kamu mau juga? (link download app)'
             let pic = null
-            var url ='http://campaign.caping.co.id/dukungindonesia/'
+            var url ='https://app.appsflyer.com/com.engloryintertech.caping?pid=Caping+Article'
             CapingJs.share(title, content,url,pic)
         }
     }
