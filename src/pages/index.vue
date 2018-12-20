@@ -82,14 +82,13 @@ export default {
             window.document.cookie="uid"+ "=" +uid+";path=/;expires="+exdate.toGMTString();
         },
         getScroll(){
-            axios.get("/dice/prize/text").then(res=>{
-                console.log(res.data)
+            axios.get(process.env.API_ROOT+"/dice/prize/text").then(res=>{
                 var data = res.data.data
                 var countCoin = 0
                 var countCall = 0
-                for(let i = 0;i<100;i++){
+                for(let i = 0;i<(data.coin.length+data.special.length);i++){
                     let y = Math.floor(Math.random()*10)+1
-                    if(y>3){
+                    if(y>5){
                         let item = {
                             name:data.coin[countCoin].userName,
                             coin:data.coin[countCoin].item+" poin"
@@ -120,6 +119,7 @@ export default {
                 }
                 this.scrolling()
             }).catch(error=>{
+                console.log(error)
                 this.NetworkErrorShow = true
             })
         },

@@ -145,9 +145,8 @@ export default {
     methods:{
         getUserStatus(){
             // 获取用户当前位置
-            axios.get("/dice/chance?uid="+this.userId)
+            axios.get(process.env.API_ROOT+"/dice/chance?uid="+this.userId)
             .then(res=>{
-                console.log(res)
                 let data = res.data.data
                 if(res.data.code == 500101){
                     this.NoLoginShow = true
@@ -159,7 +158,6 @@ export default {
                     }
                     this.dailyPackage = data.dailyPackage
                     this.buyPackage = data.buyPackage
-                    console.log(this.buyPackage)
                     this.transfer(data.position)//同步棋子位置
                 } 
             }).catch(error=>{
@@ -169,15 +167,15 @@ export default {
         },
         // 投掷骰子
         openDice(){
-            axios.get('/dice/one?uid='+this.userId)
+            axios.get(process.env.API_ROOT+'/dice/one?uid='+this.userId)
             .then(res=>{
-                console.log(res)
                 if(res.data.code==0){
                     this.diceCount = res.data.data.diceCount
                     this.position = res.data.data.position
-                    console.log("后端终点"+this.position)
                     this.diceStatus = false
                     this.DiceShow = true
+                }else if(res.data.code=="500100"){
+                    this.NetworkErrorShow = true
                 }
             }).catch(error=>{
                 console.log(error)
@@ -208,8 +206,8 @@ export default {
                 this.UseCoinsShow = false
                 switch(this.payType){
                     case 0: this.payOpenDice();break;
-                    case 1: 
-                    case 2: 
+                    case 1: this.bayPackage(this.payType);break;
+                    case 2: this.bayPackage(this.payType);break;
                     case 3: this.bayPackage(this.payType);break;
                 }
             }else{
@@ -217,26 +215,32 @@ export default {
             }
         },
         bayPackage(payType){
-            axios.get('dice/buy/package/chance',{
+            axios.get(process.env.API_ROOT+'/dice/buy/package/chance',{
                 params:{
                     uid:this.userId,
                     level:payType
                 }
             }).then(res=>{
-                console.log(res)
                 if(res.data.code==0){
                     this.SelectGiftShow = true
                     this.getUserStatus()
+                }else if(res.data.code == 500202){
+                    this.NoCoinsShow = true
+                }else  if(res.data.code==500100){
+                    this.NetworkErrorShow = true
                 }
             })
         },
         // 付费投掷骰子
         payOpenDice(){
-             axios.get('/dice/buy/dice/chance?uid='+this.userId)
+             axios.get( process.env.API_ROOT+'/dice/buy/dice/chance?uid='+this.userId)
             .then(res=>{
-                console.log(res)
                 if(res.data.code==0){
                     this.openDice()
+                }else if(res.data.code==500100){
+                    this.NetworkErrorShow = true
+                }else if(res.data.code == 500202){
+                    this.NoCoinsShow = true
                 }
             }).catch(error=>{
                 console.log(error)
@@ -246,7 +250,6 @@ export default {
         closeDice(diceCount){
             this.DiceShow = false
             var endPoint = this.ChessPositionNum + diceCount//本次行走的终点
-            console.log("本次行走初始位置："+this.ChessPositionNum+";本次行走终点位置："+endPoint)
             this.walk(diceCount,endPoint)
         },
 //=======================================================开箱
@@ -257,7 +260,6 @@ export default {
                 dailyPackage:this.dailyPackage,
                 boxType:boxType
             }
-            console.log(this.boxStatus)
             switch(boxType){
                 case 1: 
                         if(this.ChessPositionNum > 7){
@@ -295,18 +297,15 @@ export default {
                             break;
                 }
         },
-        closeSelectGift(GiftNum){
-            console.log(GiftNum)//礼盒id用于传给后端
+        closeSelectGift(GiftNum){//礼盒id用于传给后端
             if(GiftNum!=0){
-                 axios.get("/dice/package/open",{
+                 axios.get(process.env.API_ROOT+"/dice/package/open",{
                      params:{
                          uid:this.userId,
                          level:GiftNum,
                      }
                  }).then(res=>{
-                    console.log(res)
                     let data = res.data
-                    console.log(data.data)
                     if(data.code==0){
                         if(data.data.item == "cellphone"){
                             //  手机
@@ -423,7 +422,6 @@ export default {
             timing = setInterval(()=>{
                 if(this.ChessPositionNum==endPoint || this.ChessPositionNum==25){
                     if(this.ChessPositionNum==endPoint){
-                        console.log("本次行走结束！")
                         if(this.position != this.ChessPositionNum){
                             // 如果前端棋子位置与后端地址位置不符，以后端位置为准
                             this.ChessPositionNum = this.position
@@ -437,13 +435,11 @@ export default {
                         if(endPoint<this.ChessPositionNum){
                             OneGrid = -OneGrid
                         }
-                        console.log("触顶倒退，目标修改为:"+endPoint+"当前位置："+this.ChessPositionNum)
                     }else{
                         this.walkingToRight(OneGrid);
                         --this.ChessPositionNum
                     }
                 }else{
-                    console.log("走了"+ ++count+"步")
                     switch(this.ChessPositionNum){
                         case 1:
                         case 2:
@@ -458,7 +454,6 @@ export default {
                         case 23:
                         case 24:this.walkingToRight(OneGrid);//向右
                                 endPoint<this.ChessPositionNum?--this.ChessPositionNum:++this.ChessPositionNum
-                                console.log("当前位置："+this.ChessPositionNum+";目标位置："+endPoint)
                                 break;
                         case 6:
                         case 7:
@@ -469,14 +464,12 @@ export default {
                         case 18:
                         case 19:this.walkingToRight(-OneGrid);// 向左
                                 endPoint<this.ChessPositionNum?--this.ChessPositionNum:++this.ChessPositionNum
-                                console.log("当前位置："+this.ChessPositionNum+";目标位置："+endPoint)
                                 break;
                         case 5:
                         case 10:
                         case 15:
                         case 20:this.walkingToTop(OneGrid);//向上
                                 endPoint<this.ChessPositionNum?--this.ChessPositionNum:++this.ChessPositionNum
-                                console.log("当前位置："+this.ChessPositionNum+";目标位置："+endPoint)
                                 break;
                     }
                 }
@@ -501,9 +494,7 @@ export default {
         },
         //传送
         transfer(num){
-            console.log("传送！")
             this.ChessPositionNum = num
-            console.log("当前位置："+this.ChessPositionNum)
             var oDiv =document.getElementById("piece");
             let left = this.ChessPosition[num-1].left/2
             let top = this.ChessPosition[num-1].top/2

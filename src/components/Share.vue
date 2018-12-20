@@ -18,10 +18,10 @@
                 </div>
             </div>
         </div>
-        <div class="header_img_call" v-if="shareType==1">
+        <div class="header_img_call" v-if="shareType==0">
             <img src="static/images/game/BulletBox/CallCharge_share.png" alt="">
         </div>
-        <div class="header_img_phone" v-if="shareType==0">
+        <div class="header_img_phone" v-if="shareType==1">
             <img src="static/images/game/BulletBox/Gift_phone.png" alt="">
         </div>
        

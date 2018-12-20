@@ -7,7 +7,7 @@
             <div class="centont">
                 <h3>KAMU BELUM LOGIN</h3>
                 <p>Masuk ke akun Caping untuk<br>mulai bermain</p>
-                <div class="button">
+                <div class="button" @click="esc">
                     <img src="static/images/game/BulletBox/goLogin_button.png" alt="">
                 </div>
             </div>
@@ -23,6 +23,9 @@ export default {
     methods: {
         closeNoLogin(){
             this.$emit('on-close')
+        },
+        esc(){
+            this.$router.push('/')
         }
     }
 }

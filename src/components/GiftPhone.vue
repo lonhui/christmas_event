@@ -58,9 +58,8 @@ export default {
                     this.telInClass = "noInput"
                 }else if(!myregEmali.test(this.emali)){
                     this.emaliInClass = "noInput"
-                    alert('请输入有效的邮箱！');
                 }else{
-                    axios.get("/dice/user/info",{
+                    axios.get(process.env.API_ROOT+"/dice/user/info",{
                         params:{
                             uid:this.uid,
                             phone:this.phoneNum,
@@ -68,7 +67,6 @@ export default {
                             userName:this.userName,
                         }
                     }).then(res=>{
-                        console.log(res)
                         if(res.data.code==0){
                             this.closeGiftPhone(1)
                         }

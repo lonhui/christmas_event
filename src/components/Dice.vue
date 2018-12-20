@@ -84,7 +84,6 @@ export default {
         }
     },
     mounted(){
-        console.log("本次骰子点数："+this.diceCount)
         setTimeout(()=>{
             this.DiceNumber = this.diceCount
         },2000)

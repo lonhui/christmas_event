@@ -44,13 +44,12 @@ export default {
                 } else if(this.phoneNum.length!=11) { 
                     this.inputClass = "noTelInput"
                 }else {
-                    axios.get("/dice/phone",{
+                    axios.get(process.env.API_ROOT+"/dice/phone",{
                         params:{
                             uid:this.uid,
                             phone:this.phoneNum
                         }
                     }).then(res=>{
-                        console.log(res)
                         if(res.data.code==0){
                             this.closeGiftCall(1)
                         }
