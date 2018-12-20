@@ -41,14 +41,9 @@ export default {
             if(this.phoneNum){
                 if(this.phoneNum.length==0) { 
                     this.inputClass = "noTelInput"
-                    alert('手机号码不能为空！');
                 } else if(this.phoneNum.length!=11) { 
                     this.inputClass = "noTelInput"
-                    alert('请输入有效的手机号码，需是11位！');
-                }else if(!verifyPhone.test(this.phoneNum)){ 
-                    this.inputClass = "noTelInput"
-                    alert('请输入有效的手机号码！'); 
-                }else{
+                }else {
                     axios.get("/dice/phone",{
                         params:{
                             uid:this.uid,
@@ -64,7 +59,7 @@ export default {
                     })
                 }
             }else{
-                alert('手机号码不能为空！');
+                this.inputClass = "noTelInput"
             }
             
         }

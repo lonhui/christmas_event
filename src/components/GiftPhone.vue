@@ -54,13 +54,8 @@ export default {
             if(this.phoneNum && this.userName && this.emali){
                 if(this.phoneNum.length==0) {
                     this.telInClass = "noInput"
-                    alert('手机号码不能为空！');
                 } else if(this.phoneNum.length!=11) { 
                     this.telInClass = "noInput"
-                    alert('请输入有效的手机号码，需是11位！');
-                }else if(!verifyPhone.test(this.phoneNum)){ 
-                    this.telInClass = "noInput"
-                    alert('请输入有效的手机号码！'); 
                 }else if(!myregEmali.test(this.emali)){
                     this.emaliInClass = "noInput"
                     alert('请输入有效的邮箱！');
@@ -81,8 +76,6 @@ export default {
                         console.log(error)
                     })
                 }
-            }else{
-                alert("请按要求填写信息")
             }
         }
     },
