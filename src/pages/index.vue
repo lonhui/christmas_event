@@ -130,11 +130,11 @@ export default {
             this.coin = this.scrollData[0].coin
             var count = 1
             timer = setInterval(()=>{
-                if(spanDom.offsetLeft > 300){
+                if(spanDom.offsetLeft > 260){
                     if(count>99){
                         count = 0
                     }
-                    spanDom.style.left="-320px"
+                    spanDom.style.left="-300px"
                     this.name = this.scrollData[count].name
                     this.coin = this.scrollData[count].coin
                     count++
@@ -142,7 +142,7 @@ export default {
                 else{
                     spanDom.style.left = spanDom.offsetLeft + 1 + 'px';
                 }
-            },30);
+            },20);
         }
     }
 }

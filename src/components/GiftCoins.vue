@@ -120,7 +120,31 @@ export default {
     height: 220px;
     background: url("../../static/images/game/BulletBox/openGift.png") no-repeat;
     background-size: 100% 100%;
+    position: relative;
 }
+.coin_left{
+    color: #fff;
+    font-size: 24px;
+    position: absolute;
+    left: 70px;
+    top:48px;
+}
+.coin_center{
+    color: #fff;
+    font-size: 34px;
+    font-weight: 600;
+    position: absolute;
+    left: 245px;
+    top:42px;
+}
+.coin_right{
+    color: #fff;
+    font-size: 24px;
+    position: absolute;
+    left: 485px;
+    top:48px;
+}
+
 p{
     margin-top:30px;
     font-size: 28px;
@@ -170,29 +194,6 @@ p span{
     font-size: 26px;
 }
 
-
-.coin_left{
-    color: #fff;
-    font-size: 24px;
-    position: relative;
-    left: 70px;
-    top:48px;
-}
-.coin_center{
-    color: #fff;
-    font-size: 34px;
-    font-weight: 600;
-    position: relative;
-    left: 245px;
-    top:16px;
-}
-.coin_right{
-    color: #fff;
-    font-size: 24px;
-    position: relative;
-    left: 485px;
-    top:-8px;
-}
 
 
 </style>
