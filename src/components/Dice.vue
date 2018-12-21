@@ -86,6 +86,7 @@ export default {
     mounted(){
         setTimeout(()=>{
             this.DiceNumber = this.diceCount
+            this.automaticClose()
         },2000)
     },
      methods: {
@@ -93,6 +94,11 @@ export default {
             if(this.DiceNumber!=0){
                 this.$emit('on-close',this.DiceNumber)
             }
+        },
+        automaticClose(){
+            setTimeout(()=>{
+                this.closeDice()
+            },2000)
         }
     }
 }

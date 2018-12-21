@@ -9,9 +9,7 @@
             <router-link :to="{path:'rule/',query:{rule_id:0}}">
                 <button class="rule">Cara Main</button>
             </router-link>
-            <router-link :to="{path:'/game'}">
-                <button class="game">Mulai Main</button>
-            </router-link>
+            <button class="game" @click="toGame">Mulai Main</button>
         </div>
         <p class="treaty">
             <router-link :to="{path:'rule/',query:{rule_id:1}}" style="text-decoration:none;">
@@ -21,7 +19,7 @@
         <!--广播 -->
         <div class="broadcast">
             <div class="text">
-                <p class="broadcast_span"><span>{{name}}</span> berhasil mendapatkan Pulsa <span>{{coin}}</span>. </p>
+                <p class="broadcast_span"><span>{{name}}</span> berhasil mendapatkan <span>{{coin}}</span>. </p>
             </div>
         </div>
 
@@ -52,30 +50,40 @@ export default {
     },
     mounted(){
         this.getScroll()
-        const url = window.location.href
-        let uidArray = url.match(/[^a-zA-Z0-9]u{1,1}=([0-9\-]+)/)
-        // let didArray = url.match(/[^a-zA-Z0-9]c{1,1}=([a-z0-9]+)/)
-        // let did = didArray[1]
-        // this.user.did = did
-        if(uidArray){
-            let uid = uidArray[1]
-            this.userId = uid
-            this.setCookie(uid,1)
-        }else  if (document.cookie.length>0) {
-            var arr=document.cookie.split('; ');//这里显示的格式需要切割一下自己可输出看下
-            for(var i=0;i<arr.length;i++){
-                var arr2=arr[i].split('=');//再次切割
-                //判断查找相对应的值
-                if(arr2[0]=='uid'){
-                    this.userId = arr2[1]//保存到保存数据的地方
-                }
-            }
-            if(this.userId==null){this.NoLoginShow = true}
-        }else{
-            this.NoLoginShow = true
-        }
+        this.getUid()
     },
     methods:{
+        getUid(){
+            const url = window.location.href
+            let uidArray = url.match(/[^a-zA-Z0-9]u{1,1}=([0-9\-]+)/)
+            // let didArray = url.match(/[^a-zA-Z0-9]c{1,1}=([a-z0-9]+)/)
+            // let did = didArray[1]
+            // this.user.did = did
+            if(uidArray){
+                let uid = uidArray[1]
+                this.userId = uid
+                this.setCookie(uid,1)
+            }else  if (document.cookie.length>0) {
+                var arr=document.cookie.split('; ');//这里显示的格式需要切割一下自己可输出看下
+                for(var i=0;i<arr.length;i++){
+                    var arr2=arr[i].split('=');//再次切割
+                    //判断查找相对应的值
+                    if(arr2[0]=='uid'){
+                        this.userId = arr2[1]//保存到保存数据的地方
+                    }
+                }
+                if(this.userId==null){this.NoLoginShow = true}
+            }else{
+                this.NoLoginShow = true
+            }
+        },
+        toGame(){
+            if(this.userId){
+                this.$router.push('/game')
+            }else{
+                this.NoLoginShow = true
+            }
+        },
         setCookie(uid,exdays){
             var exdate = new Date();//获取时间
             exdate.setTime(exdate.getTime()+24*60*60*1000*exdays)//保存天数
@@ -91,7 +99,7 @@ export default {
                     if(y>5){
                         let item = {
                             name:data.coin[countCoin].userName,
-                            coin:data.coin[countCoin].item+" poin"
+                            coin:data.coin[countCoin].item+" coin"
                         }
                         this.scrollData.push(item)
                         countCoin++
@@ -99,14 +107,14 @@ export default {
                         if(data.special.length<=countCall){
                             let item = {
                                 name:data.coin[countCoin].userName,
-                                coin:data.coin[countCoin].item+" poin"
+                                coin:data.coin[countCoin].item+" coin"
                             }
                             this.scrollData.push(item)
                             countCoin++
                         }else{
                             let item = {
                                 name:data.special[countCall].userName,
-                                coin:data.special[countCall].item*10000+" ribu"
+                                coin:"Pulsa "+(data.special[countCall].item*10000)
                             }
                             this.scrollData.push(item)
                             countCall++
@@ -130,17 +138,17 @@ export default {
             this.coin = this.scrollData[0].coin
             var count = 1
             timer = setInterval(()=>{
-                if(spanDom.offsetLeft > 260){
+                if(spanDom.offsetLeft < -280){
                     if(count>99){
                         count = 0
                     }
-                    spanDom.style.left="-300px"
+                    spanDom.style.left="310px"
                     this.name = this.scrollData[count].name
                     this.coin = this.scrollData[count].coin
                     count++
                 }
                 else{
-                    spanDom.style.left = spanDom.offsetLeft + 1 + 'px';
+                    spanDom.style.left = spanDom.offsetLeft - 1 + 'px';
                 }
             },20);
         }
@@ -242,7 +250,7 @@ h1{
 .broadcast p{
     width: 200%;
     position: relative;
-    left: 0;
+    left: 500px;
 }
 .broadcast span{
     color: yellow;

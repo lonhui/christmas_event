@@ -5,34 +5,34 @@
                 <img src="static/images/game/BulletBox/shutDown.png" alt="">
             </div>
             <div class="header">
-                Hadiah Sesi 1
+                Hadiah Sesi {{boxStatus.boxType}}
             </div>
             <div class="centont">
                 <p class="top_p">Kamu berkesempatan mendapatkan salah<br>satu dari hadiah di bawah ini!</p>
                 <div class="box">
                     <div>
                         <div class="box_img">
-                            <img src="static/images/game/BulletBox/Coins_1.png">
+                            <img :src="this.boxGift[0].img">
                         </div>
-                        <p>350 Coin</p>
+                        <p>{{boxGift[0].coin}}</p>
                     </div>
                     <div>
                         <div class="box_img">
-                            <img src="static/images/game/BulletBox/Coins_2.png">
+                            <img :src="this.boxGift[1].img">
                         </div>
-                        <p>500 Coin</p>
+                        <p>{{boxGift[1].coin}}</p>
                     </div>
                     <div>
                         <div class="box_img">
-                            <img src="static/images/game/BulletBox/Coins_3.png">
+                           <img :src="this.boxGift[2].img">
                         </div>
-                        <p>700 Coin</p>
+                        <p>{{boxGift[2].coin}}</p>
                     </div>
                      <div>
                          <div class="box_img">
-                            <img src="static/images/game/BulletBox/Coins_4.png">
+                           <img :src="this.boxGift[3].img">
                          </div>
-                        <p>1000 Coin</p>
+                        <p>{{boxGift[3].coin}}</p>
                     </div>
                 </div>
                 <div class="button_top">
@@ -50,9 +50,71 @@
 <script>
 
 export default {
+    props:["boxStatus"],
     data(){
         return{
-
+            boxGift:[
+                {
+                    img:"static/images/game/BulletBox/Coins_1.png",
+                    coin:"350 Coin"
+                },
+                {
+                    img:"static/images/game/BulletBox/Coins_2.png",
+                    coin:"500 Coin"
+                },
+                {
+                    img:"static/images/game/BulletBox/Coins_3.png",
+                    coin:"700 Coin"
+                },
+                {
+                    img:"static/images/game/BulletBox/Coins_4.png",
+                    coin:"1000 Coin"
+                },
+            ]
+        }
+    },
+    mounted(){
+        console.log(this.boxStatus)
+        switch(this.boxStatus.boxType){
+            case 1: break;
+            case 2: this.boxGift=[
+                {
+                    img:"static/images/game/BulletBox/Coins_3.png",
+                    coin:"1000 Coin"
+                },
+                {
+                    img:"static/images/game/BulletBox/Coins_4.png",
+                    coin:"7000 Coin"
+                },
+                {
+                    img:"static/images/game/BulletBox/Gift_call.png",
+                    coin:"Pulsa 10000"
+                },
+                {
+                    img:"static/images/game/BulletBox/Gift_call.png",
+                    coin:"Pulsa 25000"
+                },
+            ]
+            break;
+            case 3: this.boxGift=[
+                {
+                    img:"static/images/game/BulletBox/Coins_3.png",
+                    coin:"10000 Coin"
+                },
+                {
+                    img:"static/images/game/BulletBox/Coins_4.png",
+                    coin:"20000 Coin"
+                },
+                {
+                    img:"static/images/game/BulletBox/Gift_call.png",
+                    coin:"Pulsa 100000"
+                },
+                {
+                    img:"static/images/game/BulletBox/Gift_phone.png",
+                    coin:"Oppo A3S"
+                },
+            ]
+            break;
         }
     },
     methods: {
@@ -122,8 +184,12 @@ p{
     align-items:flex-start;
     align-content:flex-start;
 }
+.box p{
+     font-size: 24px;
+}
 .box_img{
     width: 150px;
+    height: 150px;
 }
 .button{
     width: 360px;

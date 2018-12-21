@@ -6,9 +6,9 @@
             </div>
             <div class="centont">
                 <p class="top_p">Kamu akan menggunakan <span>{{coinsNum}} Coin</span> untuk</p>
-                <p>membuka kotak keberuntungan</p>
+                <p>{{text}}</p>
                 <div class="button"  @click="closeUserCoins(true)">
-                    Buka Kotak Sekarang
+                    {{buttonText}}
                 </div>
                 <p>BATAL</p>
             </div>
@@ -21,12 +21,17 @@ export default {
     props:["payType"],
     data(){
         return{
-            coinsNum:200
+            coinsNum:200,
+            buttonText:"Buka Kotak Sekarang",
+            text:"membuka kotak keberuntungan"
         }
     },
     mounted(){
         switch(this.payType){
-            case 0: this.coinsNum = 200;break;
+            case 0: this.coinsNum = 200;
+                    this.buttonText = "Lempar Dadu Sekarang"
+                    this.text = "Melempar Dadu"
+                    break;
             case 1: this.coinsNum = 400;break;
             case 2: this.coinsNum = 2000;break;
             case 3: this.coinsNum = 3500;break;

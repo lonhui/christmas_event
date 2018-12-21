@@ -52,8 +52,12 @@ export default {
             console.log("盒子类型："+this.boxType)
             this.closeSelectGift(this.boxType)
         },
-        closeSelectGift(num){ //num,0关闭,1开盒子
-            this.$emit('on-close',num)
+        closeSelectGift(num){ //0关闭,1开盒子1,2开盒子2,3开盒子3
+            var selectStatus={
+                num : num,
+                boxNum : this.boxNum//标记选择的盒子
+            }
+            this.$emit('on-close',selectStatus)
         },
         selectBox(num){
             switch(num){

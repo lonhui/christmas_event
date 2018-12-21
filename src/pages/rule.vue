@@ -15,8 +15,8 @@
                     <li>3.	Untuk mengikuti event ini, kamu harus memiliki Tabungan Caping yang cukup. Apabila kamu belum memiliki Tabungan Caping, silahkan menuju FAQ untuk mengetahui cara mengumpulkan Tabungan Caping.</li>
                     <li>4.	Event kali ini dibentuk dalam sebuah permainan ular tangga, dan pada akhir permainan akan ada grand prize yang bisa kamu dapatkan.</li>
                     <li>5.	Untuk memainkan ular tangga ini, setiap harinya kamu akan mendapatkan 1x kesempatan FREE melempar dadu. Namun setiap pelemparan dadu berikutnya akan dikenakan Rp 200 Tabungan Caping.</li>
-                    <li>6.	Apabila kamu sudah mencapai atau melewati kolom “Hadiah Sesi 1”, kamu akan bisa membuka kotak hadiah untuk mendapatkan kesempatan berbagai hadiah. Setiap harinya kamu akan mendapatkan 1x kesempatan FREE membuka kotak hadiah. Namun setiap pembukaan kotak hadiah berikutnya akan dikenakan Rp 400 Tabungan Caping setiap sekali buka.
-Berikut adalah hadiah yang bisa kamu dapatkan pada “Hadiah Sesi 1”:</li>
+                    <li>6.	Apabila kamu sudah mencapai atau melewati kolom “Hadiah Sesi 1”, kamu akan bisa membuka kotak hadiah untuk mendapatkan kesempatan berbagai hadiah. Setiap harinya kamu akan mendapatkan 1x kesempatan FREE* membuka kotak hadiah. Namun setiap pembukaan kotak hadiah berikutnya akan dikenakan Rp 400 Tabungan Caping setiap sekali buka.
+                           <br>Berikut adalah hadiah yang bisa kamu dapatkan pada “Hadiah Sesi 1”:</li>
                     <li>
                         <ul>
                             <li>•	Koin Rp 200</li>
@@ -26,8 +26,8 @@ Berikut adalah hadiah yang bisa kamu dapatkan pada “Hadiah Sesi 1”:</li>
                             <li>•	Koin Rp 1.000</li>
                         </ul>
                     </li>
-                    <li>7.	Apabila kamu sudah mencapai atau melewati kolom “Hadiah Sesi 2”, kamu akan bisa membuka kotak hadiah sesi 2 untuk mendapatkan kesempatan berbagai hadiah yang lebih menarik. Setiap harinya kamu akan mendapatkan 1x kesempatan FREE membuka kotak hadiah. Namun setiap pembukaan kotak hadiah berikutnya akan dikenakan Rp 400 Tabungan Caping setiap sekali buka.
-                        <br> Berikut adalah hadiah yang bisa kamu dapatkan pada “Hadiah Sesi 2”:</li>
+                    <li>7.	Apabila kamu sudah mencapai atau melewati kolom “Hadiah Sesi 2”, kamu akan bisa membuka kotak hadiah sesi 2 untuk mendapatkan kesempatan berbagai hadiah yang lebih menarik. Setiap harinya kamu akan mendapatkan 1x kesempatan FREE* membuka kotak hadiah. Namun setiap pembukaan kotak hadiah berikutnya akan dikenakan Rp 2000 Tabungan Caping setiap sekali buka.
+                            <br>Berikut adalah hadiah yang bisa kamu dapatkan pada “Hadiah Sesi 2”:</li>
                     <li>
                         <ul>
                             <li>•	Koin 1000</li>
@@ -39,7 +39,7 @@ Berikut adalah hadiah yang bisa kamu dapatkan pada “Hadiah Sesi 1”:</li>
                             <li>•	Pulsa Rp 25.000</li>
                         </ul>
                     </li>
-                    <li>8.	Apabila kamu sudah mencapai akhir permainan, kamu akan bisa membuka kotak hadiah untuk mendapatkan kesempatan berbagai Hadiah Utama. Setiap harinya kamu akan mendapatkan 1x kesempatan FREE membuka kotak hadiah utama. Namun setiap pembukaan kotak hadiah berikutnya akan dikenakan Rp 3.500 Tabungan Caping setiap sekali buka.
+                    <li>8.	Apabila kamu sudah mencapai akhir permainan, kamu akan bisa membuka kotak hadiah untuk mendapatkan kesempatan berbagai Hadiah Utama. Setiap harinya kamu akan mendapatkan 1x kesempatan FREE* membuka kotak hadiah utama. Namun setiap pembukaan kotak hadiah berikutnya akan dikenakan Rp 3.500 Tabungan Caping setiap sekali buka.
                         <br> Berikut adalah hadiah yang bisa kamu dapatkan pada “Hadiah Utama”:</li>
                     <li>
                         <ul>
@@ -54,12 +54,13 @@ Berikut adalah hadiah yang bisa kamu dapatkan pada “Hadiah Sesi 1”:</li>
                             <li>•	Koin Rp 20.000</li>
                         </ul>
                     </li>
-                    <li>9.	Untuk Capingers yang mendapatkan hadiah koin, koin akan dikirimkan langsung ke akun kamu dalam waktu maksimal 3x24 jam.</li>
-                    <li>10.	Untuk Capingers yang mendapatkan hadiah pulsa, diharapkan untuk mengisi nomor hp kamu pada kolom yang tersedia, lalu pulsa akan dikirimkan ke nomor kamu dalam waktu maksimal 3x24 jam.</li>
-                    <li>11.	Untuk Capingers yang mendapatkan hadiah Smartphone, diharapkan untuk mengisi identitas lengkap dan benar (username Caping, nomor hp, email) pada kolom yang tersedia. Setelah itu Tim Caping akan menghubungi pemenang melalui alamat email pemenang untuk proses klaim lebih lanjut.</li>
-                    <li>12.	Capingers yang mengikuti event ini dianggap setuju dengan syarat & ketentuan yang berlaku.</li>
-                    <li>13.	Adapun Capingers yang melakukan kecurangan saat mengikuti event ini akan segera ditindaklanjuti oleh Tim Caping.</li>
-                    <li>14.	Syarat & ketentuan dapat berubah sewaktu-waktu tanpa pemberitahuan lebih lanjut. Silahkan cek halaman ini secara berkala.</li>
+                    <li>9.	1x Kesempatan FREE yang diberikan untuk membuka kotak hadiah, hanya bisa kamu pilih pada salah satu Sesi Hadiah. Jadi, apabila kamu sudah membuka 1x kesempatan FREE pada salah satu Sesi Hadiah, di Sesi Hadiah lainnya akan dikenakan Tabungan Caping (berlaku di hari yang sama).</li>
+                    <li>10.	Untuk Capingers yang mendapatkan hadiah koin, koin akan dikirimkan langsung ke akun kamu dalam waktu maksimal 3x24 jam.</li>
+                    <li>11.	Untuk Capingers yang mendapatkan hadiah pulsa, diharapkan untuk mengisi nomor hp kamu pada kolom yang tersedia, lalu pulsa akan dikirimkan ke nomor kamu dalam waktu maksimal 3x24 jam.</li>
+                    <li>12.	Untuk Capingers yang mendapatkan hadiah Smartphone, diharapkan untuk mengisi identitas lengkap dan benar (username Caping, nomor hp, email) pada kolom yang tersedia. Setelah itu Tim Caping akan menghubungi pemenang melalui alamat email pemenang untuk proses klaim lebih lanjut.</li>
+                    <li>13.	Capingers yang mengikuti event ini dianggap setuju dengan syarat & ketentuan yang berlaku.</li>
+                    <li>14.	Adapun Capingers yang melakukan kecurangan saat mengikuti event ini akan segera ditindaklanjuti oleh Tim Caping.</li>
+                    <li>15. Syarat & ketentuan dapat berubah sewaktu-waktu tanpa pemberitahuan lebih lanjut. Silahkan cek halaman ini secara berkala.</li>
                 </ul>
             </div>
             <div class="button">

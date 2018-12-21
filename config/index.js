@@ -11,10 +11,10 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // '/dice': {
-      //   target: 'http://192.168.1.199:7001',
-      //   changeOrigin: true
-      // }
+      '/dice': {
+        target: 'http://ai.caping.co.id',
+        changeOrigin: true
+      }
     },
 
     // Various Dev Server settings

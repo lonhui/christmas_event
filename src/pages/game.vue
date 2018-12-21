@@ -22,16 +22,19 @@
         <p>Lempar dadumu dan selesaikan permainan untuk kesempatan dapetin <span>Grand Prize!</span></p>
 
         <div class="batton_play">
-            <div class="play" v-if="diceStatus">
+            <div class="play" v-if="diceStatus && ChessPositionNum<25">
                 <img src="static/images/game/paly_button.png" @click="openDice" alt="">
             </div>
-            <div class="play_dice" v-if="!diceStatus">
+            <div class="play" v-if="ChessPositionNum==25">
+                <img src="static/images/game/paly_button_n.png" alt="">
+            </div>
+            <div class="play_dice" v-if="!diceStatus && ChessPositionNum < 25">
                 <div class="dice_button" >
                     <img src="static/images/game/dice_button.png" alt="">
                 </div>
                 <p class="dice_button_text">{{countdown}}</p>
             </div>
-            <div class="play" v-if="!diceStatus">
+            <div class="play" v-if="!diceStatus && ChessPositionNum < 25">
                 <img src="static/images/game/BulletBox/200coins_button.png" @click="pay(0)">
             </div>
         </div>
@@ -43,10 +46,10 @@
         <NoLogin v-if="NoLoginShow" @on-close="NoLoginShow=false"></NoLogin>
         <Dice v-if="DiceShow" @on-close="closeDice" :diceCount="diceCount"></Dice>
         <UseCoins v-if="UseCoinsShow" @on-close="closePay" :payType="payType"></UseCoins>
-        <WinningNo v-if="WinningNoShow" @on-close="WinningNoShow=false"></WinningNo>
+        <WinningNo v-if="WinningNoShow" @on-close="WinningNoShow=false" :boxStatus="boxStatus"></WinningNo>
         <Winning v-if="WinningShow" @on-close="closeWinning" :boxStatus="boxStatus" :countdown="countdown"></Winning>
         <SelectGift v-if="SelectGiftShow" @on-close="closeSelectGift" :boxType="boxType"></SelectGift>
-        <GiftCoins v-if="GiftCoinsShow" @on-close="closeGiftCoins" :boxType="boxType" :getCoins="getCoins"></GiftCoins>
+        <GiftCoins v-if="GiftCoinsShow" @on-close="closeGiftCoins" :boxType="boxType" :getCoins="getCoins" :selectBoxNum="selectBoxNum"></GiftCoins>
         <GiftCall v-if="GiftCallShow" @on-close="closeGiftCall" :getCallCharge="getCallCharge" :uid="userId"></GiftCall>
         <GiftPhone v-if="GiftPhoneShow" @on-close="closeGiftPhone" :uid="userId"></GiftPhone>
         <Share v-if="ShareShow" @on-close="ShareShow=false" :shareType="shareType"></Share>
@@ -81,7 +84,7 @@ export default {
             NoCoinsShow:false,//金币不足提示框
             GiftCallShow:false,//开奖结果显示————话费
             GiftPhoneShow:false,//开奖结果显示————手机
-            GiftCoinsShow:false,//开奖结果显示————金币
+            GiftCoinsShow:true,//开奖结果显示————金币
             NoLoginShow:false,//未登录提示框
             SelectGiftShow:false,//礼盒选择框
             WinningShow:false,//盒子开启状态
@@ -102,7 +105,7 @@ export default {
                 {top:120,left:480},{top:120,left:360},{top:120,left:240},{top:120,left:120},{top:120,left:0},
                 {top:0,left:0},{top:0,left:120},{top:0,left:240},{top:0,left:360},{top:0,left:480},
             ],
-            ChessPositionNum:1,//当前所在格子
+            ChessPositionNum:0,//当前所在格子
             boxPayNum:200,//开启本次礼盒需要的金币
             countdown:"00:00:00",//倒计时
             getCoins:null,//获得的金币数
@@ -119,7 +122,8 @@ export default {
             payType:undefined,//付款类型 0 投掷，1 box_1，2 box_3，3 box_3
             boxType:undefined,//盒子类型        1 box_1，2 box_3，3 box_3
             boxStatus:undefined,//盒子的状态,打开盒子时传入模态框，用于模态框中判断显示状态
-            shareType:undefined//0话费，1手机
+            shareType:undefined,//0话费，1手机
+            selectBoxNum:0  //选择的盒子  1左，2中，3右
         }
     },
     components:{
@@ -145,7 +149,8 @@ export default {
     methods:{
         getUserStatus(){
             // 获取用户当前位置
-            axios.get(process.env.API_ROOT+"/dice/chance?uid="+this.userId)
+            // process.env.API_ROOT+
+            axios.get("/dice/chance?uid="+this.userId)
             .then(res=>{
                 let data = res.data.data
                 if(res.data.code == 500101){
@@ -167,7 +172,8 @@ export default {
         },
         // 投掷骰子
         openDice(){
-            axios.get(process.env.API_ROOT+'/dice/one?uid='+this.userId)
+            // process.env.API_ROOT+
+            axios.get('/dice/one?uid='+this.userId)
             .then(res=>{
                 if(res.data.code==0){
                     this.diceCount = res.data.data.diceCount
@@ -180,6 +186,7 @@ export default {
             }).catch(error=>{
                 console.log(error)
                 this.NetworkErrorShow = true
+
             })
         },
         closeGiftPhone(num){//num  0关闭，1开启分享
@@ -215,7 +222,8 @@ export default {
             }
         },
         bayPackage(payType){
-            axios.get(process.env.API_ROOT+'/dice/buy/package/chance',{
+            // process.env.API_ROOT+
+            axios.get('/dice/buy/package/chance',{
                 params:{
                     uid:this.userId,
                     level:payType
@@ -233,7 +241,8 @@ export default {
         },
         // 付费投掷骰子
         payOpenDice(){
-             axios.get( process.env.API_ROOT+'/dice/buy/dice/chance?uid='+this.userId)
+            // process.env.API_ROOT+
+             axios.get( '/dice/buy/dice/chance?uid='+this.userId)
             .then(res=>{
                 if(res.data.code==0){
                     this.openDice()
@@ -298,11 +307,13 @@ export default {
                 }
         },
         closeSelectGift(GiftNum){//礼盒id用于传给后端
-            if(GiftNum!=0){
-                 axios.get(process.env.API_ROOT+"/dice/package/open",{
+            if(GiftNum.num!=0){
+                this.selectBoxNum = GiftNum.boxNum
+                // process.env.API_ROOT+
+                 axios.get("/dice/package/open",{
                      params:{
                          uid:this.userId,
-                         level:GiftNum,
+                         level:GiftNum.num,
                      }
                  }).then(res=>{
                     let data = res.data
@@ -473,7 +484,7 @@ export default {
                                 break;
                     }
                 }
-            },1000)
+            },800)
         },
         // 当行进停止时判断当前所在格子的功能
         judgeGrid (){
@@ -508,7 +519,7 @@ export default {
             var count=0
             clearInterval(this.timer);
             this.timer = setInterval(function(){
-                var speed = (target - count)/10;
+                var speed = (target - count)/6;
                 speed = speed>0 ? Math.ceil(speed) : Math.floor(speed);
                 if(count == target){
                     clearInterval(this.timer);
