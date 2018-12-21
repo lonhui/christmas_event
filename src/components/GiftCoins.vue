@@ -83,7 +83,7 @@ export default {
         switch(this.selectBoxNum){
             case 1: 
                     this.status.leftBox = true; 
-                    this.leftCoin = this.getCoins + "Cion";
+                    this.leftCoin = this.getCoins + " Cion";
                     this.removeGift(this.getCoins)
                     this.centerCoin = this.gifts[a]
                     this.removeGift(this.centerCoin)
@@ -91,7 +91,7 @@ export default {
                     break;
             case 2: 
                     this.status.centerBox = true;
-                    this.centerCoin = this.getCoins + "Cion";
+                    this.centerCoin = this.getCoins + " Cion";
                      this.removeGift(this.getCoins)
                     this.leftCoin = this.gifts[a]
                      this.removeGift(this.leftCoin)
@@ -99,7 +99,7 @@ export default {
                     break;
             case 3: 
                     this.status.rightBox = true;
-                    this.rightCoin = this.getCoins + "Cion";
+                    this.rightCoin = this.getCoins + " Cion";
                     this.removeGift(this.getCoins)
                     this.centerCoin = this.gifts[a]
                      this.removeGift(this.centerCoin)
@@ -134,31 +134,31 @@ export default {
         "status.leftBox":function(){
             if(this.status.leftBox){
                 let boxDom = document.getElementsByClassName("coin_left")[0]
-                boxDom.children[0].style.fontSize="16px"
+                boxDom.children[0].style.fontSize="0.38rem"
                 boxDom.children[0].style.fontWeight="600"
                 boxDom.children[0].style.width="100px"
-                boxDom.children[0].style.left="35px"
-                boxDom.children[0].style.top="14px"
+                boxDom.children[0].style.left="0.85rem"
+                boxDom.children[0].style.top="0.35rem"
             }
         },
         "status.centerBox":function(){
             if(this.status.centerBox){
                 let boxDom = document.getElementsByClassName("coin_center")[0]
-               boxDom.children[0].style.fontSize="16px"
+                boxDom.children[0].style.fontSize="0.38rem"
                 boxDom.children[0].style.fontWeight="600"
                 boxDom.children[0].style.width="100px"
-                boxDom.children[0].style.left="35px"
-                boxDom.children[0].style.top="14px"
+                boxDom.children[0].style.left="0.85rem"
+                boxDom.children[0].style.top="0.35rem"
             }
         },
         "status.rightBox":function(){
             if(this.status.rightBox){
                 let boxDom = document.getElementsByClassName("coin_right")[0]
-                boxDom.children[0].style.fontSize="16px"
+                boxDom.children[0].style.fontSize="0.38rem"
                 boxDom.children[0].style.fontWeight="600"
                 boxDom.children[0].style.width="100px"
-                boxDom.children[0].style.left="35px"
-                boxDom.children[0].style.top="14px"
+                boxDom.children[0].style.left="0.85rem"
+                boxDom.children[0].style.top="0.35rem"
             }
         },
     }
@@ -212,32 +212,33 @@ export default {
     color: #fff;
     width: 100%;
     display: flex;
+    font-size: 0.2rem;
+    padding-top: 50px;
 }
 .coin_left{
     position: relative;
 }
 .coin_left span{
     position:absolute;
-    top:35px;
-    left: 65px;
+    top:0.45rem;
+    left: 0.75rem;
 }
 .coin_center{
      position: relative;
 }
 .coin_center span{
     position:absolute;
-    top:35px;
-    left: 65px;
+    top:0.45rem;
+    left: 0.75rem;
 }
 .coin_right{
      position: relative;
 }
 .coin_right span{
     position:absolute;
-    top:35px;
-    left: 65px;
+    top:0.45rem;
+    left: 0.75rem;
 }
-
 p{
     margin-top:30px;
     font-size: 28px;

@@ -22,19 +22,19 @@
         <p>Lempar dadumu dan selesaikan permainan untuk kesempatan dapetin <span>Grand Prize!</span></p>
 
         <div class="batton_play">
-            <div class="play" v-if="diceStatus && ChessPositionNum<25">
+            <div class="play" v-if="diceStatus && diceButtonStatus">
                 <img src="static/images/game/paly_button.png" @click="openDice" alt="">
             </div>
-            <div class="play" v-if="ChessPositionNum==25">
+            <div class="play" v-if="!diceButtonStatus">
                 <img src="static/images/game/paly_button_n.png" alt="">
             </div>
-            <div class="play_dice" v-if="!diceStatus && ChessPositionNum < 25">
+            <div class="play_dice" v-if="!diceStatus && diceButtonStatus">
                 <div class="dice_button" >
                     <img src="static/images/game/dice_button.png" alt="">
                 </div>
                 <p class="dice_button_text">{{countdown}}</p>
             </div>
-            <div class="play" v-if="!diceStatus && ChessPositionNum < 25">
+            <div class="play" v-if="!diceStatus && diceButtonStatus">
                 <img src="static/images/game/BulletBox/200coins_button.png" @click="pay(0)">
             </div>
         </div>
@@ -84,7 +84,7 @@ export default {
             NoCoinsShow:false,//金币不足提示框
             GiftCallShow:false,//开奖结果显示————话费
             GiftPhoneShow:false,//开奖结果显示————手机
-            GiftCoinsShow:true,//开奖结果显示————金币
+            GiftCoinsShow:false,//开奖结果显示————金币
             NoLoginShow:false,//未登录提示框
             SelectGiftShow:false,//礼盒选择框
             WinningShow:false,//盒子开启状态
@@ -123,7 +123,8 @@ export default {
             boxType:undefined,//盒子类型        1 box_1，2 box_3，3 box_3
             boxStatus:undefined,//盒子的状态,打开盒子时传入模态框，用于模态框中判断显示状态
             shareType:undefined,//0话费，1手机
-            selectBoxNum:0  //选择的盒子  1左，2中，3右
+            selectBoxNum:0,  //选择的盒子  1左，2中，3右
+            diceButtonStatus:true//为false时无法投掷骰子
         }
     },
     components:{
@@ -149,8 +150,7 @@ export default {
     methods:{
         getUserStatus(){
             // 获取用户当前位置
-            // process.env.API_ROOT+
-            axios.get("/dice/chance?uid="+this.userId)
+            axios.get(process.env.API_ROOT+"/dice/chance?uid="+this.userId)
             .then(res=>{
                 let data = res.data.data
                 if(res.data.code == 500101){
@@ -172,8 +172,7 @@ export default {
         },
         // 投掷骰子
         openDice(){
-            // process.env.API_ROOT+
-            axios.get('/dice/one?uid='+this.userId)
+            axios.get(process.env.API_ROOT+'/dice/one?uid='+this.userId)
             .then(res=>{
                 if(res.data.code==0){
                     this.diceCount = res.data.data.diceCount
@@ -222,8 +221,7 @@ export default {
             }
         },
         bayPackage(payType){
-            // process.env.API_ROOT+
-            axios.get('/dice/buy/package/chance',{
+            axios.get(process.env.API_ROOT+'/dice/buy/package/chance',{
                 params:{
                     uid:this.userId,
                     level:payType
@@ -241,8 +239,7 @@ export default {
         },
         // 付费投掷骰子
         payOpenDice(){
-            // process.env.API_ROOT+
-             axios.get( '/dice/buy/dice/chance?uid='+this.userId)
+             axios.get(process.env.API_ROOT+'/dice/buy/dice/chance?uid='+this.userId)
             .then(res=>{
                 if(res.data.code==0){
                     this.openDice()
@@ -309,8 +306,7 @@ export default {
         closeSelectGift(GiftNum){//礼盒id用于传给后端
             if(GiftNum.num!=0){
                 this.selectBoxNum = GiftNum.boxNum
-                // process.env.API_ROOT+
-                 axios.get("/dice/package/open",{
+                 axios.get(process.env.API_ROOT+"/dice/package/open",{
                      params:{
                          uid:this.userId,
                          level:GiftNum.num,
@@ -431,12 +427,15 @@ export default {
             var count=0
             var OneGrid = this.latticeWH
             timing = setInterval(()=>{
-                if(this.ChessPositionNum==endPoint || this.ChessPositionNum==25){
-                    if(this.ChessPositionNum==endPoint){
+                if(this.ChessPositionNum==endPoint || this.ChessPositionNum==25){//棋子停止或经过25时
+                    if(this.ChessPositionNum==endPoint){//棋子停止时
                         if(this.position != this.ChessPositionNum){
                             // 如果前端棋子位置与后端地址位置不符，以后端位置为准
                             this.ChessPositionNum = this.position
                             this.transfer(this.position)
+                        }
+                        if(this.ChessPositionNum==25){//棋子停止在25时
+                            this.diceButtonStatus = false
                         }
                         clearInterval(timing)
                             this.conversionBackImg()
@@ -558,7 +557,6 @@ export default {
                         this.userId = arr2[1]//保存到保存数据的地方
                     }
                 }
-                // if(this.userId==null){this.NoLoginShow = true}
             }
         },
     }
