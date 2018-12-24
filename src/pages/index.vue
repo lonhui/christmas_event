@@ -235,6 +235,7 @@ h1{
     background: url("../../static/images/index/horn.png") no-repeat;
     background-size: 100% 100%;
     margin:20px auto 0;
+    margin-bottom: 50px;
     position:relative;
 }
 .broadcast .text{

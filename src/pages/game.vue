@@ -163,6 +163,9 @@ export default {
                     }
                     this.dailyPackage = data.dailyPackage
                     this.buyPackage = data.buyPackage
+                    if(data.position == 25){
+                        this.diceButtonStatus = false
+                    }
                     this.transfer(data.position)//同步棋子位置
                 } 
             }).catch(error=>{
@@ -345,7 +348,7 @@ export default {
         // 倒计时
         time(){
             // 当天00:00:00时间戳
-            let endTime = new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000
+            var endTime = new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000
             setInterval(()=>{
                 let timestamp = Date.parse(new Date());// 当前时间戳
                 let timeDifference = (endTime-timestamp)/1000
@@ -434,7 +437,7 @@ export default {
                             this.ChessPositionNum = this.position
                             this.transfer(this.position)
                         }
-                        if(this.ChessPositionNum==25){//棋子停止在25时
+                        if(this.ChessPositionNum == 25){//棋子停止在25时
                             this.diceButtonStatus = false
                         }
                         clearInterval(timing)
@@ -483,7 +486,7 @@ export default {
                                 break;
                     }
                 }
-            },800)
+            },500)
         },
         // 当行进停止时判断当前所在格子的功能
         judgeGrid (){
@@ -631,6 +634,7 @@ p{
 }
 .batton_play{
     padding-top: 50px;
+    margin-bottom: 50px;
     display: flex;
     flex-direction:row;
     flex-wrap:wrap;

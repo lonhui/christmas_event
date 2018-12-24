@@ -25,7 +25,7 @@
                         <img src="static/images/game/BulletBox/active.png" alt="" v-if="status.rightBox">
                     </div>
                 </div>
-                <p>Kamu telah mendapatkan<br><span>{{centerCoin}} Caping Coin!</span></p>
+                <p>Kamu telah mendapatkan<br><span>{{getCoins}} Caping Coin!</span></p>
                 <div class="button">
                     <div class="share_button" @click="share">
                         <img src="static/images/game/BulletBox/share_button.png" alt="">
@@ -83,7 +83,7 @@ export default {
         switch(this.selectBoxNum){
             case 1: 
                     this.status.leftBox = true; 
-                    this.leftCoin = this.getCoins + " Cion";
+                    this.leftCoin = this.getCoins + " Coin";
                     this.removeGift(this.getCoins)
                     this.centerCoin = this.gifts[a]
                     this.removeGift(this.centerCoin)
@@ -91,7 +91,7 @@ export default {
                     break;
             case 2: 
                     this.status.centerBox = true;
-                    this.centerCoin = this.getCoins + " Cion";
+                    this.centerCoin = this.getCoins + " Coin";
                      this.removeGift(this.getCoins)
                     this.leftCoin = this.gifts[a]
                      this.removeGift(this.leftCoin)
@@ -99,15 +99,13 @@ export default {
                     break;
             case 3: 
                     this.status.rightBox = true;
-                    this.rightCoin = this.getCoins + " Cion";
+                    this.rightCoin = this.getCoins + " Coin";
                     this.removeGift(this.getCoins)
                     this.centerCoin = this.gifts[a]
                      this.removeGift(this.centerCoin)
                     this.leftCoin = this.gifts[b]
                     break;
         }
-        
-
     },
     methods: {
         closeGiftCoins(whether){
@@ -212,7 +210,7 @@ export default {
     color: #fff;
     width: 100%;
     display: flex;
-    font-size: 0.2rem;
+    font-size: 14px;
     padding-top: 50px;
 }
 .coin_left{
@@ -220,24 +218,24 @@ export default {
 }
 .coin_left span{
     position:absolute;
-    top:0.45rem;
-    left: 0.75rem;
+    top:40px;
+    left:55px;
 }
 .coin_center{
      position: relative;
 }
 .coin_center span{
     position:absolute;
-    top:0.45rem;
-    left: 0.75rem;
+     top:40px;
+    left:55px;
 }
 .coin_right{
      position: relative;
 }
 .coin_right span{
     position:absolute;
-    top:0.45rem;
-    left: 0.75rem;
+     top:40px;
+    left:55px;
 }
 p{
     margin-top:30px;

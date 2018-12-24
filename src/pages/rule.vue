@@ -94,7 +94,7 @@ export default {
     height: 750px;
     padding-bottom: 300px;
     margin: 50px auto 0;
-    background-color: #010030af;
+    background: url("../../static/images/TnC.png")
 }
 h2{
     color: #fff;

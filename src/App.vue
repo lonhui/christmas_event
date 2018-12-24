@@ -70,7 +70,8 @@ export default {
         "static/images/game/BulletBox/Coins_4.png",
         "static/images/game/BulletBox/active_n.png",
         "static/images/game/BulletBox/active.png",
-        "static/images/game/paly_button_n.png"
+        "static/images/game/paly_button_n.png",
+        "static/images/bg.png"
       ]
 
       for(let img of imgs){
@@ -78,7 +79,7 @@ export default {
         image.src = img
         image.onload = () =>{
           this.count++
-          if(this.count==33){
+          if(this.count==34){
             this.loadingShow = false
           }
         }
