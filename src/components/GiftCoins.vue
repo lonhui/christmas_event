@@ -69,13 +69,13 @@ export default {
     mounted(){
         switch(this.boxType){
             case 1: this.coinsNum = 400;
-                    this.gifts = [200,350,500,700,1000]
+                    this.gifts = ['200 Coin','350 Coin','500 Coin','700 Coin','1000 Coin']
                     break;
             case 2: this.coinsNum = 2000;
-                    this.gifts = [1000,2000,3000,5000,7000]
+                    this.gifts = ['1000 Coin','2000 Coin','3000 Coin','5000 Coin','7000 Coin','Pulsa 10rb','Pulsa 50rb']
                     break;
             case 3: this.coinsNum = 3500;
-                    this.gifts = [1000,5000,10000,20000]
+                    this.gifts = ['1000 Coin','5000 Coin','10rb Coin','20rb Coin','Pulsa 10rb','Pulsa 50rb']
                     break;
         }
         let a = Math.floor(Math.random()*(this.gifts.length-1))
@@ -114,9 +114,9 @@ export default {
         shareSucceed(){this.closeGiftCoins(false)},
         share(){
             let title = 'Caping'
-            let content = 'Yey! Aku baru saja dapetin koin Caping di event Caping Run. Kamu mau juga? (link download app)'
+            let content = 'Yey! Aku baru saja dapetin koin Caping di event Caping Run. Kamu mau juga? (http://bit.ly/CapingRun)'
             let pic = null
-            var url ='https://app.appsflyer.com/com.engloryintertech.caping?pid=Caping+Article'
+            var url ='http://bit.ly/CapingRun'
             CapingJs.share(title, content,url,pic)
         },
         removeGift(num){
@@ -216,26 +216,33 @@ export default {
 .coin_left{
     position: relative;
 }
+
 .coin_left span{
+    width: 200%;
+    font-family: OpenSans-Regular;
     position:absolute;
-    top:40px;
-    left:55px;
+    top:30px;
+    left:35px;
 }
 .coin_center{
      position: relative;
 }
 .coin_center span{
+    width: 200%;
+    font-family: OpenSans-Regular;
     position:absolute;
-     top:40px;
-    left:55px;
+    top:30px;
+    left:35px;
 }
 .coin_right{
      position: relative;
 }
 .coin_right span{
+    width: 200%;
+    font-family: OpenSans-Regular;
     position:absolute;
-     top:40px;
-    left:55px;
+    top:30px;
+    left:35px;
 }
 p{
     margin-top:30px;
@@ -285,8 +292,5 @@ p span{
     color: #fff;
     font-size: 26px;
 }
-
-
-
 </style>
 

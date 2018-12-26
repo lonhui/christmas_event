@@ -44,12 +44,12 @@ export default {
             let title = 'Caping'
             let content = ''
             if(this.shareType==0){
-                content='Yey! Aku baru saja dapetin pulsa gratis di event Caping Run. Kamu mau juga? (link download app)'
+                content='Yey! Aku baru saja dapetin pulsa gratis di event Caping Run. Kamu mau juga? (http://bit.ly/CapingRun)'
             }else{
-                content='Yey! Aku baru saja dapetin smartphone keren di event Caping Run. Kamu mau juga? (link download app)'
+                content='Yey! Aku baru saja dapetin smartphone keren di event Caping Run. Kamu mau juga? (http://bit.ly/CapingRun)'
             }
             let pic = null
-            var url ='https://app.appsflyer.com/com.engloryintertech.caping?pid=Caping+Article'
+            var url ='http://bit.ly/CapingRun'
             CapingJs.share(title, content,url,pic)
         }
     }
