@@ -113,11 +113,12 @@ export default {
         },
         shareSucceed(){this.closeGiftCoins(false)},
         share(){
-            let title = 'Caping'
-            let content = 'Yey! Aku baru saja dapetin koin Caping di event Caping Run. Kamu mau juga? (http://bit.ly/CapingRun)'
+            
+            let content = 'Yey! Aku baru saja dapetin koin Caping di event Caping Run. Kamu mau juga?'
+            let title = content
             let pic = null
             var url ='http://bit.ly/CapingRun'
-            CapingJs.share(title, content,url,pic)
+            CapingJs.share(title,content,url,pic)
         },
         removeGift(num){
             for(let i = 0; i < this.gifts.length; i++){

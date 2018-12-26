@@ -41,16 +41,17 @@ export default {
         },
         shareSucceed(){this.closeShare()},
         share(){
-            let title = 'Caping'
+            
             let content = ''
             if(this.shareType==0){
-                content='Yey! Aku baru saja dapetin pulsa gratis di event Caping Run. Kamu mau juga? (http://bit.ly/CapingRun)'
+                content='Yey! Aku baru saja dapetin pulsa gratis di event Caping Run. Kamu mau juga?'
             }else{
-                content='Yey! Aku baru saja dapetin smartphone keren di event Caping Run. Kamu mau juga? (http://bit.ly/CapingRun)'
+                content='Yey! Aku baru saja dapetin smartphone keren di event Caping Run. Kamu mau juga?'
             }
+            let title = content
             let pic = null
             var url ='http://bit.ly/CapingRun'
-            CapingJs.share(title, content,url,pic)
+            CapingJs.share(title,content,url,pic)
         }
     }
 }

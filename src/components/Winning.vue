@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="footer">
-                    {{boxNum?'Gratis 1x Arnbil Perhari':'Atau tunggu selama'}}
+                    {{boxNum?'Gratis 1x Ambil Perhari':'Atau tunggu selama'}}
                     <div class="time" v-if="!boxNum">{{countdown}}</div>
                 </div>
                 
