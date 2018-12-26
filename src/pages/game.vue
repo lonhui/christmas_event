@@ -538,7 +538,7 @@ export default {
             var count = 0
             clearInterval(this.timer);
             this.timer = setInterval(function(){
-                var speed = (target - count)/10;
+                var speed = (target - count)/6;
                 speed = speed>0 ? Math.ceil(speed) : Math.floor(speed);
                 if(count == target){
                     clearInterval(this.timer);

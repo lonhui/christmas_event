@@ -47,7 +47,7 @@ export default {
                     axios.get(process.env.API_ROOT+"/dice/phone",{
                         params:{
                             uid:this.uid,
-                            phone:this.phoneNum
+                            phoneNumber:this.phoneNum
                         }
                     }).then(res=>{
                         if(res.data.code==0){
