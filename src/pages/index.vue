@@ -109,12 +109,16 @@ export default {
                                 name:data.coin[countCoin].userName,
                                 coin:data.coin[countCoin].item+" coin"
                             }
+                            
                             this.scrollData.push(item)
                             countCoin++
                         }else{
                             let item = {
                                 name:data.special[countCall].userName,
                                 coin:"Pulsa "+(data.special[countCall].item*10000)
+                            }
+                            if(item.coin == "Pulsa NaN"){
+                                item.coin = "Pulsa 10000"
                             }
                             this.scrollData.push(item)
                             countCall++

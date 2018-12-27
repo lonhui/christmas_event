@@ -348,7 +348,14 @@ export default {
         // 倒计时
         time(){
             // 当天00:00:00时间戳
-            var endTime = new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000
+            var endTime = new Date( new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000).getTime()
+            var myDate = new Date();
+            var Y = myDate.getFullYear();
+            var M = myDate.getMonth()+1;
+            var D = myDate.getDate();
+            var date = new Date(Y+"-"+M+"-"+D+" 00:00:00")
+            var endTime = date.getTime()+24 * 60 * 60 * 1000
+
             setInterval(()=>{
                 let timestamp = Date.parse(new Date());// 当前时间戳
                 let timeDifference = (endTime-timestamp)/1000

@@ -29,7 +29,8 @@ export default {
     data(){
         return{
             phoneNum:null,
-            inputClass:"telInput"
+            inputClass:"telInput",
+            NetworkErrorShow:false,
         }
     },
     methods: {
@@ -37,7 +38,6 @@ export default {
             this.$emit('on-close',num)
         },
         submit(){
-            var verifyPhone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
             if(this.phoneNum){
                 if(this.phoneNum.length==0) { 
                     this.inputClass = "noTelInput"
@@ -52,9 +52,12 @@ export default {
                     }).then(res=>{
                         if(res.data.code==0){
                             this.closeGiftCall(1)
+                        }else{
+                            alert("Koneksi kamu tidak stabil Periksa jaringan internet kamu!")
                         }
                     }).catch(error=>{
                         console.log(error)
+                        alert("Koneksi kamu tidak stabil Periksa jaringan internet kamu!")
                     })
                 }
             }else{
@@ -65,13 +68,10 @@ export default {
     },
     watch:{
         "phoneNum":function(){
-            var verifyPhone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
             if(this.phoneNum){
                 if(this.phoneNum.length==0) { 
                 
                 } else if(this.phoneNum.length!=11) { 
-                    
-                }else if(!verifyPhone.test(this.phoneNum)){ 
                     
                 }else{
                     this.inputClass = "telInput"
