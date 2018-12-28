@@ -30,7 +30,6 @@ export default {
         return{
             phoneNum:null,
             inputClass:"telInput",
-            NetworkErrorShow:false,
         }
     },
     methods: {
@@ -41,9 +40,7 @@ export default {
             if(this.phoneNum){
                 if(this.phoneNum.length==0) { 
                     this.inputClass = "noTelInput"
-                } else if(this.phoneNum.length!=11) { 
-                    this.inputClass = "noTelInput"
-                }else {
+                }else{
                     axios.get(process.env.API_ROOT+"/dice/phone",{
                         params:{
                             uid:this.uid,
@@ -53,7 +50,7 @@ export default {
                         if(res.data.code==0){
                             this.closeGiftCall(1)
                         }else{
-                            alert("Koneksi kamu tidak stabil Periksa jaringan internet kamu!")
+                            alert("Anda belum menang!")
                         }
                     }).catch(error=>{
                         console.log(error)
@@ -63,7 +60,6 @@ export default {
             }else{
                 this.inputClass = "noTelInput"
             }
-            
         }
     },
     watch:{
@@ -71,9 +67,7 @@ export default {
             if(this.phoneNum){
                 if(this.phoneNum.length==0) { 
                 
-                } else if(this.phoneNum.length!=11) { 
-                    
-                }else{
+                } else {
                     this.inputClass = "telInput"
                 }
             }

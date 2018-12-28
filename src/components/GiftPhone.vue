@@ -50,13 +50,10 @@ export default {
         },
         submit(){
             var myregEmali = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-            var verifyPhone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
             if(this.phoneNum && this.userName && this.emali){
                 if(this.phoneNum.length==0) {
                     this.telInClass = "noInput"
-                } else if(this.phoneNum.length!=11) { 
-                    this.telInClass = "noInput"
-                }else if(!myregEmali.test(this.emali)){
+                } if(!myregEmali.test(this.emali)){
                     this.emaliInClass = "noInput"
                 }else{
                     axios.get(process.env.API_ROOT+"/dice/user/info",{
@@ -79,15 +76,10 @@ export default {
     },
     watch:{
         "phoneNum":function(){
-            var verifyPhone = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
             if(this.phoneNum){
                  if(this.phoneNum.length==0) {
                     
-                } else if(this.phoneNum.length!=11) { 
-                    
-                }else if(!verifyPhone.test(this.phoneNum)){ 
-                    
-                }else{
+                } else{
                     this.telInClass = "telInput"
                 }
             }
